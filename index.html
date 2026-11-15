@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#160d08">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Хроники Эйрвальда">
+<title>Хроники Эйрвальда</title>
+<style>
+:root{--bg:#100a07;--panel:#21140d;--panel2:#2b1a0e;--gold:#e9a52e;--gold2:#ffc65a;--text:#f1e4ce;--muted:#b39b7b;--line:#875017;--red:#d85b4c;--blue:#65a8dc;--green:#74bd79}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse at top,#3b210e 0,#160d08 48%,#090605 100%);color:var(--text);font-family:Georgia,"Times New Roman",serif;min-height:100vh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+button{font:inherit;color:inherit;cursor:pointer} .app{max-width:980px;margin:auto;padding:14px 12px 32px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:4px 0 12px}.brand{font-size:13px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}.brand b{color:var(--gold2);font-size:19px;letter-spacing:1px;display:block;margin-top:3px}.save{border:1px solid #bd8423;background:linear-gradient(#8a4b12,#4a260d);padding:11px 16px;border-radius:12px;font-weight:bold}
+.hero{border:2px solid var(--gold);background:linear-gradient(110deg,#2b190d,#160e09);padding:14px;border-radius:12px;box-shadow:0 0 0 3px #080503,0 8px 28px #0008}
+.herohead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.name{font-size:22px;color:var(--gold2);font-weight:bold}.sub{font:13px Arial;color:var(--muted);margin-top:5px}.wealth{text-align:right;color:var(--gold2);font: bold 14px Arial;white-space:nowrap}
+.ribbon{margin-top:13px;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.badge{background:#120b07;border:1px solid #674015;border-radius:20px;padding:6px 10px;font:12px Arial;color:var(--muted)}
+.agebox{margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;background:#160e09;border:1px solid #754313;padding:11px;border-radius:10px}.age{font-size:23px;color:var(--gold2)}.age small{font-size:13px;color:var(--muted)}.advance{border:1px solid #e5a32a;border-radius:10px;padding:12px 16px;background:linear-gradient(#96520f,#4a270c);font-weight:bold;min-width:135px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.card{background:linear-gradient(145deg,#2b1a0e,#1b100a);border:1px solid #70400f;border-radius:12px;padding:13px;box-shadow:inset 0 1px #ffffff0b}.card h2{font-size:19px;color:var(--gold2);margin:0 0 12px}.bars{display:grid;gap:11px}.barrow{font:13px Arial;color:var(--muted)}.barlabel{display:flex;justify-content:space-between;margin-bottom:5px}.track{height:10px;background:#080604;border-radius:20px;overflow:hidden}.fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#d68a24,#ffc34e);transition:width .3s}.fill.hp{background:linear-gradient(90deg,#a73e32,#ee7960)}.fill.mood{background:linear-gradient(90deg,#bd8d27,#f5d36b)}.fill.mana{background:linear-gradient(90deg,#315caa,#71b5ec)}.fill.social{background:linear-gradient(90deg,#357d9e,#72b9e9)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;font:13px Arial}.stat{display:flex;justify-content:space-between;gap:5px;padding:7px 0;border-bottom:1px solid #ffffff0c;color:var(--muted)}.stat b{color:var(--text)}.stat em{font-style:normal;color:var(--gold2)}
+.actions{margin-top:14px}.actions h2{font-size:22px;margin:0 0 10px}.actiongrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.act{background:linear-gradient(145deg,#2b1a0e,#140c08);border:1px solid #825018;border-radius:10px;padding:12px 10px;text-align:left;min-height:64px}.act strong{display:block;color:var(--gold2);font-size:14px}.act span{display:block;font:12px Arial;color:var(--muted);margin-top:5px;line-height:1.35}.act:active,.advance:active{transform:scale(.98)}.act:disabled{opacity:.35;cursor:not-allowed}
+.log{margin-top:12px;min-height:150px;max-height:330px;overflow:auto}.log h2{margin:0 0 9px;color:var(--gold2);font-size:19px}.entry{border-left:2px solid #a36b1b;padding:6px 9px;margin:7px 0;background:#100a0780;font-size:14px;line-height:1.4}.entry small{color:var(--muted);font:11px Arial;margin-right:6px}
+.family{font-size:14px;line-height:1.6;color:var(--muted)}.childlist{display:grid;gap:7px;margin-top:9px}.childcard{width:100%;text-align:left;background:#130c08;border:1px solid #70400f;border-radius:8px;padding:9px;color:var(--text)}.childcard b{color:var(--gold2)}.childcard small{display:block;color:var(--muted);margin-top:3px;font:11px Arial}.profilegrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;font:13px Arial}.profilegrid span{background:#130c08;padding:7px;border-radius:6px;color:var(--muted)}.profilegrid b{color:var(--text)}.family b{color:var(--text)}.traits{display:flex;flex-wrap:wrap;gap:6px}.trait{border:1px solid #8e591b;color:var(--gold2);padding:5px 8px;border-radius:7px;font:12px Arial}
+.footer{text-align:center;color:#876b4d;font:11px Arial;margin:18px 0 0}
+.overlay{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:18px;z-index:5}.modal{width:min(460px,100%);background:#24160d;border:2px solid var(--gold);border-radius:14px;padding:20px;box-shadow:0 20px 80px #000}.modal h2{color:var(--gold2);margin:0 0 10px}.modal p{line-height:1.5;color:var(--muted)}.modal button{width:100%;margin-top:8px;padding:12px;border-radius:9px;border:1px solid #a56b1c;background:#63350e}.modal .secondary{background:#17100b}
+.toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#39200d;border:1px solid var(--gold);padding:10px 15px;border-radius:20px;font:13px Arial;opacity:0;pointer-events:none;transition:.25s;z-index:8;max-width:90%;text-align:center}.toast.show{opacity:1}
+@media(max-width:650px){.app{padding:10px 9px 26px}.grid{grid-template-columns:1fr}.herohead{align-items:center}.name{font-size:19px}.wealth{font-size:12px}.stats{gap:4px 12px}.actiongrid{grid-template-columns:1fr 1fr}.act{min-height:72px;padding:10px 8px}.act strong{font-size:13px}.agebox{align-items:center}.advance{padding:11px 10px;min-width:118px;font-size:13px}.card{padding:12px}.brand b{font-size:17px}}
+</style>
+</head>
+<body>
+<div class="app">
+ <div class="top"><div class="brand">Летопись одного рода<b>⚔ Хроники Эйрвальда</b></div><button class="save" id="saveBtn">💾 Сохранить</button></div>
+ <section class="hero">
+  <div class="herohead"><div><div class="name" id="heroName">Неизвестный наследник</div><div class="sub" id="heroSub">Человек · 0 лет · Детство</div></div><div class="wealth" id="wealth">🪙 0 золотых<br><span style="color:var(--muted);font-weight:normal">Слава: 0</span></div></div>
+  <div class="ribbon"><span class="badge" id="rank">✦ Безвестный</span><span class="badge" id="generation">Поколение I</span><span class="badge" id="year">Год 1 Эпохи Королей</span></div>
+  <div class="agebox"><div><div class="age" id="ageLabel">0 лет <small>· Детство</small></div><div class="sub" id="yearHint">Впереди целая жизнь.</div></div><button class="advance" id="ageBtn">ПРОЖИТЬ ГОД ▶</button></div>
+ </section>
+ <div class="grid">
+  <section class="card"><h2>♥ Состояние</h2><div class="bars" id="bars"></div></section>
+  <section class="card"><h2>✧ Характеристики</h2><div class="stats" id="stats"></div></section>
+  <section class="card"><h2>✦ Мастерство</h2><div class="stats" id="skills"></div></section>
+  <section class="card"><h2>♜ Семья и наследие</h2><div class="family" id="family"></div></section><section class="card"><h2>🛡 Снаряжение и гильдия</h2><div class="stats" id="equipment"></div><div class="family" id="guildInfo" style="margin-top:9px"></div></section>
+ </div>
+ <section class="actions">
+  <h2>Чем займёшься в этом году?</h2>
+  <div class="sub" id="points" style="margin:0 0 9px">Действий осталось: 3</div>
+  <div class="actiongrid" id="actions"></div>
+ </section>
+ <section class="card log"><h2>📜 Хроника жизни</h2><div id="journal"></div></section>
+ <div class="footer">Мир Эйрвальда · Каждая жизнь уникальна · Прогресс сохраняется на этом устройстве<br><strong style="display:block;margin-top:8px;color:#c49a61;letter-spacing:1px">ХРОНИКИ ЭЙРВАЛЬДА · ВЕРСИЯ 2.1.0</strong></div>
+</div>
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div><div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+const names=["Элдрик","Фаэлин","Мираэль","Торен","Лиора","Каэл","Эвелин","Бран","Сильвия","Арен","Нерис","Дарен","Иллиан","Веста"];
+const surnames=["Сумрачный","Златолист","Пепельный","Северный","Изумрудный","Воронье Крыло","Светозарный","Тихий Ручей"];
+const stages=a=>a<3?"Младенчество":a<7?"Детство":a<13?"Отрочество":a<18?"Юность":a<40?"Расцвет":a<60?"Зрелость":a<75?"Старость":"Закат";
+const clamp=(n,min=0,max=100)=>Math.max(min,Math.min(max,n));
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[rnd(0,a.length-1)];
+let s;
+function rollStats(){return {strength:rnd(2,16),agility:rnd(2,16),control:rnd(1,15),maxMana:rnd(35,120),luck:rnd(1,20),sword:rnd(0,5),magic:rnd(0,5)}}
+function inheritedStats(a,b){
+ const keys=["strength","agility","control","maxMana","luck","sword","magic"],out={};
+ for(const k of keys){const av=a?.[k]??(k==="maxMana"?70:5),bv=b?.[k]??(k==="maxMana"?70:5),spread=Math.max(1,Math.round((av+bv)*.12));out[k]=Math.max(k==="luck"?1:0,Math.round((av+bv)/2+rnd(-spread,spread)));}
+ return out;
+}
+function fresh(gen=1,parent=null,inherited=null){
+ const first=pick(names),last=pick(surnames),t=inherited||rollStats();
+ return {name:first+" "+last,age:0,gen,year:1,health:100,mood:rnd(55,95),stress:0,social:rnd(25,65),strength:t.strength,agility:t.agility,control:t.control,mana:Math.round(t.maxMana*.7),maxMana:t.maxMana,luck:t.luck,gold:rnd(8,24),fame:0,sword:t.sword,magic:t.magic,combat:0,actions:3,alive:true,partner:null,partnerStats:null,children:[],parents:parent?[parent]:[],legacy:[],log:[],lastEvent:"",ageAtDeath:null,weaponLevel:0,armorLevel:0,guildRank:0,questsDone:0};
+}
+function say(t){s.log.unshift({age:s.age,year:s.year,text:t});s.log=s.log.slice(0,45)}
+function init(){let saved=localStorage.getItem("eyrval_save");if(saved){try{s=JSON.parse(saved);s.children=(s.children||[]).map(c=>typeof c==="string"?(()=>{let t=rollStats();return {name:c,age:0,sex:"ребёнок",...t}})():c);if(s.partner&&!s.partnerStats)s.partnerStats=rollStats();if(!s.maxMana)s.maxMana=100;s.weaponLevel=s.weaponLevel||0;s.armorLevel=s.armorLevel||0;s.guildRank=s.guildRank||0;s.questsDone=s.questsDone||0;}catch(e){s=fresh()}}else{s=fresh();say("Ты появился на свет в небольшом поселении. Никто не знает, кем тебе суждено стать.")}render()}
+function toast(t){let el=$("toast");el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),1900)}
+function save(){localStorage.setItem("eyrval_save",JSON.stringify(s));toast("Игра сохранена на устройстве.")}
+function bar(label,val,max,kind,icon){return `<div class="barrow"><div class="barlabel"><span>${icon} ${label}</span><b>${Math.round(val)} / ${max}</b></div><div class="track"><div class="fill ${kind}" style="width:${clamp(val/max*100)}%"></div></div></div>`}
+function render(){
+ $("heroName").textContent=s.name;$("heroSub").textContent=`Человек · ${s.age} лет · ${stages(s.age)}`;
+ $("wealth").innerHTML=`🪙 ${s.gold.toLocaleString("ru-RU")} золотых<br><span style="color:var(--muted);font-weight:normal">Слава: ${s.fame.toLocaleString("ru-RU")}</span>`;
+ $("rank").textContent=s.fame>900?"✦ Живая легенда":s.fame>400?"✦ Герой королевства":s.fame>100?"✦ Известное имя":"✦ "+(s.fame>0?"На слуху":"Безвестный");
+ $("generation").textContent=`Поколение ${["I","II","III","IV","V","VI","VII","VIII","IX"][Math.min(s.gen-1,8)]||s.gen}`;
+ $("year").textContent=`Год ${s.year} Эпохи Королей`;
+ $("ageLabel").innerHTML=`${s.age} лет <small>· ${stages(s.age)}</small>`;
+ $("yearHint").textContent=s.alive?(s.actions>0?`У тебя ещё ${s.actions} действия в этом году.`:"Год завершён. Пора двигаться дальше."):"Эта жизнь завершилась.";
+ $("ageBtn").disabled=!s.alive||s.actions>0;$("ageBtn").textContent=s.alive?"ПРОЖИТЬ ГОД ▶":"ЖИЗНЬ ОКОНЧЕНА";
+ $("bars").innerHTML=bar("Здоровье",s.health,100,"hp","❤️")+bar("Настроение",s.mood,100,"mood","😊")+bar("Мана",s.mana,Math.max(1,s.maxMana||100),"mana","🔮")+bar("Общение",s.social,100,"social","🫂")+bar("Стресс",s.stress,100,"","☁️");
+ $("stats").innerHTML=[["💪 Сила",s.strength],["🦶 Ловкость",s.agility],["🌀 Контроль магии",s.control],["🔮 Запас маны",s.maxMana||100],["🍀 Удача",s.luck],["⚔ Боевой рейтинг",Math.round(s.strength*1.35+s.agility*1.15+s.sword*2.4+s.magic*1.8+s.control)]].map(x=>`<div class="stat"><span>${x[0]}</span><b>${x[1]}</b></div>`).join("");
+ $("skills").innerHTML=[["⚔ Владение мечом",s.sword],["✨ Магическое искусство",s.magic],["⭐ Слава",s.fame],["🪙 Золото",s.gold]].map(x=>`<div class="stat"><span>${x[0]}</span><b>${x[1]}</b></div>`).join("");
+ $("equipment").innerHTML=[["🗡 Оружие",["Учебный клинок","Стальной меч","Рунный клинок","Клинок драконоборца"][Math.min(3,s.weaponLevel||0)]],["🛡 Броня",["Нет доспеха","Кожаная броня","Кольчуга","Доспех древних"][Math.min(3,s.armorLevel||0)]],["🏅 Ранг гильдии",["Нет ранга","Новичок","Искатель","Ветеран","Мастер"][Math.min(4,s.guildRank||0)]],["📜 Выполнено заданий",s.questsDone||0]].map(x=>`<div class="stat"><span>${x[0]}</span><b>${x[1]}</b></div>`).join("");
+ $("guildInfo").innerHTML=`Гильдия искателей: <b>${(s.guildRank||0)>=4?"Мастер":(s.guildRank||0)>=3?"Ветеран":(s.guildRank||0)>=2?"Искатель":(s.guildRank||0)>=1?"Новичок":"не состоишь"}</b><br><span style="font:12px Arial;color:var(--muted)">Оружие усиливает удары, броня снижает получаемый урон. Поручения приносят золото и славу.</span>`;
+ $("family").innerHTML=`<div>💍 Спутник жизни: <b>${s.partner||"Пока нет"}</b></div><div>👶 Потомки: <b>${s.children.length}</b></div><div>🧬 Род: <b>${s.gen}-е поколение</b></div><div class="childlist">${s.children.map((c,i)=>`<button class="childcard" data-profile="${i}"><b>👶 ${c.name}</b><small>${c.age} лет · ${c.sex} · сила ${c.strength} · магия ${c.magic} · меч ${c.sword}</small></button>`).join("")||"<span>Потомков пока нет.</span>"}</div><div style="margin-top:8px;color:var(--gold2)">Наследие</div>${s.legacy.length?s.legacy.map(x=>"✦ "+x).join("<br>"):"Твоя история только начинается."}`;
+ $("points").textContent=s.alive?`⚡ Действий осталось: ${s.actions} / 3 · Тренировки улучшают навыки, удача неизменна.`:"Ты можешь продолжить род, выбрав наследника.";
+ $("actions").innerHTML=actionDefs.map((a,i)=>`<button class="act" data-a="${i}" ${!s.alive||s.actions<=0?"disabled":""}><strong>${a.icon} ${a.name}</strong><span>${a.desc}</span></button>`).join("");
+ $("journal").innerHTML=s.log.map(e=>`<div class="entry"><small>${e.age} лет · год ${e.year}</small>${e.text}</div>`).join("")||"Пока здесь тихо.";
+}
+const actionDefs=[
+ {icon:"✨",name:"Изучать магию",desc:"Контроль и магическое мастерство + мана.",fn:()=>{s.magic+=rnd(2,5)+Math.floor(s.control/12);s.control+=rnd(1,3);s.maxMana=(s.maxMana||100)+rnd(2,6)+Math.floor(s.control/15);s.mana=clamp(s.mana+15,0,s.maxMana);s.stress+=rnd(2,5);say("Ты провёл часы за изучением заклинаний. Магия стала послушнее.");}},
+ {icon:"⚔️",name:"Тренировать меч",desc:"Сила, ловкость и фехтование.",fn:()=>{s.sword+=rnd(2,5)+Math.floor(s.agility/15);s.strength+=rnd(1,3)+Math.floor(s.strength/20);s.agility+=rnd(1,2);s.health=clamp(s.health+3);s.stress+=4;say("Тренировки до изнеможения закалили тело и руку.");}},
+ {icon:"🧘",name:"Отдыхать",desc:"Восстановить здоровье, настроение и ману.",fn:()=>{s.health=clamp(s.health+rnd(12,22));s.mood=clamp(s.mood+rnd(12,20));s.mana=clamp(s.mana+25,0,s.maxMana||100);s.stress=clamp(s.stress-18);say("Ты позволил себе отдохнуть. Мир подождёт.");}},
+ {icon:"🧭",name:"Исследовать мир",desc:"Случайные встречи, находки и опасности.",fn:explore},
+ {icon:"🐉",name:"Охотиться на тварей",desc:"Сразиться с чудовищем ради славы и золота.",fn:fight},
+ {icon:"🫂",name:"Общаться",desc:"Друзья, связи и хорошее настроение.",fn:()=>{s.social=clamp(s.social+rnd(8,16));s.mood=clamp(s.mood+8);if(Math.random()<.15)s.fame+=5;say("Ты провёл время среди людей. Новые знакомства могут пригодиться.");}},
+ {icon:"📚",name:"Учиться и работать",desc:"Заработать золото и развить интеллект.",fn:()=>{let g=rnd(8,18)+Math.floor(s.agility/3);s.gold+=g;s.mood=clamp(s.mood-3);s.fame+=1;say(`Ты потрудился и получил ${g} золотых.`);}},
+ {icon:"💞",name:"Искать любовь",desc:"В зрелом возрасте можно создать семью.",fn:romance},
+ {icon:"👑",name:"Совершить подвиг",desc:"Рискованный путь к славе и могуществу.",fn:heroic}
+];
+actionDefs.push(
+ {icon:"🛒",name:"Купить снаряжение",desc:"Улучшить оружие или броню у торговца.",fn:shop},
+ {icon:"🏰",name:"Взять задание гильдии",desc:"Выполнить поручение ради золота, славы и ранга.",fn:guildQuest},
+ {icon:"💪",name:"Тренировать тело",desc:"Развивать силу и восстанавливать здоровье.",fn:()=>{let g=rnd(2,4);s.strength+=g;s.health=clamp(s.health+rnd(4,9));s.agility+=rnd(0,2);s.stress=clamp(s.stress+5);say(`Физическая подготовка укрепила тебя. Сила +${g}.`);}}
+);
+function shop(){
+ const w=s.weaponLevel||0,a=s.armorLevel||0,cw=[0,35,85,170][w+1]||170,ca=[0,30,75,150][a+1]||150;
+ $("modal").innerHTML=`<h2>🛒 Торговец Старого города</h2><p>У тебя ${s.gold} золотых. Улучшения сохраняются навсегда.</p>
+ <button id="buyW" ${w>=3||s.gold<cw?"disabled":""}>🗡 Улучшить оружие · ${cw} золота<small>Уровень ${w}/3 · повышает урон мечом.</small></button>
+ <button id="buyA" ${a>=3||s.gold<ca?"disabled":""}>🛡 Улучшить броню · ${ca} золота<small>Уровень ${a}/3 · снижает входящий урон.</small></button>
+ <button class="secondary" id="leave">Уйти</button>`;
+ $("overlay").style.display="flex";
+ ["buyW","buyA","leave"].forEach(id=>$(id).style.cssText="width:100%;margin-top:8px;padding:12px;border-radius:9px;border:1px solid #a56b1c;background:#63350e;text-align:left");
+ $("buyW").onclick=()=>{if(s.gold>=cw&&s.weaponLevel<3){s.gold-=cw;s.weaponLevel++;say("Ты приобрёл улучшенное оружие.");$("overlay").style.display="none";render();}};
+ $("buyA").onclick=()=>{if(s.gold>=ca&&s.armorLevel<3){s.gold-=ca;s.armorLevel++;say("Ты приобрёл прочную броню.");$("overlay").style.display="none";render();}};
+ $("leave").onclick=()=>$("overlay").style.display="none";
+}
+function guildQuest(){
+ if(s.age<14){say("Гильдия принимает искателей с 14 лет.");return;}
+ let difficulty=1+(s.guildRank||0),skill=s.sword+s.magic+s.strength+s.agility+s.control;
+ let chance=clamp(42+Math.floor(skill/4)+s.luck*1.3-difficulty*13,12,92);
+ if(rnd(1,100)<=chance){let g=rnd(18,30)+difficulty*12,f=rnd(12,20)+difficulty*7;s.gold+=g;s.fame+=f;s.questsDone=(s.questsDone||0)+1;if(s.questsDone%2===0)s.guildRank=Math.min(4,difficulty);say(`Поручение гильдии выполнено! Награда: ${g} золота, слава +${f}.`);}
+ else{s.health=clamp(s.health-rnd(8,20));s.mood=clamp(s.mood-6);say("Задание оказалось опаснее ожиданий. Ты вернулся без награды.");}
+}
+
+function useAction(i){if(!s.alive||s.actions<=0)return;let old=s.actions;actionDefs[i].fn();s.actions=old-1;render()}
+function explore(){let r=Math.random();if(r<.28){let g=rnd(12,40);s.gold+=g;say(`В заброшенном святилище ты нашёл ${g} золотых.`)}else if(r<.52){s.mana=clamp(s.mana+20,0,s.maxMana||100);s.control++;say("Древний источник наполнил тебя маной и открыл тайну контроля.");}else if(r<.75){s.health=clamp(s.health-rnd(5,16));s.mood=clamp(s.mood-5);say("На тропе тебя настигла стая лесных тварей. Ты едва ушёл живым.");}else{s.fame+=rnd(8,18);s.luck=s.luck;say("Ты помог путникам отбиться от разбойников. О тебе заговорили.");}}
+let activeBattle=null;
+function fight(){
+ if(s.age<10){say("Ты ещё слишком юн для настоящей охоты. Сначала подрасти и потренируйся.");return;}
+ const beasts=[
+  {name:"Волчья тварь",hp:34+s.age*.8,attack:8+s.age*.18,def:3,loot:18},
+  {name:"Пещерный тролль",hp:56+s.age,attack:13+s.age*.22,def:7,loot:32},
+  {name:"Теневой василиск",hp:48+s.age*1.1,attack:15+s.age*.2,def:5,loot:40},
+  {name:"Молодой дракон",hp:88+s.age*1.2,attack:20+s.age*.25,def:11,loot:65}
+ ];
+ const r=Math.random(),idx=(r<.05+s.luck/450)?3:r<.4?2:r<.7?1:0;
+ activeBattle={foe:{...beasts[idx]},maxHp:beasts[idx].hp};
+ battleScreen("Чудовище преградило тебе путь. Выбери тактику.");
+}
+function battleScreen(message){
+ let b=activeBattle;if(!b)return;
+ $("modal").innerHTML=`<h2>⚔️ ${b.foe.name}</h2><p>${message}</p>
+ <div class="barrow"><div class="barlabel"><span>❤️ Твоё здоровье</span><b>${s.health}/100</b></div><div class="track"><div class="fill hp" style="width:${s.health}%"></div></div></div>
+ <div class="barrow" style="margin-top:10px"><div class="barlabel"><span>🐲 Здоровье чудовища</span><b>${Math.max(0,b.foe.hp)}/${b.maxHp}</b></div><div class="track"><div class="fill" style="width:${clamp(b.foe.hp/b.maxHp*100)}%"></div></div></div>
+ <button id="strike">⚔️ Удар мечом<small>Сила, ловкость, меч и оружие определяют урон.</small></button>
+ <button id="spell" ${s.mana<12?"disabled":""}>✨ Заклинание · 12 маны<small>Магия и контроль наносят магический урон.</small></button>
+ <button id="guard">🛡 Защищаться<small>Снизить урон следующей атаки.</small></button>
+ <button class="secondary" id="run">🏃 Отступить</button>`;
+ $("overlay").style.display="flex";
+ ["strike","spell","guard","run"].forEach(id=>$(id).style.cssText="width:100%;margin-top:8px;padding:12px;border-radius:9px;border:1px solid #a56b1c;background:#63350e;text-align:left");
+ $("strike").onclick=()=>battleMove("strike");$("spell").onclick=()=>battleMove("spell");$("guard").onclick=()=>battleMove("guard");$("run").onclick=()=>battleMove("run");
+}
+function battleMove(move){
+ let b=activeBattle;if(!b)return;
+ if(move==="run"){
+  if(Math.random()<.4+s.agility/180+s.luck/160){say(`Ты отступил от ${b.foe.name}, сохранив жизнь.`);activeBattle=null;$("overlay").style.display="none";render();return;}
+ }
+ let msg="";
+ if(move==="strike"){let d=Math.max(3,Math.round(s.strength*.45+s.agility*.2+s.sword*1.25+(s.weaponLevel||0)*9+rnd(0,8)-b.foe.def));b.foe.hp-=d;msg=`Ты нанёс ${d} урона мечом.`;}
+ if(move==="spell"){if(s.mana<12)return;s.mana-=12;let d=Math.max(4,Math.round(s.magic*.85+s.control*.7+rnd(4,12)));b.foe.hp-=d;msg=`Заклинание нанесло ${d} урона.`;}
+ let guarding=move==="guard";if(guarding)msg="Ты занял защитную стойку.";
+ if(b.foe.hp<=0){let g=b.foe.loot+rnd(5,18),f=rnd(12,28);s.gold+=g;s.fame+=f;s.combat+=rnd(7,15);s.mood=clamp(s.mood+6);say(`Победа над ${b.foe.name}! ${msg} Добыча: ${g} золота, слава +${f}.`);activeBattle=null;$("overlay").style.display="none";render();return;}
+ let defense=(s.armorLevel||0)*4+Math.floor(s.agility/8)+(guarding?12:0),hit=Math.max(1,b.foe.attack+rnd(-3,5)-defense);s.health=clamp(s.health-hit);
+ if(s.health<=0){activeBattle=null;$("overlay").style.display="none";die(`Ты пал в бою с ${b.foe.name}.`);return;}
+ battleScreen(`${msg} Противник атаковал и нанёс ${hit} урона.`);
+}
+function addChild(){
+ const t=inheritedStats(s,s.partnerStats||rollStats());
+ const c={name:pick(names)+" "+s.name.split(" ").slice(-1)[0],age:0,sex:Math.random()<.5?"дочь":"сын",strength:t.strength,agility:t.agility,control:t.control,maxMana:t.maxMana,luck:t.luck,sword:t.sword,magic:t.magic,health:100,mood:rnd(60,90),bornYear:s.year};
+ s.children.push(c);say(`В семье родился ${c.sex}: ${c.name}. Его задатки унаследованы от обоих родителей.`);
+}
+function romance(){if(s.age<16){say("Ты пока слишком юн для создания семьи.");toast("Семья — после 16 лет.");return}if(s.partner){if(s.children.length<5&&Math.random()<.65){addChild();}else say("Вы с партнёром провели вечер вместе. Семейные узы стали крепче.");s.mood=clamp(s.mood+10);return}if(Math.random()<.55+s.luck/100){s.partner=pick(["Элиана","Морвен","Тарен","Лисса","Эйрик","Селена","Ровен","Мира"]);s.partnerStats=rollStats();s.mood=clamp(s.mood+18);s.social=clamp(s.social+10);say(`Ты встретил ${s.partner}. Между вами вспыхнули чувства. Вы решили быть вместе.`)}else{ s.mood=clamp(s.mood-4);say("Знакомство было приятным, но искры не возникло. Возможно, в другой раз.")}}
+function heroic(){if(s.age<14){say("Пока ты можешь совершать лишь маленькие добрые дела.");s.fame+=2;return}let p=s.combat+s.magic+s.sword+s.luck; if(p>rnd(20,100)){s.fame+=rnd(35,70);s.gold+=rnd(20,50);s.mood=clamp(s.mood+12);say("Твой смелый поступок вошёл в баллады. Слава разнеслась по королевству!")}else{s.health=clamp(s.health-rnd(12,28));s.say; say("Подвиг обернулся опасностью. Ты выжил, но заплатил за смелость.");}}
+function ageUp(){if(!s.alive||s.actions>0)return;s.age++;s.year++;s.actions=3;s.health=clamp(s.health-rnd(0,3));s.mood=clamp(s.mood+rnd(-5,5));s.stress=clamp(s.stress-4);s.mana=clamp(s.mana+8,0,s.maxMana||100);
+ if(s.age===7)say("Ты пошёл учиться. Настоящий мир оказался куда больше родного дома.");
+ if(s.age===16)say("Ты достиг совершеннолетия. Теперь можно искать любовь, вступать в гильдии и принимать взрослые решения.");
+ if(s.age===30&&s.partner&&s.children.length===0&&Math.random()<.45){addChild();}
+ if(s.partner&&s.age>18&&s.children.length<4&&Math.random()<.12){addChild();}s.children.forEach(c=>{c.age++;});
+ if(s.age>45)s.health=clamp(s.health-rnd(0,3));if(s.age>65)s.health=clamp(s.health-rnd(1,6));if(s.age>82)s.health=clamp(s.health-rnd(3,10));
+ if(s.health<=0){die("Здоровье иссякло. Пришло время покинуть этот мир.");return}
+ let risk=s.age>70?(s.age-68)*.018:.002;if(Math.random()<risk){die("Судьба распорядилась иначе. Твоя жизнь подошла к концу.");return}
+ if(s.age%10===0){s.fame+=Math.floor(s.combat/20);say("Прошёл ещё один десяток лет. Твои поступки становятся частью истории.");}
+ if(s.age>=12&&Math.random()<.2)randomLifeEvent();render()}
+function randomLifeEvent(){
+ const e=[
+  {title:"Королевский турнир",text:"Глашатай зовёт тебя принять участие в состязании.",opts:[["Выйти на поединок","Шанс зависит от силы и меча",()=>{let c=clamp(35+s.strength+s.agility+s.sword*2+s.luck,10,95);if(rnd(1,100)<=c){s.fame+=25;s.gold+=20;s.sword++;say("Ты победил на турнире. Королевский двор запомнил твоё имя!");}else{s.health=clamp(s.health-10);say("Ты проиграл поединок, но приобрёл опыт.");}}],["Остаться зрителем","Поднять настроение",()=>{s.mood=clamp(s.mood+8);say("Турнир вдохновил тебя на новые свершения.");}]]},
+  {title:"Забытое святилище",text:"В руинах мерцает древний источник магии.",opts:[["Коснуться источника","Рискнуть ради силы",()=>{if(Math.random()<.7){s.magic+=3;s.control+=2;s.maxMana+=10;s.mana=clamp(s.mana+20,0,s.maxMana);say("Источник принял тебя. Магия стала сильнее.");}else{s.health=clamp(s.health-14);say("Древняя магия обожгла тебя.");}}],["Уйти","Избежать риска",()=>say("Ты решил не тревожить древнее святилище.")] ]},
+  {title:"Странствующий наставник",text:"Мастер предлагает обучить тебя тайному приёму за 12 золотых.",opts:[["Заплатить","Меч +2, ловкость +1",()=>{if(s.gold>=12){s.gold-=12;s.sword+=2;s.agility++;say("Наставник обучил тебя тайному приёму.");}else say("У тебя не хватило золота на урок.");}],["Отказаться","Сохранить деньги",()=>say("Ты отказался от предложения наставника.")] ]}
+ ][rnd(0,2)];
+ $("modal").innerHTML=`<h2>📜 ${e.title}</h2><p>${e.text}</p>${e.opts.map((o,i)=>`<button data-choice="${i}">${o[0]}<small>${o[1]}</small></button>`).join("")}`;
+ $("overlay").style.display="flex";$("modal").querySelectorAll("[data-choice]").forEach(b=>{b.style.cssText="width:100%;margin-top:8px;padding:12px;border-radius:9px;border:1px solid #a56b1c;background:#63350e;text-align:left";b.onclick=()=>{e.opts[+b.dataset.choice][2]();$("overlay").style.display="none";render();};});
+}
+function die(reason){s.alive=false;s.ageAtDeath=s.age;say(reason);say(`Ты прожил ${s.age} лет. Твоё имя останется в хрониках Эйрвальда.`);render();setTimeout(()=>showDeath(),250)}
+function showChild(i){
+ const c=s.children[i];if(!c)return;
+ $("modal").innerHTML=`<h2>🧬 ${c.name}</h2><p>${c.sex} · ${c.age} лет · Наследник ${s.name}</p><div class="profilegrid">${[["💪 Сила",c.strength],["🦶 Ловкость",c.agility],["🌀 Контроль магии",c.control],["🔮 Запас маны",c.maxMana],["🍀 Удача",c.luck],["⚔ Меч",c.sword],["✨ Магия",c.magic]].map(x=>`<span>${x[0]} <b>${x[1]}</b></span>`).join("")}</div><p>Задатки ребёнка рассчитаны из характеристик обоих родителей с небольшой случайной наследственной вариацией.</p><button id="closeProfile">Закрыть</button>`;
+ $("overlay").style.display="flex";$("closeProfile").onclick=()=>$("overlay").style.display="none";
+}
+function showDeath(){let m=$("modal");m.innerHTML=`<h2>🕯 Конец одной жизни</h2><p><b>${s.name}</b> прожил ${s.age} лет.<br>Слава: ${s.fame} · Мастерство меча: ${s.sword} · Магия: ${s.magic}.<br><br>${s.children.length?`У тебя осталось ${s.children.length} потомков. Род может продолжиться.`:"У тебя нет детей, и эта ветвь рода обрывается."}</p>${s.children.map((c,i)=>`<button data-child="${i}">Играть за ${c.name} · ${c.age} лет</button>`).join("")}<button class="secondary" id="newLife">Начать новую жизнь</button><button class="secondary" id="closeModal">Закрыть хронику</button>`;$("overlay").style.display="flex";
+ m.querySelectorAll("[data-child]").forEach(b=>b.onclick=()=>{let child=s.children[+b.dataset.child];let old=s;let t={strength:child.strength,agility:child.agility,control:child.control,maxMana:child.maxMana,luck:child.luck,sword:child.sword,magic:child.magic};s=fresh(old.gen+1,old.name,t);s.name=child.name;s.parents=[old.name];s.gold=Math.max(5,Math.floor(old.gold*.12));s.fame=Math.floor(old.fame*.08);s.log=old.log.slice();say(`Ты родился в семье ${old.name}. Это новая жизнь — и новая судьба.`);$("overlay").style.display="none";render()});
+ $("newLife").onclick=()=>{s=fresh();say("Новая история начинается.");$("overlay").style.display="none";render()};$("closeModal").onclick=()=>$("overlay").style.display="none";}
+$("actions").addEventListener("click",e=>{let b=e.target.closest("[data-a]");if(b)useAction(+b.dataset.a)});$("family").addEventListener("click",e=>{let b=e.target.closest("[data-profile]");if(b)showChild(+b.dataset.profile)});
+$("ageBtn").onclick=ageUp;$("saveBtn").onclick=save;
+window.addEventListener("beforeunload",()=>localStorage.setItem("eyrval_save",JSON.stringify(s)));
+init();
+</script>
+</body></html>
