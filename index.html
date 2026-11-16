@@ -1,0 +1,1503 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#160d08">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Хроники Эйрвальда">
+<title>Хроники Эйрвальда</title>
+<style>
+:root{--bg:#0c1420;--panel:#172536;--panel2:#20344a;--gold:#c9a66b;--gold2:#f0d39a;--text:#eaf0f5;--muted:#a8b8c8;--line:#536d83;--red:#d87572;--blue:#75b9e8;--green:#82c6a0}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse at 50% -10%,#31465b 0,#142235 42%,#0a111c 100%);color:var(--text);font-family:Georgia,"Times New Roman",serif;min-height:100vh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+button{font:inherit;color:inherit;cursor:pointer} .app{max-width:980px;margin:auto;padding:14px 12px 100px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:4px 0 12px}.brand{font-size:13px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}.brand b{color:var(--gold2);font-size:19px;letter-spacing:1px;display:block;margin-top:3px}.sound{border:1px solid #536d83;background:#20344a;padding:11px 13px;border-radius:12px;font-weight:bold;white-space:nowrap}.save{border:1px solid #bd8423;background:linear-gradient(#8a4b12,#4a260d);padding:11px 16px;border-radius:12px;font-weight:bold}
+.hero{border:2px solid var(--gold);background:linear-gradient(120deg,#263b50,#142337);padding:18px;border-radius:18px;box-shadow:0 14px 36px #0006}
+.herohead{display:flex;justify-content:space-between;gap:12px;align-items:center}.heroidentity{display:flex;align-items:center;gap:13px;min-width:0}.heroidentity>div:last-child{min-width:0}.avatar{display:block;flex:0 0 auto;border-radius:50%;overflow:hidden;border:2px solid var(--gold);background:#182a3d;box-shadow:0 5px 18px #0007}.avatar.hero-avatar{width:92px;height:92px}.avatar.child-avatar{width:58px;height:58px;border-width:1px}.avatar.profile-avatar{width:118px;height:118px;margin:4px auto 12px;border-width:3px}.heroidentity .name{overflow-wrap:anywhere}.name{font-size:22px;color:var(--gold2);font-weight:bold}.sub{font:13px Arial;color:var(--muted);margin-top:5px}.wealth{text-align:right;color:var(--gold2);font: bold 14px Arial;white-space:nowrap}
+.ribbon{margin-top:13px;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.badge{background:#120b07;border:1px solid #674015;border-radius:20px;padding:6px 10px;font:12px Arial;color:var(--muted)}
+.agebox{margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;background:#160e09;border:1px solid #754313;padding:11px;border-radius:10px}.age{font-size:23px;color:var(--gold2)}.age small{font-size:13px;color:var(--muted)}.advance{border:1px solid #e5a32a;border-radius:10px;padding:12px 16px;background:linear-gradient(#96520f,#4a270c);font-weight:bold;min-width:135px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.card{background:linear-gradient(145deg,#2b1a0e,#1b100a);border:1px solid #40576d;border-radius:16px;padding:15px;background:linear-gradient(145deg,#1d3044,#142337);box-shadow:0 8px 24px #0003,inset 0 1px #ffffff0b}.card h2{font-size:19px;color:var(--gold2);margin:0 0 12px}.bars{display:grid;gap:11px}.barrow{font:13px Arial;color:var(--muted)}.barlabel{display:flex;justify-content:space-between;margin-bottom:5px}.track{height:10px;background:#080604;border-radius:20px;overflow:hidden}.fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#d68a24,#ffc34e);transition:width .3s}.fill.hp{background:linear-gradient(90deg,#a73e32,#ee7960)}.fill.mood{background:linear-gradient(90deg,#bd8d27,#f5d36b)}.fill.mana{background:linear-gradient(90deg,#315caa,#71b5ec)}.fill.social{background:linear-gradient(90deg,#357d9e,#72b9e9)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;font:13px Arial}.stat{display:flex;justify-content:space-between;gap:5px;padding:7px 0;border-bottom:1px solid #ffffff0c;color:var(--muted)}.stat b{color:var(--text)}.stat em{font-style:normal;color:var(--gold2)}
+.actions{margin-top:14px}.actions h2{font-size:22px;margin:0 0 10px}.actiongrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.act{background:linear-gradient(145deg,#263c51,#17283b);border:1px solid #536d83;border-radius:13px;padding:12px 10px;text-align:left;min-height:64px;box-shadow:0 4px 12px #0002}.act strong{display:block;color:var(--gold2);font-size:14px}.act[data-a="0"]{background:linear-gradient(145deg,#4b3820,#2a2117);border-color:#a77d39}.act[data-a="1"],.act[data-a="2"]{background:linear-gradient(145deg,#263e62,#172942);border-color:#527cb1}.act[data-a="3"],.act[data-a="4"]{background:linear-gradient(145deg,#244b3e,#142d28);border-color:#4f9478}.act[data-a="5"],.act[data-a="8"]{background:linear-gradient(145deg,#56352a,#2f201b);border-color:#a36a4d}.act[data-a="6"],.act[data-a="7"]{background:linear-gradient(145deg,#4b3158,#2a1e37);border-color:#8b68a5}.act:focus-visible,.advance:focus-visible,button:focus-visible{outline:3px solid #f0d39a;outline-offset:2px}.act span{display:block;font:12px Arial;color:var(--muted);margin-top:5px;line-height:1.35}.act:active,.advance:active{transform:scale(.98)}.act:disabled{opacity:.35;cursor:not-allowed}
+.log{margin-top:12px;min-height:150px;max-height:330px;overflow:auto}.log h2{margin:0 0 9px;color:var(--gold2);font-size:19px}.entry{border-left:2px solid #a36b1b;padding:6px 9px;margin:7px 0;background:#100a0780;font-size:14px;line-height:1.4}.entry small{color:var(--muted);font:11px Arial;margin-right:6px}
+.family{font-size:14px;line-height:1.6;color:var(--muted)}.childlist{display:grid;gap:7px;margin-top:9px}.childcard{width:100%;display:flex;align-items:center;gap:10px;text-align:left;background:linear-gradient(110deg,#1e3449,#142337);border:1px solid #536d83;border-radius:11px;padding:9px;color:var(--text)}.childcard .child-meta{min-width:0}.childcard b{color:var(--gold2)}.childcard b{color:var(--gold2)}.childcard small{display:block;color:var(--muted);margin-top:3px;font:11px Arial}.profilegrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;font:13px Arial}.profilegrid span{background:#130c08;padding:7px;border-radius:6px;color:var(--muted)}.profilegrid b{color:var(--text)}.family b{color:var(--text)}.portrait-row{display:flex;justify-content:center}.portrait-caption{text-align:center;color:var(--muted);font:12px Arial;margin:-4px 0 12px}.sound{background:linear-gradient(145deg,#263e62,#172942);border-color:#527cb1}.save{background:linear-gradient(145deg,#8a5818,#4a2b0d)}.advance{background:linear-gradient(145deg,#a56a17,#59320b)}.modal button:not(.secondary){background:linear-gradient(145deg,#315d87,#1c3857);border-color:#638db4}.modal .choice{background:linear-gradient(145deg,#315d87,#1c3857)}.modal .secondary{background:linear-gradient(145deg,#4a3030,#281b1b);border-color:#875454}.traits{display:flex;flex-wrap:wrap;gap:6px}.trait{border:1px solid #8e591b;color:var(--gold2);padding:5px 8px;border-radius:7px;font:12px Arial}
+.action-result{margin-top:10px;padding:11px 13px;border:1px solid #8a6537;border-radius:11px;background:linear-gradient(120deg,#30221c,#1d1b24);font:13px/1.5 Arial;color:#dfcfb9}.action-result b{color:#f1c879}.lore-entry{padding:10px;margin:8px 0;border-left:3px solid #b98745;background:#17151b;border-radius:7px;line-height:1.5}.lore-entry small{display:block;color:#b9a99a;font:11px Arial;margin-bottom:4px}.footer{text-align:center;color:#876b4d;font:11px Arial;margin:18px 0 0}
+.overlay{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:18px;z-index:5}.modal{width:min(460px,100%);background:#24160d;border:1px solid #8299ad;border-radius:20px;padding:22px;box-shadow:0 20px 80px #000;background:linear-gradient(145deg,#24384c,#142235)}.modal h2{color:var(--gold2);margin:0 0 10px}.modal p{line-height:1.5;color:var(--muted)}.modal button{width:100%;margin-top:8px;padding:12px;border-radius:9px;border:1px solid #a56b1c;background:#63350e}.modal .secondary{background:#17100b}
+.champion{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px;margin:7px 0;background:#120b07;border:1px solid #79501f;border-radius:9px}.champion b{color:var(--gold2)}.champion small{display:block;color:var(--muted);font:11px Arial;margin-top:3px}.goalbox{padding:10px;background:#130c08;border:1px solid #79501f;border-radius:9px;line-height:1.5}.goalbox select{width:100%;padding:10px;margin-top:8px;background:#20140d;color:var(--text);border:1px solid #95601d;border-radius:8px}.goalprogress{height:8px;background:#080604;border-radius:10px;overflow:hidden;margin-top:8px}.goalprogress span{display:block;height:100%;background:linear-gradient(90deg,#bd7c1d,#ffd16b)}.modal .choice{display:block;text-align:left}.modal button:disabled{opacity:.35}
+.extra-actions{margin-top:10px;border:1px solid #536d83;border-radius:13px;background:#142337;overflow:hidden}.extra-actions summary{padding:13px 14px;color:var(--gold2);font-weight:bold;cursor:pointer;list-style:none}.extra-actions summary::-webkit-details-marker{display:none}.extra-actions summary:after{content:"＋";float:right;color:var(--muted)}.extra-actions[open] summary:after{content:"−"}.extra-actions .actiongrid{padding:0 9px 9px;margin-top:0}.year-dock{position:fixed;left:0;right:0;bottom:0;z-index:4;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:linear-gradient(180deg,#101c2acc,#09121df5);border-top:1px solid #8b652e;backdrop-filter:blur(10px);display:flex;justify-content:center;align-items:center;gap:12px}.year-dock .dock-hint{font:12px Arial;color:var(--muted)}.year-dock .advance{min-width:min(320px,62vw);padding:13px 18px;box-shadow:0 4px 18px #0008}.year-dock[hidden]{display:none}.battle-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.battle-actions button{width:100%;min-height:62px;margin:0!important;padding:10px!important;border-radius:10px!important;text-align:left!important;line-height:1.3}.battle-actions button small{display:block;font:11px Arial;color:#e2d3bd;margin-top:4px}.battle-actions button:disabled{opacity:.35}.battle-hint{padding:9px 11px;border:1px solid #7a5b2b;border-radius:9px;background:#100d0a;color:var(--gold2);font:12px Arial;margin-top:10px}.toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#39200d;border:1px solid var(--gold);padding:10px 15px;border-radius:20px;font:13px Arial;opacity:0;pointer-events:none;transition:.25s;z-index:8;max-width:90%;text-align:center}.toast.show{opacity:1}
+@media(max-width:650px){.avatar.hero-avatar{width:76px;height:76px}.heroidentity{gap:9px}.heroidentity .name{font-size:17px}.wealth{font-size:11px}.year-dock{gap:7px;padding-left:8px;padding-right:8px}.year-dock .dock-hint{font-size:10px;max-width:90px}.year-dock .advance{min-width:0;flex:1;max-width:320px}.battle-actions{grid-template-columns:1fr 1fr}.top{align-items:flex-start}.sound{padding:10px 9px;font-size:12px}.save{padding:10px 11px;font-size:12px}.app{padding:10px 9px 26px}.grid{grid-template-columns:1fr}.herohead{align-items:center}.name{font-size:19px}.wealth{font-size:12px}.stats{gap:4px 12px}.actiongrid{grid-template-columns:1fr 1fr}.act{min-height:72px;padding:10px 8px}.act strong{font-size:13px}.agebox{align-items:center}.advance{padding:11px 10px;min-width:118px;font-size:13px}.card{padding:12px}.brand b{font-size:17px}}
+
+/* 3.6 visual pass */
+.actions h2{color:var(--gold2);letter-spacing:.2px}.actions>.actiongrid>.act{position:relative;overflow:hidden;transition:transform .16s,border-color .16s,filter .16s}.actions>.actiongrid>.act:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--gold);opacity:.9}.actions>.actiongrid>.act[data-a="1"]:before{background:#8c9ff4}.actions>.actiongrid>.act[data-a="5"]:before{background:#e07b65}.actions>.actiongrid>.act[data-a="6"],.actions>.actiongrid>.act[data-a="7"]{border-color:#8062a5}.actions>.actiongrid>.act:disabled{filter:saturate(.45)}
+.extra-actions{border-color:#92713f;background:linear-gradient(135deg,#1d3044,#111e2e)}.extra-actions summary{min-height:48px;display:flex;align-items:center}.extra-actions[open]{box-shadow:0 8px 24px #0004}.extra-actions .act{background:linear-gradient(140deg,#3b3653,#20263b);border-color:#76689c}.extra-actions .act strong{color:#e2d4ff}
+.modal{max-height:min(84vh,760px);overflow:auto}.modal h2{font-size:23px}.battle-actions button{background:linear-gradient(145deg,#314a67,#192b40)!important;border:1px solid #6e8da8!important}.battle-actions button:nth-child(1),.battle-actions button:nth-child(2){background:linear-gradient(145deg,#68402e,#39251e)!important;border-color:#b07855!important}.battle-actions button:nth-child(3),.battle-actions button:nth-child(4),.battle-actions button:nth-child(5){background:linear-gradient(145deg,#344b79,#1c2d4c)!important;border-color:#718fc5!important}.battle-actions button:nth-child(6){background:linear-gradient(145deg,#4a3030,#281b1b)!important;border-color:#875454!important}
+.spell-label{grid-column:1/-1;color:#cbb8f5;font:12px Arial;letter-spacing:1px;text-transform:uppercase;margin:4px 0 -2px}.battle-hint{line-height:1.55;background:linear-gradient(110deg,#352d4d,#1a263a)!important;border-color:#76669c!important}.hero{position:relative;overflow:hidden}.hero:after{content:"✦";position:absolute;right:18px;top:10px;color:#e8c77d;opacity:.13;font-size:72px;pointer-events:none}.childcard:active,.act:active{filter:brightness(1.2)}
+@media(max-width:420px){.app{padding-left:10px;padding-right:10px}.grid{gap:8px}.card{padding:12px}.battle-actions{grid-template-columns:1fr 1fr}.year-dock .dock-hint{max-width:105px;font-size:10px}.year-dock .advance{min-width:190px}}
+
+/* 3.7.0 — новый визуальный язык: обсидиан, бронза и цветовые акценты */
+:root{
+ --bg:#100d12;--panel:#211923;--panel2:#30212a;--gold:#c58a42;--gold2:#f1c879;
+ --text:#f2e8d8;--muted:#b9a99a;--line:#654832;--red:#d97868;--blue:#79b9c9;--green:#8fc28f;
+}
+html{scroll-behavior:smooth;scroll-padding-top:18px}
+body{
+ background:
+  radial-gradient(ellipse at 8% 0%,#3b251d 0,transparent 36%),
+  radial-gradient(ellipse at 95% 28%,#20243a 0,transparent 32%),
+  linear-gradient(160deg,#100d12 0%,#171016 52%,#0d1118 100%);
+ color:var(--text)
+}
+.app{max-width:1040px;padding-top:16px}
+.top{padding:5px 2px 10px;border-bottom:1px solid #76502e}
+.brand{letter-spacing:2.4px;color:#c7ad91}
+.brand b{font-size:21px;color:#f4d69b;text-shadow:0 2px 14px #b76b2b40}
+.hero{
+ background:linear-gradient(120deg,#39251d 0%,#241923 48%,#17232c 100%);
+ border:1px solid #c18a45;border-radius:19px;
+ box-shadow:0 12px 35px #0008,inset 0 1px #ffe2aa25
+}
+.hero:after{content:"✧";font-size:90px;right:25px;top:0;color:#f4d69b;opacity:.12}
+.avatar{border-color:#d5a65e;background:#261b20;box-shadow:0 0 0 4px #d5a65e20,0 8px 20px #0008}
+.avatar svg{display:block;width:100%;height:100%}
+.badge{background:#191319;border-color:#79512e;color:#ddc4a2}
+.agebox{background:linear-gradient(100deg,#21151a,#282018);border-color:#9a692e}
+.age{color:#f3d18c}
+.advance,.save{
+ background:linear-gradient(145deg,#a96522,#603514);
+ border:1px solid #e0a64c;color:#fff0d2;
+ box-shadow:inset 0 1px #ffffff25,0 4px 12px #0005
+}
+.sound{background:linear-gradient(145deg,#31545a,#1b3038);border-color:#5e9aa0;color:#d6f0e8}
+.card{
+ background:linear-gradient(145deg,#2b2022 0%,#211820 58%,#191820 100%);
+ border:1px solid #75502f;border-radius:15px;
+ box-shadow:0 9px 24px #0005,inset 0 1px #ffffff0a
+}
+.card h2,.actions h2{color:#f0c77d}
+.card h2{display:flex;align-items:center;gap:9px}
+.card h2:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,#a8783b,transparent);opacity:.8}
+.stat{
+ background:linear-gradient(120deg,#35241d,#281e20);
+ border:1px solid #65452d;border-radius:9px;padding:10px 11px;
+ min-height:44px;align-items:center
+}
+.stat b{color:#f3d28f;font-size:15px}
+.barrow{color:#d0bca7}
+.track{background:#0c0a0d;border:1px solid #3c2b29;height:11px}
+.fill{background:linear-gradient(90deg,#a96b2d,#f3c56e)}
+.fill.hp{background:linear-gradient(90deg,#923f43,#e87967)}
+.fill.mana{background:linear-gradient(90deg,#3d6e9c,#80c6e1)}
+.fill.social{background:linear-gradient(90deg,#347c72,#85c5a4)}
+.fill.mood{background:linear-gradient(90deg,#a17a36,#efd27a)}
+.actiongrid{gap:9px}
+.act{
+ background:linear-gradient(145deg,#302329,#1e1920);
+ border:1px solid #79502f;border-radius:11px;
+ box-shadow:inset 0 1px #ffffff0b,0 4px 12px #0003;
+ transition:transform .15s,border-color .15s,filter .15s
+}
+.act strong{color:#f2d18f}
+.act span{color:#c5b3a1}
+.act[data-a="0"]{background:linear-gradient(145deg,#59401e,#30221a);border-color:#c18c3e}
+.act[data-a="1"],.act[data-a="2"]{background:linear-gradient(145deg,#283b53,#1b2535);border-color:#597da6}
+.act[data-a="3"],.act[data-a="4"]{background:linear-gradient(145deg,#25463c,#192c29);border-color:#528b72}
+.act[data-a="5"],.act[data-a="8"]{background:linear-gradient(145deg,#57302b,#2d1d20);border-color:#a45d51}
+.act[data-a="6"],.act[data-a="7"]{background:linear-gradient(145deg,#49314f,#271e31);border-color:#8b6aa0}
+.act:active{transform:translateY(1px) scale(.99)}
+.extra-actions{background:linear-gradient(145deg,#28202a,#191820);border-color:#8b6238}
+.extra-actions summary{color:#f1ca80}
+.extra-actions .act{background:linear-gradient(145deg,#303047,#1d202d);border-color:#69658d}
+.extra-actions .act strong{color:#d9d0ff}
+.childcard{background:linear-gradient(110deg,#34252a,#20202a);border-color:#795536}
+.childcard b{color:#f1cf8a}
+.champion,.goalbox{background:linear-gradient(120deg,#2b1e1b,#1c1920);border-color:#825a32}
+.entry{background:#171218;border-left-color:#d39b4d}
+.trait{background:#1c1720;border-color:#8f6339}
+.quick-nav{
+ display:flex;gap:7px;overflow-x:auto;padding:10px 1px 4px;margin:0 0 2px;
+ scrollbar-width:thin;scrollbar-color:#8d6237 transparent
+}
+.quick-nav a{
+ flex:0 0 auto;text-decoration:none;color:#e8d5b8;
+ background:linear-gradient(145deg,#2b2023,#1a1920);
+ border:1px solid #76502f;border-radius:20px;padding:9px 13px;
+ font:12px Arial,sans-serif;white-space:nowrap
+}
+.quick-nav a:active{background:#60401f;color:#fff0c8}
+#statusCard,#familyCard,#championsCard,#purposeCard,#actionsSection,#journalSection{scroll-margin-top:12px}
+.family{color:#c8b8a7}
+.profilegrid span{background:#1c1720;border:1px solid #62452f}
+.modal{background:linear-gradient(145deg,#34232a,#1a1b25);border-color:#a87943}
+.modal button:not(.secondary){background:linear-gradient(145deg,#8c5724,#4b2d1d);border-color:#d39a4b}
+.modal .secondary{background:linear-gradient(145deg,#493039,#261d25)}
+.year-dock{
+ background:linear-gradient(180deg,#211923e8,#100d13fa);
+ border-top:1px solid #9b6b37;box-shadow:0 -8px 25px #0005
+}
+.year-dock .advance{background:linear-gradient(145deg,#b8792c,#704018);border-color:#edbd67}
+.toast{background:#34231f;border-color:#d5a253;color:#fff0d7}
+.footer{color:#9b826a}
+@media(hover:hover) and (pointer:fine){
+ .quick-nav a:hover{border-color:#e0b66c;background:#44302a}
+ .act:hover:not(:disabled){filter:brightness(1.14);transform:translateY(-1px)}
+ .childcard:hover{border-color:#d1a45e}
+}
+@media(max-width:650px){
+ .app{padding-left:10px;padding-right:10px}
+ .hero{padding:13px}
+ .hero:after{right:9px;font-size:68px}
+ .quick-nav{margin-left:-2px;margin-right:-2px}
+ .quick-nav a{padding:9px 11px;font-size:11px}
+ .stat{padding:9px 8px;font-size:12px}
+ .stats{gap:6px}
+ .card{border-radius:13px}
+}
+
+
+/* 4.0 — приключения и более выразительная обратная связь */
+.quest-card{border-color:#a77a43;background:linear-gradient(135deg,#302326,#1a2028)}
+.quest-card h2{color:#f2cd83}.quest-meta,.quest-kicker{font:12px Arial,sans-serif;color:#c4a985;letter-spacing:.3px}
+.quest-progress{display:flex;gap:8px;margin:12px 0}.quest-progress span{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1px solid #765537;background:#17141a;color:#b9a99a;font: bold 12px Arial}
+.quest-progress .done{background:#315d49;border-color:#79b88b;color:#fff}.quest-progress .current{background:#76501f;border-color:#efc16b;color:#fff}
+.quest-kicker{color:#e9bd6b;font-weight:bold;letter-spacing:1.4px}.modal h3{color:#f0c77d;margin:8px 0}.modal .choice small{display:block;margin-top:5px;color:#d6c2a8;font:11px Arial}
+
+/* 4.1 — тёмные дары крови и проклятия луны */
+.infection-card{border-color:#9a4652;background:radial-gradient(circle at 90% 0%,#4a202b 0,transparent 42%),linear-gradient(140deg,#2b1b26,#171820)}
+.infection-card h2{color:#ef9aa5}.infection-card p{line-height:1.55}.infection-tag{display:inline-block;border:1px solid #b45b68;background:#401e2b;color:#ffd6d9;border-radius:18px;padding:5px 10px;font:12px Arial;margin:2px 0 8px}
+.infection-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.infection-actions button{flex:1 1 180px;background:linear-gradient(145deg,#663044,#321c2b);border:1px solid #b36a77;color:#ffe4e5;border-radius:10px;padding:11px}
+.infection-card.wolf{border-color:#7c8c9c;background:radial-gradient(circle at 90% 0%,#344354 0,transparent 42%),linear-gradient(140deg,#202a34,#171820)}
+.infection-card.wolf h2{color:#c3d8ec}.infection-card.wolf .infection-tag{background:#24394a;border-color:#829db7;color:#e2f2ff}.infection-card.wolf .infection-actions button{background:linear-gradient(145deg,#40566b,#202e3b);border-color:#809bb5}
+
+
+/* 4.2 — экран рождения, предрасположенности и божественные знаки */
+.birth-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0;font:12px Arial}
+.birth-stat{display:flex;justify-content:space-between;gap:8px;padding:8px 9px;border:1px solid #74502e;border-radius:8px;background:#17151a;color:#c9b9a8}
+.birth-stat b{color:#f2d69a}.birth-path{padding:10px;border:1px solid #98703a;border-radius:10px;background:linear-gradient(110deg,#3a281b,#211c24);color:#f2d69a;font-weight:bold}
+.fate-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.fate-card{padding:10px;border-radius:10px;background:#1c211e;border:1px solid #65815a;font:12px Arial;line-height:1.4}.fate-card.curse{background:#241a22;border-color:#87536a}.fate-card b{display:block;font: bold 13px Georgia;color:#bce0ad;margin-bottom:5px}.fate-card.curse b{color:#e5a6bd}.reroll-row{display:flex;align-items:center;gap:10px;margin:12px 0}.reroll-row button{flex:1;background:linear-gradient(145deg,#675024,#332516)!important;border-color:#bd9650!important}.reroll-row span{font:12px Arial;color:var(--muted)}.birth-note{font:11px Arial;color:#b9a99a;line-height:1.5;margin:8px 0}
+@media(max-width:430px){.fate-grid{grid-template-columns:1fr}.birth-grid{gap:5px}.birth-stat{padding:7px}}
+
+.card-collapse{margin-left:auto;flex:0 0 auto!important;border:1px solid #795a37!important;background:#211820!important;color:#eacb91!important;border-radius:7px!important;padding:4px 9px!important;font:11px Arial!important;cursor:pointer}
+.card.collapsed>.card-body{display:none!important}.card.collapsed{padding-bottom:10px}
+.trait-detail{border:1px solid #76502f;background:#1b171b;border-radius:10px;padding:10px;margin:8px 0;font:12px/1.5 Arial;color:#d7c6b2}.trait-detail b{color:#f0c77d}.trait-detail.curse{border-color:#89536a}.trait-detail.curse b{color:#e7a7bc}
+.capline{font:11px Arial;color:#bba98f;display:block;margin-top:3px}.child-choice{display:grid;grid-template-columns:1fr;gap:7px;text-align:left!important}
+
+.hubtabs{display:flex;gap:5px;overflow-x:auto;padding:5px 0 10px}.hubtab{white-space:nowrap;padding:8px 10px;border-radius:8px;background:#18293b;border:1px solid #536d83;color:#d9c9ad;font-size:12px}.hubtab.active{background:#6a471e;border-color:#d1a65b;color:#fff0c7}.hubbody{max-height:52vh;overflow:auto}.hubgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hubgrid>div{background:#111d2a;border:1px solid #52667a;border-radius:9px;padding:10px;color:#b9a99a;font-size:12px}.hubgrid b{display:block;color:#f1c879;font-size:15px;margin-top:4px}.easter-portrait{height:126px;width:126px;border-radius:50%;margin:0 auto 12px;position:relative;background:linear-gradient(145deg,#41566b,#1c2838);border:2px solid #c69a5b;overflow:hidden}.easter-portrait:before{content:"";position:absolute;width:62px;height:70px;left:31px;top:30px;border-radius:45% 45% 42% 42%;background:#c99b7e;box-shadow:0 -23px 0 8px #201d20}.easter-hair{position:absolute;z-index:2;left:25px;top:9px;width:76px;height:54px;border-radius:50%;background:#201d20;filter:drop-shadow(0 3px 2px #000)}.easter-glasses{position:absolute;z-index:3;top:55px;left:31px;color:#17202a;font-size:20px;text-shadow:0 0 0 2px #d7dce0}.easter-robe{position:absolute;bottom:-8px;left:14px;width:100px;height:56px;border-radius:45% 45% 0 0;background:#eee8dc;color:#99734a;text-align:center;padding-top:12px;font-size:20px}.easter-portrait:after{content:"";position:absolute;z-index:4;left:70px;top:82px;width:9px;height:58px;background:#171a20;transform:rotate(42deg);border-radius:8px}
+</style>
+</head>
+<body>
+<div class="app">
+ <div class="top">
+<div class="brand">Летопись одного рода<b>⚔ Хроники Эйрвальда</b>
+</div>
+<div style="display:flex;gap:7px;align-items:center"><button class="sound" id="soundBtn" aria-pressed="true">🔊 Звук: вкл.</button><button class="save" id="saveBtn">💾 Сохранить</button></div>
+</div>
+ <section class="hero">
+  <div class="herohead">
+<div class="heroidentity"><div id="heroAvatar"></div><div>
+<div class="name" id="heroName">Неизвестный наследник</div>
+<div class="sub" id="heroSub">Человек · 0 лет · Детство</div>
+</div></div>
+<div class="wealth" id="wealth">🪙 0 золотых<br>
+<span style="color:var(--muted);font-weight:normal">Слава: 0</span>
+</div>
+</div>
+  <div class="ribbon">
+<span class="badge" id="rank">✦ Безвестный</span>
+<span class="badge" id="generation">Поколение I</span>
+<span class="badge" id="year">Год 1 Эпохи Королей</span>
+</div>
+  <div class="agebox">
+<div>
+<div class="age" id="ageLabel">0 лет <small>· Детство</small>
+</div>
+<div class="sub" id="yearHint">Впереди целая жизнь.</div>
+</div>
+<button class="advance" id="ageBtn">ПРОЖИТЬ ГОД ▶</button>
+</div>
+ </section>
+ <nav class="quick-nav" aria-label="Быстрый переход">
+  <a href="#statusCard">♥ Состояние</a>
+  <a href="#familyCard">♜ Семья</a>
+  <a href="#championsCard">🏆 Чемпионы</a>
+  <a href="#purposeCard">🎯 Цель</a>
+  <a href="#actionsSection">⚔ Действия</a>
+  <a href="#journalSection">📜 Хроника</a>
+ </nav>
+ <div class="grid">
+  <section class="card" id="statusCard">
+<h2>♥ Состояние</h2>
+<div class="bars" id="bars">
+</div>
+</section>
+  <section class="card">
+<h2>✧ Характеристики</h2>
+<div class="stats" id="stats">
+</div>
+</section>
+  <section class="card">
+<h2>✦ Мастерство</h2>
+<div class="stats" id="skills">
+</div>
+</section>
+  <section class="card" id="familyCard">
+<h2>♜ Семья и наследие</h2>
+<div class="family" id="family">
+</div>
+</section>
+<section class="card">
+<h2>🛡 Снаряжение и гильдия</h2>
+<div class="stats" id="equipment">
+</div>
+<div class="family" id="guildInfo" style="margin-top:9px">
+</div>
+</section>
+ </div>
+ <section class="card infection-card" id="infectionCard" hidden>
+  <h2>☾ Кровь и проклятие</h2>
+  <div id="infectionPanel"></div>
+ </section>
+ <section class="card quest-card" id="questCard">
+  <h2>📖 Приключение сезона</h2>
+  <div id="questPanel"><p class="sub">Твои решения могут изменить ход истории.</p></div>
+ </section>
+ <section class="card" id="championsCard">
+  <h2>🏆 Три сильнейших бойца Эйрвальда</h2>
+  <p class="sub">Их имена известны каждому. Встретить одного из них — редчайшая удача. Победи чемпиона, чтобы занять его место.</p>
+  <div id="champions">
+</div>
+  <div id="championStatus" class="sub">
+</div>
+ </section>
+ <section class="card" id="worldChronicleCard"><h2>📜 Летопись богов и мира</h2><div id="worldChronicle" class="sub"></div></section>
+ <section class="card" id="purposeCard">
+  <h2>🎯 Цель твоей жизни</h2>
+  <div id="lifeGoal">
+</div>
+ </section>
+ <section class="actions" id="actionsSection">
+  <h2>Чем займёшься в этом году?</h2>
+  <div class="sub" id="points" style="margin:0 0 9px">Действий осталось: 7</div>
+  <div class="actiongrid" id="actions">
+</div>
+<details class="extra-actions"><summary>Редкие занятия и особые возможности (<span id="extraCount">4</span>)</summary><div class="actiongrid" id="extraActions"></div></details>
+<div id="actionResult" class="action-result" aria-live="polite">Последнее действие: пока нет записей.</div>
+<div class="actiongrid" style="margin-top:8px">
+<button class="act" id="treasuryBtn">
+<strong>🏦 Казна и покупки</strong>
+<span>Дом, зелья, наставник, инвестиции.</span>
+</button>
+<button class="act" id="worldHubBtn"><strong>🌍 Мир и судьба</strong><span>Власть, магия, ордена и наследие.</span></button>
+<button class="act" id="loreArchiveBtn"><strong>📚 Лор мира</strong><span>Открытые тайны, герои, боги, культы и нечисть.</span></button>
+<button class="act" id="potionBtn">
+<strong>🧪 Выпить зелье</strong>
+<span>В запасе: <b id="potionCount">0</b> · восстановить здоровье.</span>
+</button>
+</div>
+ </section>
+ <section class="card log" id="journalSection">
+<h2>📜 Хроника жизни</h2>
+<div id="journal">
+</div>
+</section>
+ <div class="footer">Мир Эйрвальда · Каждая жизнь уникальна · Прогресс сохраняется на этом устройстве<br>
+<strong style="display:block;margin-top:8px;color:#c49a61;letter-spacing:1px">ХРОНИКИ ЭЙРВАЛЬДА · ВЕРСИЯ 5.1.2</strong>
+</div>
+</div>
+<div class="year-dock" id="yearDock"><span class="dock-hint" id="dockHint">Год можно завершить в любой момент</span><button class="advance" id="ageBtnDock">ПРОЖИТЬ ГОД ▶</button></div>
+<div class="overlay" id="overlay">
+<div class="modal" id="modal">
+</div>
+</div>
+<div class="toast" id="toast">
+</div>
+<script>
+
+
+const $=id=>document.getElementById(id);
+
+// Небольшие синтезированные звуковые эффекты: без внешних файлов и сетевых запросов.
+let soundEnabled=true,audioCtx=null;
+try{soundEnabled=localStorage.getItem("eyrval_sound")!=="off";}catch(e){}
+function audio(){
+ if(!soundEnabled)return null;
+ try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;if(!audioCtx)audioCtx=new C();if(audioCtx.state==="suspended")audioCtx.resume();return audioCtx;}catch(e){return null;}
+}
+function tone(freq,duration=.12,type="sine",volume=.045,delay=0){
+ const c=audio();if(!c)return;const o=c.createOscillator(),g=c.createGain(),t=c.currentTime+delay;
+ o.type=type;o.frequency.setValueAtTime(freq,t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+duration);
+ o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+duration+.025);
+}
+function playSound(kind="click"){
+ if(!soundEnabled)return;
+ const patterns={click:[[520,.055,"triangle",.025,0]],ui:[[740,.045,"sine",.018,0]],coin:[[880,.07,"sine",.035,0],[1175,.12,"sine",.03,.07]],heal:[[523,.12,"sine",.03,0],[659,.16,"sine",.035,.1],[784,.2,"sine",.035,.22]],hit:[[150,.11,"square",.025,0],[95,.13,"triangle",.02,.08]],sword:[[330,.07,"sawtooth",.025,0],[590,.09,"triangle",.03,.04]],birth:[[523,.16,"sine",.035,0],[659,.16,"sine",.035,.13],[784,.24,"sine",.04,.26],[1046,.3,"sine",.035,.45]],level:[[392,.12,"triangle",.03,0],[523,.12,"triangle",.03,.1],[659,.12,"triangle",.03,.2],[784,.28,"sine",.04,.3]],action:[[440,.09,"triangle",.035,0],[660,.13,"sine",.03,.07]],year:[[392,.18,"sine",.04,0],[523,.2,"sine",.04,.14],[659,.28,"sine",.04,.29]],success:[[523,.12,"triangle",.04,0],[659,.12,"triangle",.04,.1],[784,.2,"sine",.04,.2]],danger:[[220,.18,"sawtooth",.025,0],[165,.22,"sawtooth",.025,.15]],magic:[[660,.12,"sine",.03,0],[880,.18,"sine",.025,.11],[1175,.24,"sine",.02,.22]],fire:[[110,.12,"sawtooth",.035,0],[220,.1,"triangle",.03,.05],[440,.16,"sine",.025,.12]],ice:[[880,.12,"triangle",.025,0],[1320,.18,"sine",.025,.08],[1760,.22,"sine",.018,.16]],storm:[[95,.08,"sawtooth",.04,0],[720,.07,"square",.025,.07],[120,.2,"sawtooth",.035,.14]],battle:[[180,.12,"square",.025,0],[130,.16,"triangle",.03,.12]],blood:[[82,.24,"sawtooth",.035,0],[110,.2,"triangle",.03,.18],[55,.32,"sine",.035,.34]],wolf:[[130,.2,"sawtooth",.03,0],[196,.16,"triangle",.03,.14],[98,.3,"sawtooth",.025,.3]]};
+ (patterns[kind]||patterns.click).forEach(a=>tone(...a));
+}
+function updateSoundButton(){const b=$("soundBtn");if(!b)return;b.textContent=soundEnabled?"🔊 Звук: вкл.":"🔇 Звук: выкл.";b.setAttribute("aria-pressed",String(soundEnabled));}
+
+
+const names=["Элдрик","Фаэлин","Мираэль","Торен","Лиора","Каэл","Эвелин","Бран","Сильвия","Арен","Нерис","Дарен","Иллиан","Веста","Рейнар","Искра","Ориан","Талия","Корвин","Сайра","Малрик","Эстель","Рунар","Виорика","Леонель","Астория","Гален","Нимрия","Эйдан","Фрея","Кассиан","Морвена","Люциан","Ириса","Дамиан","Селеста","Валериан","Наэла","Родерик","Элиана","Тарвис","Лисандра","Орвен","Мейра","Зарен","Киара","Фенрик","Элара","Севериан","Ровена"];
+const surnames=["Сумрачный","Златолист","Пепельный","Северный","Изумрудный","Воронье Крыло","Светозарный","Тихий Ручей","Железнобокий","Лунная Тень","Грозорождённый","Седой Волк","Красный Мыс","Серебряная Река","Каменное Сердце","Туманного Брода","Солнечный","Чернокорень","Высокий Холм","Медный Щит","Зимний Ветер","Белый Ястреб","Ночной Дозор","Ясная Звезда","Дубравный","Пепельная Роза","Штормовой"];
+const races={human:{name:"Человек",desc:"Универсалы. Быстро приспосабливаются и лучше других сочетают разные занятия.",gift:"Адаптация: случайно развить один из основных навыков и получить золото.",bonus:{strength:1,agility:1,luck:2}},elf:{name:"Эльф",desc:"Долгоживущий народ лесов. Силен в магии и ловкости, но взрослеет и стареет медленнее.",gift:"Лунное созерцание: восстановить ману, усилить магию и контроль.",bonus:{agility:2,control:2,maxMana:22,magic:1}},dwarf:{name:"Дварф",desc:"Народ горных крепостей. Силен, искусен с клинком и необычайно стоек с возрастом.",gift:"Рунная закалка: улучшить владение мечом и укрепить тело.",bonus:{strength:4,sword:2,maxMana:-8}},orc:{name:"Орк",desc:"Сильные кланы воинов. Рано достигают физического расцвета, но хуже управляют магией.",gift:"Боевой рёв: прилив сил, здоровья и боевого опыта.",bonus:{strength:5,agility:-1,control:-1,sword:2}},fae:{name:"Фейри",desc:"Народ перекрёстков и древних рощ. Их удача влияет даже на исход опасных столкновений.",gift:"Искры судьбы: удача, настроение и шанс на редкую находку или всплеск маны.",bonus:{control:4,maxMana:30,luck:4,strength:-2}}};
+
+const stages=a=>a<3?"Младенчество":a<7?"Детство":a<13?"Отрочество":a<18?"Юность":a<40?"Расцвет":a<60?"Зрелость":a<75?"Старость":"Закат";
+
+const clamp=(n,min=0,max=100)=>Math.max(min,Math.min(max,n));
+
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+
+const pick=a=>a[rnd(0,a.length-1)];
+
+let s;
+
+const birthPaths={
+ warrior:{name:"Воинская кровь",desc:"Рождён для силы и клинка. Магический потенциал ограничен.",bias:{strength:6,agility:3,sword:5,magic:-3,control:-2},apt:{strength:1.5,agility:1.22,sword:1.65,magic:.52,control:.72,maxMana:.72,luck:1}},
+ mage:{name:"Звёздный разум",desc:"Редкая врождённая связь с магией. Великим мечником стать почти невозможно.",bias:{magic:6,control:5,maxMana:20,strength:-3,sword:-3},apt:{magic:1.7,control:1.55,maxMana:1.55,strength:.52,agility:.78,sword:.48,luck:1.05}},
+ scout:{name:"Тень ветра",desc:"Быстрый, наблюдательный и удачливый. Силен в ловкости и точных ударах.",bias:{agility:6,luck:4,sword:2,control:-1,maxMana:-8},apt:{agility:1.55,luck:1.35,sword:1.18,strength:.9,magic:.72,control:1.0,maxMana:.82}},
+ balanced:{name:"Ровная звезда",desc:"Нет выдающегося дара, зато несколько путей развития остаются открытыми.",bias:{strength:1,agility:1,control:1},apt:{strength:1.08,agility:1.08,control:1.08,maxMana:1.08,luck:1.08,sword:1.08,magic:1.08}}
+};
+const birthBlessings=[
+ {id:"starborn",name:"Рождённый под звездой",desc:"Магия и контроль растут быстрее, но тело хуже приспособлено к силовым тренировкам.",stats:{magic:5,control:4,maxMana:18,strength:-2},apt:{magic:.18,control:.14,strength:-.12}},
+ {id:"ironheart",name:"Сердце из железа",desc:"Сила и стойкость выше обычного. Мана даётся труднее.",stats:{strength:5,sword:2,maxMana:-10},apt:{strength:.16,sword:.12,magic:-.12}},
+ {id:"foxluck",name:"Нить Фортуны",desc:"Удача чаще улыбается в опасности, но стабильность судьбы непредсказуема.",stats:{luck:7,agility:2},apt:{luck:.18,agility:.05}},
+ {id:"greenblood",name:"Зелёная кровь",desc:"Природная ловкость и крепкое здоровье, но слабее тяга к магии.",stats:{agility:5,strength:2,magic:-1},apt:{agility:.15,strength:.08,magic:-.08}},
+ {id:"oracle",name:"Шёпот оракула",desc:"Контроль и мудрость растут легче. Физические тренировки требуют больше времени.",stats:{control:6,maxMana:12,luck:2},apt:{control:.18,maxMana:.1,strength:-.1,sword:-.1}},
+ {id:"phoenix",name:"Искра феникса",desc:"Редкий дар: больше маны и один раз за жизнь спасает от смертельного удара.",stats:{maxMana:22,magic:3,health:0},apt:{magic:.1,control:.08}}
+];
+const birthCurses=[
+ {id:"frail",name:"Хрупкая оболочка",desc:"Тело слабо, зато жизненная энергия усиливает магический потенциал.",stats:{strength:-4,agility:-2,maxMana:18,magic:2},apt:{strength:-.18,agility:-.08,magic:.12,maxMana:.12}},
+ {id:"muteoath",name:"Обет безмолвия",desc:"Трудно находить общий язык, зато мысли становятся необычайно собранными.",stats:{social:-12,control:4},apt:{control:.12}},
+ {id:"ashfate",name:"Пепел неудачи",desc:"Удача отвернулась. В бою отчаяние иногда превращается в ярость.",stats:{luck:-5,combat:4},apt:{luck:-.18,strength:.04,sword:.04}},
+ {id:"manaThirst",name:"Жажда маны",desc:"Магия сильнее, но ежегодное восстановление маны хуже и стресс накапливается быстрее.",stats:{magic:4,maxMana:12},apt:{magic:.12,maxMana:.08}},
+ {id:"brittle",name:"Кость под трещиной",desc:"Сила ограничена, зато движения точнее и быстрее.",stats:{strength:-3,agility:4},apt:{strength:-.14,agility:.12}},
+ {id:"restless",name:"Беспокойная душа",desc:"Тяжело отдыхать и успокаиваться, но пережитые испытания закаляют волю.",stats:{stress:8,control:3,magic:2},apt:{control:.08,magic:.06}}
+];
+const birthStatKeys=["strength","agility","control","maxMana","luck","sword","magic"];
+function makeBirthRoll(race="human"){
+ const pathKey=pick(Object.keys(birthPaths)),path=birthPaths[pathKey];
+ const t={strength:rnd(5,13),agility:rnd(5,13),control:rnd(4,12),maxMana:rnd(48,88),luck:rnd(3,12),sword:rnd(0,5),magic:rnd(0,5)};
+ Object.entries(path.bias).forEach(([k,v])=>t[k]=(t[k]||0)+v);
+ Object.entries(races[race]?.bonus||{}).forEach(([k,v])=>t[k]=(t[k]||0)+v);
+ const blessing=pick(birthBlessings),curse=pick(birthCurses),apt={...path.apt};
+ Object.entries(blessing.apt||{}).forEach(([k,v])=>apt[k]=(apt[k]||1)+v);
+ Object.entries(curse.apt||{}).forEach(([k,v])=>apt[k]=(apt[k]||1)+v);
+ Object.entries(blessing.stats||{}).forEach(([k,v])=>{if(k in t)t[k]+=v;});
+ Object.entries(curse.stats||{}).forEach(([k,v])=>{if(k in t)t[k]+=v;});
+ t.strength=Math.max(1,t.strength);t.agility=Math.max(1,t.agility);t.control=Math.max(1,t.control);t.maxMana=Math.max(25,t.maxMana);t.luck=Math.max(1,t.luck);t.sword=Math.max(0,t.sword);t.magic=Math.max(0,t.magic);
+ const potential={strength:Math.round(55* (apt.strength||1)),agility:Math.round(55*(apt.agility||1)),control:Math.round(55*(apt.control||1)),maxMana:Math.round(85*(apt.maxMana||1)),luck:Math.round(55*(apt.luck||1)),sword:Math.round(55*(apt.sword||1)),magic:Math.round(55*(apt.magic||1))};
+ // Specialization creates real ceilings: a born mage cannot grind into the realm's greatest swordsman.
+ for(const k of birthStatKeys)potential[k]=Math.max(t[k]+8,Math.min(k==="maxMana"?300:260,potential[k]));
+ return {stats:t,pathKey,aptitude:apt,potential,blessing,curse};
+}
+function rollStats(race="human"){return makeBirthRoll(race).stats;}
+function applyBirthGrowth(before){
+ if(!s||!s.potential||!s.aptitude)return;
+ for(const k of birthStatKeys){const old=Number(before[k])||0,now=Number(s[k])||0,delta=now-old;if(delta<=0)continue;
+  const cap=Number(s.potential[k])||now+1,apt=Math.max(.28,Math.min(1.85,Number(s.aptitude[k])||1));
+  const ratio=old/Math.max(1,cap),diminish=ratio<.30?1:Math.max(.10,1-(ratio-.30)*1.15);
+  // Рост копится постепенно: один год тренировок не превращает ребёнка в легенду.
+  s.growthProgress=s.growthProgress||{};
+  const raw=delta*apt*diminish*.06*(.85+Math.random()*.30);
+  s.growthProgress[k]=(Number(s.growthProgress[k])||0)+raw;
+  const whole=Math.floor(s.growthProgress[k]);s.growthProgress[k]-=whole;
+  s[k]=Math.min(cap,old+whole);if(s[k]>=cap)s.growthProgress[k]=0;
+ }
+}
+
+function profileForExisting(person){
+ const path=person.magic>person.sword+4?"mage":person.sword>person.magic+4?"warrior":"balanced";
+ const apt={...birthPaths[path].apt};
+ const potential={};for(const k of birthStatKeys){const base=k==="maxMana"?85:55;potential[k]=Math.max((Number(person[k])||0)+8,Math.min(k==="maxMana"?300:260,Math.round(base*(apt[k]||1))));}
+ return {path,apt,potential};
+}
+
+function inheritedStats(a,b,childRace="human"){
+ const keys=["strength","agility","control","maxMana","luck","sword","magic"],out={};
+ const parentRaceA=races[a?.race]?a.race:"human",parentRaceB=races[b?.race]?b.race:"human";
+ for(const k of keys){
+  const bonusA=races[parentRaceA].bonus[k]||0,bonusB=races[parentRaceB].bonus[k]||0,bonusChild=races[childRace]?.bonus[k]||0;
+  const av=(a?.[k]??(k==="maxMana"?70:5))-bonusA,bv=(b?.[k]??(k==="maxMana"?70:5))-bonusB;
+  const spread=Math.max(1,Math.round((Math.abs(av)+Math.abs(bv))*.10));
+  out[k]=Math.max(k==="luck"?1:k==="maxMana"?25:0,Math.round((av+bv)/2+rnd(-spread,spread))+bonusChild);
+ }
+ return out;
+}
+function inheritedRace(a,b){return Math.random()<.5?(a?.race||"human"):(b?.race||"human");}
+function fresh(gen=1,parent=null,inherited=null,race="human"){
+ const first=pick(names),last=pick(surnames),t=inherited||rollStats(race);
+
+ return {name:first+" "+last,race,age:0,gen,year:1,health:100,mood:rnd(55,95),stress:0,social:rnd(25,65),strength:t.strength,agility:t.agility,control:t.control,mana:Math.round(t.maxMana*.7),maxMana:t.maxMana,luck:t.luck,gold:rnd(8,24),fame:0,sword:t.sword,magic:t.magic,combat:0,actions:7,alive:true,partner:null,partnerStats:null,children:[],parents:parent?[parent]:[],legacy:[],log:[],lastEvent:"",ageAtDeath:null,weaponLevel:0,armorLevel:0,staffLevel:0,staffBonus:0,artifacts:[],guildRank:0,questsDone:0,house:0,lifeGoal:"champion",goalClaimed:false,rareMeetingCooldown:0,potions:0,duelWins:0,storyQuest:null,renown:0,worldFlags:{},infection:null,infectionCured:false,birthPath:"balanced",aptitude:null,potential:null,growthProgress:{},blessing:null,curse:null,extendedLife:false,outcast:false,holyHuntCooldown:0,chaosGodDefeated:false,worldChronicle:[],worldState:{stability:65,prosperity:55,war:0,ruler:"Король Альдрен"},faction:null,factionRep:0,school:null,madness:0,title:null,land:0,army:0,spellLore:0,ending:null,easterMet:false,foundRituals:[],loreUnlocked:[],ancestralReputation:0,ancestralInfamy:0,familyThreads:[],echoMarks:[],lastActionResult:"",champions:createChampions()};
+
+}
+
+function showCreator(){
+ let chosenRace=s.race||"human";const chosen=chosenRace;let roll=makeBirthRoll(chosen),rerolls=5;
+ const statNames={strength:"Сила",agility:"Ловкость",control:"Контроль",maxMana:"Запас маны",luck:"Удача",sword:"Меч",magic:"Магия"};
+ const renderRoll=()=>{
+  const t=roll.stats,path=birthPaths[roll.pathKey];
+  $("birthPath").innerHTML=`✦ Предрасположенность: ${path.name}<div class="birth-note">${path.desc}</div>`;
+  $("birthStats").innerHTML=birthStatKeys.map(k=>`<div class="birth-stat"><span>${statNames[k]}</span><b>${t[k]}</b></div>`).join("");
+  $("birthFates").innerHTML=`<div class="fate-card"><b>✧ Благословение: ${roll.blessing.name}</b>${roll.blessing.desc}<br><b>Последствия:</b> ${Object.entries(roll.blessing.stats||{}).map(([k,v])=>`${k}: ${v>0?"+":""}${v}`).join(" · ")||"особый эффект"}</div><div class="fate-card curse"><b>☾ Проклятие: ${roll.curse.name}</b>${roll.curse.desc}<br><b>Последствия:</b> ${Object.entries(roll.curse.stats||{}).map(([k,v])=>`${k}: ${v>0?"+":""}${v}`).join(" · ")||"особый эффект"}</div>`;
+  $("rerollCount").textContent=`Осталось попыток: ${rerolls}`;$ ("rerollBtn").disabled=rerolls<=0;
+ };
+ $("modal").innerHTML=`<h2>✦ Рождение под знаками богов</h2><div class="portrait-row" id="creatorAvatar">${avatarMarkup({race:chosen,age:18,sex:"герой"},"profile")}</div><div class="portrait-caption">Так будет выглядеть твой персонаж</div><p>Ты не создаёшь идеального героя. Судьба определяет врождённый путь, а боги оставляют благословение и проклятие. Можно перебросить весь набор, но попытки ограничены.</p><label style="display:block;color:var(--gold2);margin:12px 0 5px">Раса</label><select id="racePick" style="width:100%;padding:12px;border-radius:10px;background:#142337;color:var(--text);border:1px solid #71879b">${Object.entries(races).map(([k,v])=>`<option value="${k}" ${k===chosen?"selected":""}>${v.name}</option>`).join("")}</select><p id="raceDesc">${races[chosen].desc}</p><p id="raceGift" style="color:var(--gold2)">✦ Родовой дар: ${races[chosen].gift}</p><div class="birth-path" id="birthPath"></div><div class="birth-grid" id="birthStats"></div><div class="fate-grid" id="birthFates"></div><div class="reroll-row"><button id="rerollBtn">🎲 Перебросить судьбу</button><span id="rerollCount"></span></div><label style="display:block;color:var(--gold2);margin:12px 0 5px">Образ персонажа</label><select id="sexPick" style="width:100%;padding:12px;border-radius:10px;background:#142337;color:var(--text);border:1px solid #71879b"><option value="герой">Мужской</option><option value="героиня">Женский</option></select><label style="display:block;color:var(--gold2);margin:12px 0 5px">Имя</label><input id="firstPick" maxlength="24" value="${pick(names)}" style="width:100%;padding:12px;border-radius:10px;background:#142337;color:var(--text);border:1px solid #71879b"><label style="display:block;color:var(--gold2);margin:12px 0 5px">Фамилия</label><input id="lastPick" maxlength="30" value="${pick(surnames)}" style="width:100%;padding:12px;border-radius:10px;background:#142337;color:var(--text);border:1px solid #71879b"><button id="beginLife">Принять судьбу и начать жизнь</button>`;
+ $("overlay").style.display="flex";renderRoll();
+ $("racePick").onchange=e=>{if(rerolls<=0){e.target.value=chosenRace;toast("Попытки переброса судьбы закончились.");return;}rerolls--;const r=e.target.value;chosenRace=r;$("raceDesc").textContent=races[r].desc;$("raceGift").textContent="✦ Родовой дар: "+races[r].gift;$("creatorAvatar").innerHTML=avatarMarkup({race:r,age:18,sex:$("sexPick").value},"profile");roll=makeBirthRoll(r);renderRoll();};
+ $("sexPick").onchange=()=>$ ("creatorAvatar").innerHTML=avatarMarkup({race:$("racePick").value,age:18,sex:$("sexPick").value},"profile");
+ $("rerollBtn").onclick=()=>{if(rerolls<=0)return;rerolls--;roll=makeBirthRoll($("racePick").value);renderRoll();playSound("magic");};
+ $("beginLife").onclick=()=>{
+  const race=$("racePick").value;if(!races[race]){toast("Выбери доступную расу.");return;}
+  const old=s, t=roll.stats;s.race=race;s.sex=$("sexPick").value;s.name=($("firstPick").value.trim()||pick(names))+" "+($("lastPick").value.trim()||pick(surnames));
+  for(const k of Object.keys(t))s[k]=t[k];s.mana=Math.round(s.maxMana*.7);s.health=100;s.actions=7;s.alive=true;
+  s.birthPath=roll.pathKey;s.aptitude=roll.aptitude;s.potential=roll.potential;s.growthProgress={};s.blessing={id:roll.blessing.id,name:roll.blessing.name,desc:roll.blessing.desc};s.curse={id:roll.curse.id,name:roll.curse.name,desc:roll.curse.desc};s.social=clamp((s.social||40)+(roll.curse.stats.social||0));s.stress=clamp((s.stress||0)+(roll.curse.stats.stress||0));s.combat=Math.max(0,(s.combat||0)+(roll.curse.stats.combat||0));
+  say(`Ты родился с предрасположенностью «${birthPaths[s.birthPath].name}». Благословение: ${s.blessing.name}. Проклятие: ${s.curse.name}.`);
+  $("overlay").style.display="none";render();save();
+ };
+}
+
+function say(t){s.log.unshift({age:s.age,year:s.year,text:t});
+s.log=s.log.slice(0,45);s.lastActionResult=t;if(/побед|нашёл|нашла|награ|получил|призов|легенд/i.test(t))playSound("success");else if(/опас|проиграл|ран|пораж|не хват|иссяк|смерт|погиб/i.test(t))playSound("danger");}
+const championTitles=["Клинок Севера","Грозовой архимаг","Палач Бездны"];
+
+const championNames=["Варгрим Железный","Элирия Буревестница","Каэдор Безмолвный"];
+
+function createChampions(){
+ return championTitles.map((title,i)=>({id:i,name:championNames[i],title,rank:i+1,
+  strength:78+i*5,agility:75+(2-i)*5,control:70+i*7,maxMana:90+i*28,
+  sword:i===1?76:105-i*8,magic:i===1?128:65+i*13,health:100,
+  fame:9000-i*1700,alive:true,defeated:false}));
+
+}
+function championPower(c){
+ return Math.round(c.strength*1.2+c.agility*1.1+c.control*.7+c.sword*1.7+c.magic*1.6+c.maxMana*.08+(c.luck||8)*.4);
+
+}
+function playerPower(){
+ return Math.round(s.strength*1.2+s.agility*1.1+s.control*.7+s.sword*1.7+s.magic*1.6+(s.maxMana||70)*.08+(s.luck||8)*.4+(s.weaponLevel||0)*18+(s.armorLevel||0)*8);
+
+}
+function championsMarkup(){
+ return (s.champions||[]).map((c,i)=>`<div class="champion"><div><b>#${i+1} ${c.name}</b><small>${c.title} · сила рейтинга ${championPower(c)} · ${c.isPlayerChampion?"ты занял это место":c.defeated?"побеждён тобой":"непобеждён"}</small></div><b>${c.defeated?"👑":"⚔️"}</b></div>`).join("");
+
+}
+const goalCatalog={
+ champion:{name:"Стать одним из трёх сильнейших бойцов",desc:"Победи одного из легендарных чемпионов и займи его место.",progress:()=>s.duelWins>0?1:0,target:1},
+ rich:{name:"Стать самым богатым человеком королевства",desc:"Накопи 1 500 золотых одновременно.",progress:()=>s.gold,target:1500},
+ mage:{name:"Стать величайшим магом",desc:"Развить магию до 100 и контроль до 80.",progress:()=>Math.min(s.magic/100,s.control/80),target:1},
+ sword:{name:"Стать непревзойдённым мечником",desc:"Доведи владение мечом до 120.",progress:()=>s.sword,target:120},
+ dynasty:{name:"Основать большую династию",desc:"Оставить после себя не менее пяти детей.",progress:()=>s.children.length,target:5},
+ fame:{name:"Стать легендой королевства",desc:"Набрать 1 000 славы.",progress:()=>s.fame,target:1000}
+};
+
+function goalMarkup(){
+ 
+const g=goalCatalog[s.lifeGoal]||goalCatalog.champion;
+
+ 
+let value=g.progress(),ratio=Math.min(100,Math.round(value/g.target*100));
+
+ return `<div class="goalbox"><b>${g.name}</b><div>${g.desc}</div><div class="goalprogress"><span style="width:${ratio}%"></span></div><small>${typeof value==="number"?Math.floor(value):value} / ${g.target}</small>
+ <select id="goalSelect" ${s.goalClaimed?"disabled":""}>${Object.entries(goalCatalog).map(([k,v])=>`<option value="${k}" ${k===s.lifeGoal?"selected":""}>${v.name}</option>`).join("")}</select>
+ <div class="sub">${s.goalClaimed?"Цель достигнута! Выбери новую цель в следующей жизни.":"Цель можно изменить в любой момент, пока ты жив."}</div></div>`;
+
+}
+function setGoal(key){
+ if(!goalCatalog[key]||!s.alive)return;
+
+ s.lifeGoal=key;
+s.goalClaimed=false;
+say(`Ты поставил перед собой новую цель: «${goalCatalog[key].name}».`);
+render();
+
+}
+function checkGoal(){
+ 
+const g=goalCatalog[s.lifeGoal];
+if(!g||s.goalClaimed)return;
+
+ if(g.progress()>=g.target){s.goalClaimed=true;
+s.fame+=100;
+s.gold+=100;
+s.mood=clamp(s.mood+20);
+say(`Ты достиг жизненной цели: ${g.name}! Награда: 100 золота и 100 славы.`);
+}
+}
+function rareChampionEncounter(source="путешествии"){
+ if(!s.alive||s.age<18||s.rareMeetingCooldown>0)return false;
+
+ // This is intentionally very rare: roughly one event per many dozens of eligible actions.
+ if(Math.random()>.012+(s.luck*.00025))return false;
+
+ 
+const candidates=(s.champions||[]).filter(c=>!c.defeated&&!c.isPlayerChampion);
+
+ if(!candidates.length)return false;
+
+ 
+const c=pick(candidates);
+
+ s.rareMeetingCooldown=8;
+
+ showChampionEncounter(c,source);
+
+ return true;
+
+}
+function showChampionEncounter(c,source){
+ 
+const power=championPower(c),mine=playerPower();
+
+ $("modal").innerHTML=`<h2>⚡ Невероятная встреча</h2><p>Во время ${source} толпа внезапно расступилась. Перед тобой <b>${c.name}</b>, известный как «${c.title}» — один из трёх сильнейших бойцов Эйрвальда.</p><p>Его боевая мощь: <b>${power}</b><br>Твоя боевая мощь: <b>${mine}</b></p><p>Он редко принимает вызовы. Если проиграешь, можешь потерять здоровье, золото и часть славы. Победа позволит занять его место.</p>
+ <button class="choice" id="challengeChampion">⚔️ Вызвать на бой</button><button class="secondary" id="declineChampion">🙏 Поклониться и пройти мимо</button>`;
+
+ $("overlay").style.display="flex";
+
+ $("challengeChampion").onclick=()=>championDuel(c);
+
+ $("declineChampion").onclick=()=>{$("overlay").style.display="none";
+s.mood=clamp(s.mood+2);
+say(`Ты встретил ${c.name}, но решил пока не бросать ему вызов.`);
+render();
+};
+
+}
+function championDuel(c){
+ $("overlay").style.display="none";
+
+ 
+const mine=playerPower(),their=championPower(c);
+
+ 
+const winChance=clamp(48+(mine-their)*.42+s.luck*.35,8,90);
+
+ 
+const roll=rnd(1,100);
+
+ if(roll<=winChance){
+  c.defeated=true;
+c.isPlayerChampion=true;
+c.alive=false;
+s.duelWins++;
+
+  
+const oldRank=c.rank;
+
+  c.name=s.name;
+c.title="Новый чемпион Эйрвальда";
+c.rank=oldRank;
+
+  c.strength=s.strength;
+c.agility=s.agility;
+c.control=s.control;
+c.maxMana=s.maxMana;
+
+  c.sword=s.sword;
+c.magic=s.magic;
+c.fame=Math.max(s.fame,1000);
+c.health=s.health;
+
+  s.fame+=250;
+s.gold+=250;
+s.mood=clamp(s.mood+25);
+s.health=clamp(s.health-18);
+
+  say(`НЕВЕРОЯТНО! Ты победил ${championNames[c.id]} и занял его место среди трёх сильнейших бойцов!`);
+
+ }else{
+  
+const wound=rnd(22,48);
+s.health=clamp(s.health-wound);
+s.gold=Math.max(0,s.gold-rnd(10,35));
+s.fame=Math.max(0,s.fame-rnd(5,20));
+
+  say(`Ты бросил вызов ${c.name}, но потерпел поражение. Здоровье -${wound}. В следующий раз подготовься лучше.`);
+
+  if(s.health<=0)die(`Ты погиб после поединка с ${c.name}.`);
+
+ }
+ checkGoal();
+render();
+
+}
+function openTreasury(){
+ 
+const homeCost=[120,300,650,1200][Math.min(3,s.house||0)];
+
+ $("modal").innerHTML=`<h2>🏦 Куда вложить золото?</h2><p>У тебя <b>${s.gold}</b> золотых. Деньги можно тратить не только на оружие: вложения дают постоянные или временные преимущества.</p>
+ <button class="choice" id="buyHome" ${s.house>=4||s.gold<homeCost?"disabled":""}>🏠 Улучшить жильё · ${homeCost} золота<small>Уровень ${s.house||0}/4. Улучшает восстановление здоровья и настроение каждый год.</small></button>
+ <button class="choice" id="buyPotion" ${s.gold<25?"disabled":""}>🧪 Купить лечебные зелья · 25 золота<small>+2 зелья. В бою каждое восстанавливает 30 здоровья.</small></button>
+ <button class="choice" id="buyTraining" ${s.gold<70?"disabled":""}>📖 Оплатить наставника · 70 золота<small>Случайно улучшит меч, магию, контроль или силу.</small></button>
+ <button class="choice" id="buyInvest" ${s.gold<100?"disabled":""}>📈 Вложиться в торговое дело · 100 золота<small>Через 5 прожитых лет вернёт 150–230 золотых.</small></button>
+ <button class="secondary" id="closeTreasury">Закрыть</button>`;
+
+ $("overlay").style.display="flex";
+
+ $("buyHome").onclick=()=>{if(s.gold>=homeCost&&s.house<4){s.gold-=homeCost;
+s.house++;
+say(`Ты улучшил свой дом. Уровень жилья: ${s.house}/4.`);
+closeAndRender();
+}};
+
+ $("buyPotion").onclick=()=>{if(s.gold>=25){s.gold-=25;
+s.potions+=2;
+say("Ты купил два лечебных зелья.");
+closeAndRender();
+}};
+
+ $("buyTraining").onclick=()=>{if(s.gold>=70){const before=Object.fromEntries(birthStatKeys.map(k=>[k,Number(s[k])||0]));s.gold-=70;
+let stat=pick(["sword","magic","control","strength","agility"]);
+s[stat]+=rnd(3,7);
+applyBirthGrowth(before);say(`Наставник провёл особое занятие. ${({sword:"Меч",magic:"Магия",control:"Контроль магии",strength:"Сила",agility:"Ловкость"})[stat]} выросли.`);
+closeAndRender();
+}};
+
+ $("buyInvest").onclick=()=>{if(s.gold>=100){s.gold-=100;
+s.investments=s.investments||[];
+s.investments.push({due:s.year+5});
+say("Ты вложил 100 золотых в торговый караван. Прибыль ожидается через пять лет.");
+closeAndRender();
+}};
+
+ $("closeTreasury").onclick=()=>{$("overlay").style.display="none";
+};
+
+}
+function closeAndRender(){$("overlay").style.display="none";
+checkGoal();
+render();
+}
+function usePotion(){if(s.infection){toast("Проклятая кровь отвергает обычные лечебные средства. Восстановиться можно только ночной охотой.");return;}playSound("heal");
+ if(!s.potions){toast("У тебя нет лечебных зелий.");
+return;
+}
+ s.potions--;
+s.health=clamp(s.health+30);
+say("Ты выпил лечебное зелье и восстановил до 30 здоровья.");
+render();
+
+}
+
+const loreEntries=[
+{id:"firstRoad",category:"Древняя эпоха",title:"Дороги до королей",text:"До появления королевств дороги Эйрвальда связывали семь святилищ изначальных богов. Камни у обочин старше первых городских стен."},
+{id:"oldGods",category:"Боги и первородный мир",title:"Семеро изначальных",text:"Изначальные боги не были семьёй и не делили мир поровну. Каждый поддерживал одну из основ бытия: жизнь, память, движение, меру, глубину, свет и покой. Их имена исчезли из большинства молитв."},
+{id:"ashenWar",category:"Падение богов",title:"Война пепельного неба",text:"Азарот не родился богом. Он был первой мыслью, которую мир попытался забыть. Когда изначальные боги заключили его за пределами времени, он научился превращать противоречия в оружие и вернулся, чтобы уничтожить своих создателей."},
+{id:"bloodOath",category:"Запретные знания",title:"Клятва крови и времени",text:"Продление жизни не возвращает молодость и не отменяет цену. Человек, укравший годы, выпадает из обычного порядка: Священный орден считает его долгом, который должен быть взыскан."},
+{id:"championsLore",category:"Герои Эйрвальда",title:"Три печати силы",text:"Три величайших бойца хранят не просто славу. Каждый носит осколок печати, оставленной изначальными богами. Только собрав их, смертный может привлечь внимание Азарота."},
+{id:"dynastyLore",category:"Роды и наследие",title:"Память крови",text:"В Эйрвальде поступки не исчезают со смертью. Люди помнят лица, фамилии, спасённые деревни и сожжённые поселения. Потомок не отвечает за предка, но незнакомцы редко дают ему шанс это доказать."},
+{id:"roadwardens",category:"Люди и обычаи",title:"Клятва дорожных хранителей",text:"После Войны пепельного неба торговые тракты стали опасны. Дорожные хранители записывали имена тех, кто спасал путников, и тех, кто грабил обозы. Их книги переходили от деревни к деревне, поэтому даже далёкие потомки могли услышать о чужом поступке."},
+{id:"blackArchive",category:"Запретные знания",title:"Архив под корнями",text:"Под старейшим дубом Эйрвальда скрыта библиотека, которую не строили смертные. Там хранятся ритуалы, способные изменить пределы тела и украсть годы у смерти. Но всякая запись в Архиве требует платы, и не всегда золотом."},
+{id:"ashenCrown",category:"Падение королевств",title:"Корона из пепла",text:"Первый король Эйрвальда получил корону не от богов, а от семи народов, уставших от войны. Корона хранит память о клятве: власть существует, пока правитель защищает тех, кто не может защитить себя."},
+{id:"azarothWhisper",category:"Шёпот Хаоса",title:"Имя, которое нельзя произносить",text:"Азарот не просто убил изначальных богов. Он стёр часть их имён из самой памяти мира. Иногда в руинах слышен шёпот, который произносит имя слушателя голосом его умерших предков."},
+{id:"threeChampions",category:"Сильнейшие Эйрвальда",title:"Те, кто стоят выше королей",text:"Три сильнейших бойца не служат ни одному трону. Их имена — Каэл Железный, Сиверна Пепельная и Роэн Безмолвный. Каждый прошёл путь, который сломал бы целую армию. Говорят, они охраняют осколки печати, ведущей к Богу Хаоса."},
+{id:"cultOfAsh",category:"Культы и тайные общества",title:"Культ Пепельного Сердца",text:"Последователи Азарота верят, что мир — ошибка, а уничтожение богов было освобождением. Они скрываются среди лекарей, торговцев и придворных. Их знак — серый круг с трещиной посередине."},
+{id:"cultDawn",category:"Культы и тайные общества",title:"Хранители Первой Зари",text:"Этот тайный круг собирает обломки святилищ и пытается восстановить хотя бы часть имён изначальных богов. Они не считают себя культом: для них это долг перед миром, который забыл собственное начало."},
+{id:"nightThings",category:"Нечисть и проклятия",title:"Нечисть за границей костров",text:"Вампиры и оборотни — не просто болезни крови. Старые записи называют их потомками людей, переживших прикосновение к осколкам павших божеств. Есть и другие твари: болотные утопцы, костяные гончие и безликие, которые надевают чужие воспоминания."},
+{id:"holyOrder",category:"Ордена и охотники",title:"Священные рыцари",text:"Священный орден возник после первых случаев украденного времени. Его рыцари считают бессмертие нарушением договора между смертными и миром. Они преследуют тех, кто отказывается стареть, но не все в ордене согласны с жестокими методами."},
+{id:"firstBeasts",category:"Нечисть и проклятия",title:"Звери старше человеческой речи",text:"В глубине Эйрвальда встречаются существа, существовавшие до первых поселений. Их нельзя приручить обычной силой. Некоторые охраняют древние дороги, другие питаются страхом путников. Встреча с ними часто оставляет след не только на теле, но и в памяти рода."}
+];
+function unlockLore(id,title,text){s.loreUnlocked=s.loreUnlocked||[];if(s.loreUnlocked.includes(id))return;const e=loreEntries.find(x=>x.id===id)||{id,category:"Открытие",title,text};if(!loreEntries.some(x=>x.id===id))loreEntries.push(e);s.loreUnlocked.push(id);say(`📚 Открыта часть лора: «${e.title}». Её можно прочитать в отдельной кнопке «Лор мира».`);}
+function ancestryScore(){return (Number(s.ancestralReputation)||0)-(Number(s.ancestralInfamy)||0)+Math.floor((s.fame||0)/80)+Math.floor((s.renown||0)/20);}
+function rememberDeed(kind,detail){s.ancestralDeeds=s.ancestralDeeds||[];s.ancestralDeeds.unshift({kind,detail,gen:s.gen||1,name:s.name,age:s.age});s.ancestralDeeds=s.ancestralDeeds.slice(0,18);s.worldChronicle=s.worldChronicle||[];s.worldChronicle.unshift(`${s.name}, поколение ${s.gen||1}: ${detail}`);s.worldChronicle=s.worldChronicle.slice(0,30);}
+function recordActionResult(title,before,note){const labels={strength:"Сила",agility:"Ловкость",control:"Контроль",maxMana:"Предел маны",luck:"Удача",sword:"Меч",magic:"Магия",mana:"Текущая мана",health:"Здоровье",mood:"Настроение",stress:"Стресс",social:"Общение",gold:"Золото",fame:"Слава",cap_strength:"Предел силы",cap_agility:"Предел ловкости",cap_control:"Предел контроля",cap_maxMana:"Предел запаса маны",cap_luck:"Предел удачи",cap_sword:"Предел меча",cap_magic:"Предел магии"};const keys=[...birthStatKeys,"mana","health","mood","stress","social","gold","fame",...birthStatKeys.map(k=>"cap_"+k)];const changes=keys.map(k=>{const current=k.startsWith("cap_")?(Number(s.potential?.[k.slice(4)])||0):(Number(s[k])||0),d=current-(Number(before[k])||0);return d?`${labels[k]} ${d>0?"+":""}${d}`:null;}).filter(Boolean);s.lastActionResult=`${title}: ${note||s.log?.[0]?.text||"Событие завершено."}${changes.length?` · Итог: ${changes.join(" · ")}`:" · Числовые параметры не изменились."}`;}
+function snapshotStats(){const out=Object.fromEntries([...birthStatKeys,"mana","health","mood","stress","social","gold","fame"].map(k=>[k,Number(s[k])||0]));for(const k of birthStatKeys)out["cap_"+k]=Number(s.potential?.[k])||0;return out;}
+function roadsideEncounter(){
+ const score=ancestryScore(),power=(s.strength||0)+(s.sword||0)*.8+(s.combat||0)*.35+(s.army||0)*4;
+ const deeds=s.ancestralDeeds||[];const goodDeed=deeds.find(x=>x.kind==="good"),badDeed=deeds.find(x=>x.kind==="evil");const marks=(s.echoMarks||[]).map(x=>x.mark);const caravanOath=marks.includes("caravan_oath"),caravanFear=marks.includes("caravan_fear"),groveBlessing=marks.includes("grove_blessing"),groveCurse=marks.includes("grove_curse"),shrineSeal=marks.includes("shrine_seal"),shrineWhisper=marks.includes("shrine_whisper");
+ const knownGood=score>=5||goodDeed?.kind==="good",knownBad=score<=-4||badDeed?.kind==="evil";
+ let greeting;
+ if(caravanOath&&Math.random()<.65)greeting="Купец узнаёт фамильный знак на твоём плаще. «Вы из рода, что спас наш караван! Наши двери открыты для вас».";
+ else if(caravanFear&&Math.random()<.65)greeting="Путники замечают фамильный знак. Купец бледнеет: «Это потомки тех, кто ограбил караван. Не подпускайте их к повозкам!»";
+ else if(groveBlessing&&Math.random()<.35)greeting="Эльфийский странник узнаёт фамилию. «Хранители рощи помнят ваш долг. Возьми это в дорогу».";
+ else if(groveCurse&&Math.random()<.35)greeting="Эльфийский дозорный узнаёт фамилию и кладёт руку на лук. «Твой род снова пришёл осквернить наши земли?»";
+ else if(knownBad&&badDeed&&(!goodDeed||badDeed.age>=goodDeed.age)&&Math.random()<.82)greeting=`Старик всматривается в твоё лицо. «Постой… ${goodDeed?.name||"кто-то из твоего рода"} спас людей на тракте. Ты из этого рода? Прошу, помоги нам!»`;
+ else if(knownBad&&Math.random()<.82)greeting=`Путники узнают фамилию. Женщина отступает, закрывая ребёнка: «Это потомок ${badDeed?.name||"того самого рода"}? Не троньте нас! Мы всё отдадим, только не убивайте!»`;
+ else if(power>150)greeting="Они не узнают твоего имени, но замечают силу, оружие и уверенную осанку. Один путник поднимает руки: «Мы не ищем ссоры, господин…»";
+ else greeting="Несколько путников застряли у сломанной повозки. Они не узнают тебя. Один подозрительно спрашивает, не из разбойников ли ты.";
+ if(caravanOath&&Math.random()<.25)s.gold+=12;if(groveBlessing&&Math.random()<.2)s.mana=clamp(s.mana+8,0,s.maxMana);if(shrineSeal&&Math.random()<.15)s.stress=clamp(s.stress-3);if(shrineWhisper&&Math.random()<.12)s.madness=clamp(s.madness+2);
+ const reputationLine=knownGood?"Добрая память о предке открывает тебе доверие.":knownBad?"Дурная слава рода заставляет людей бояться тебя ещё до первого слова.":"Пока твой род мало кому известен.";
+ $("modal").innerHTML=`<h2>🛞 Люди на старом тракте</h2><p>${greeting}</p><p>${reputationLine} Колесо повозки сломано, а до ближайшего поселения далеко.</p><button class="choice" id="roadHelp">🤝 Помочь им</button><button class="choice" id="roadTalk">🗣️ Назвать своё имя и поговорить</button><button class="choice" id="roadDemand">🪙 Потребовать плату</button><button class="choice" id="roadThreat">⚔️ Запугать и забрать припасы</button><button class="secondary" id="roadLeave">🚶 Пройти мимо</button>`;$ ("overlay").style.display="flex";
+ const finish=(note)=>{const before=window.__roadBefore||snapshotStats();recordActionResult("Встреча на тракте",before,note);$("overlay").style.display="none";render();save();};window.__roadBefore=snapshotStats();
+ $("roadHelp").onclick=()=>{if(power>95){s.health=clamp(s.health+4);s.ancestralReputation=(s.ancestralReputation||0)+2;s.social=clamp(s.social+12);s.fame+=10;s.gold+=rnd(8,18);rememberDeed("good",`${s.name} спас обоз на старом тракте.`);unlockLore("roadwardens");finish("Ты поднял повозку, защитил путников и укрепил добрую славу рода.");}else{s.health=clamp(s.health-5);s.ancestralReputation=(s.ancestralReputation||0)+1;s.social=clamp(s.social+5);rememberDeed("good",`${s.name} не бросил раненых на дороге.`);finish("Сил не хватило поднять повозку, но ты перевязал раненого и остался с людьми.");}};
+ $("roadTalk").onclick=()=>{if(knownGood||socialCheck()){s.social=clamp(s.social+8);s.fame+=5;s.gold+=rnd(4,12);finish("Люди поверили тебе. Разговор закончился благодарностью и небольшой наградой.");}else if(knownBad){s.social=clamp(s.social-5);s.health=clamp(s.health-4);finish("Услышав фамилию, путники отказались говорить и прогнали тебя камнями.");}else{ s.social=clamp(s.social+2);finish("Они не узнали твоего имени, но после разговора перестали считать тебя угрозой.");}};
+ $("roadDemand").onclick=()=>{if(knownBad||socialCheck()||power>100){const g=rnd(12,28);s.gold+=g;s.ancestralInfamy=(s.ancestralInfamy||0)+1;rememberDeed("evil",`${s.name} вымогал плату у путников.`);finish(`Путники заплатили ${g} золотых, лишь бы ты ушёл. Слава рода стала мрачнее.`);}else{s.health=clamp(s.health-8);finish("Путники отказались платить. Завязалась потасовка, и ты ушёл с синяками.");}};
+ $("roadThreat").onclick=()=>{if(power>100||knownBad){const g=rnd(20,42);s.gold+=g;s.ancestralInfamy=(s.ancestralInfamy||0)+3;s.fame+=5;rememberDeed("evil",`${s.name} ограбил обоз на старом тракте.`);finish(`Путники в ужасе отдали ${g} золотых. Эта история станет частью дурной славы рода.`);}else{s.health=clamp(s.health-15);s.social=clamp(s.social-6);finish("Один из путников оказался бывшим солдатом. Он дал отпор, и тебе пришлось отступить.");}};
+ $("roadLeave").onclick=()=>finish("Ты прошёл мимо. Путники проводили тебя тревожными взглядами.");
+}
+function socialCheck(){return (s.social||0)+(s.fame||0)/8+(s.luck||0)>55;}
+
+const worldFactions=[
+ {id:"dawn",name:"Орден Первой Зари",desc:"Защищает наследие древних богов и мирных жителей."},
+ {id:"mages",name:"Круг Архимагов",desc:"Хранит знания о магии, времени и запретных школах."},
+ {id:"shadows",name:"Братство Теней",desc:"Шпионы, разведчики и мастера тайных сделок."},
+ {id:"chaos",name:"Дети Хаоса",desc:"Ищут следы Азарота и силу, оставшуюся после гибели богов."}
+];
+function worldTick(){
+ const w=s.worldState||(s.worldState={stability:65,prosperity:55,war:0,ruler:"Король Альдрен"});
+ if(Math.random()<.24){w.war=Math.max(0,Math.min(3,(w.war||0)+(Math.random()<.55?1:-1)));w.stability=Math.max(8,Math.min(100,w.stability+rnd(-7,6)));w.prosperity=Math.max(8,Math.min(100,w.prosperity+rnd(-5,7)));}
+ if(s.age%12===0){const old=w.ruler;w.ruler=pick(["Королева Мирелла","Король Торвальд","Регент Эдрик","Королева Селена","Император Каэрон"]);if(old!==w.ruler){s.worldChronicle.unshift(`Власть перешла к ${w.ruler}; прежняя эпоха завершилась.`);s.worldChronicle=s.worldChronicle.slice(0,24);}}
+ if(s.age>=25&&s.loreUnlocked.includes("firstRoad"))unlockLore("oldGods");if((s.duelWins||0)>=2)unlockLore("championsLore");if(s.chaosGodDefeated)unlockLore("ashenWar");if(s.extendedLife)unlockLore("bloodOath");
+ if(w.war>1&&Math.random()<.18){w.prosperity=Math.max(5,w.prosperity-5);if(s.title)s.fame+=2;}
+}
+function worldTitle(){return s.title|| (s.fame>=800?"Герой королевства":s.fame>=400?"Знатный лорд":s.fame>=180?"Рыцарь": "Без титула");}
+function openLoreArchive(){
+ const unlocked=(s.loreUnlocked||[]).map(id=>loreEntries.find(e=>e.id===id)).filter(Boolean);
+ const groups=[...new Set(loreEntries.map(e=>e.category))];
+ const body=groups.map(cat=>{const entries=loreEntries.filter(e=>e.category===cat);const known=entries.filter(e=>(s.loreUnlocked||[]).includes(e.id));return `<section class="lore-entry"><b>${cat}</b><small>Открыто ${known.length} из ${entries.length}</small>${entries.map(e=>known.some(x=>x.id===e.id)?`<div class="lore-entry"><small>✦ Открыто</small><b>${e.title}</b><br>${e.text}</div>`:`<div class="lore-entry" style="opacity:.48"><small>🔒 Тайна не раскрыта</small><b>???</b><br>Продолжай исследовать Эйрвальд, встречать необычных существ, искать культы и узнавать судьбы сильнейших.</div>`).join("")}</section>`}).join("");
+ const count=unlocked.length,total=loreEntries.length;
+ $("modal").innerHTML=`<h2>📚 Лор Эйрвальда</h2><p>Это отдельный архив знаний. Он не раскрывает мир сразу: каждая запись появляется только после исследования, встреч, побед или важных решений. Открыто <b>${count} из ${total}</b> тайн.</p><div class="hubbody">${body}</div><button class="secondary" id="closeLore">Закрыть архив</button>`;$ ("overlay").style.display="flex";
+ $("closeLore").onclick=()=>$("overlay").style.display="none";
+}
+function openWorldHub(tab="overview"){
+ const w=s.worldState||(s.worldState={stability:65,prosperity:55,war:0,ruler:"Король Альдрен"});
+ const tabs=[ ["overview","🌍 Обзор"],["power","👑 Власть"],["magic","🔮 Магия"],["orders","🏛️ Ордена"],["legacy","🧬 Наследие"] ];
+ const nav=`<div class="hubtabs">${tabs.map(([id,label])=>`<button class="hubtab ${tab===id?'active':''}" data-hub="${id}">${label}</button>`).join("")}</div>`;
+ let body="";
+ if(tab==="overview")body=`<div class="hubgrid"><div>👑 Правитель<b>${w.ruler}</b></div><div>🕊️ Стабильность<b>${w.stability}/100</b></div><div>🪙 Процветание<b>${w.prosperity}/100</b></div><div>⚔️ Конфликты<b>${["Мир","Напряжённость","Пограничная война","Большая война"][w.war]||"Мир"}</b></div></div><p>Королевства живут своей жизнью: правители сменяются, войны меняют торговлю, города переживают подъёмы и упадок. События обновляются каждый прожитый год.</p><p><b>Твоё положение:</b> ${worldTitle()} · ${s.land||0} владений · ${s.army||0} бойцов в дружине.</p><p><b>Безумие:</b> ${s.madness||0}/100 ${s.madness>=60?'— шёпот запретной силы становится навязчивым.':'— разум пока устойчив.'}</p>`;
+ if(tab==="power")body=`<p>Власть открывается поступками, славой и золотом. Титул даёт доступ к землям и дружине, но повышает риск заговоров.</p><p><b>Текущий статус:</b> ${worldTitle()} · владений: ${s.land||0} · дружина: ${s.army||0}</p><button class="choice" id="earnTitle" ${s.age<18||s.fame<100||s.title?"disabled":""}>⚔️ Принять посвящение в рыцари · нужно 100 славы и 18 лет</button><button class="choice" id="buyLand" ${!s.title||s.gold<180?"disabled":""}>🏰 Приобрести поместье · 180 золота</button><button class="choice" id="raiseArmy" ${!s.land||s.gold<90?"disabled":""}>🛡️ Нанять дружину · 90 золота</button><button class="choice" id="courtDiplomacy" ${!s.title?"disabled":""}>🕊️ Дипломатия при дворе · 1 действие</button>`;
+ if(tab==="magic")body=`<p>Школы магии развиваются через практику и наставников. Выбранная школа даёт небольшой постоянный бонус, но тёмные знания повышают безумие.</p><p><b>Школа:</b> ${s.school||"не выбрана"} · <b>Знание:</b> ${s.spellLore||0}</p>${["Огонь","Лёд","Молния","Жизнь","Смерть","Пространство","Время","Хаос"].map((x,i)=>`<button class="choice" data-school="${x}" ${s.age<12?"disabled":""}>${["🔥","❄️","⚡","🌿","☠️","🌀","⌛","🜏"][i]} Изучать: ${x}<small>${i===4||i===7?"Мощная запретная школа; увеличивает безумие.":"Развивает магическое мастерство и открывает тематические события."}</small></button>`).join("")}<button class="choice" id="studyLore" ${s.gold<45?"disabled":""}>📜 Купить редкий трактат · 45 золота</button>`;
+ if(tab==="orders")body=`<p>Можно состоять только в одном тайном обществе одновременно. Репутация растёт от исследований, поручений и решений.</p>${worldFactions.map(f=>`<button class="choice" data-faction="${f.id}" ${s.faction&&s.faction!==f.id?"disabled":""}>${f.name}${s.faction===f.id?" · ты состоишь здесь":""}<small>${f.desc} ${s.faction===f.id?`Репутация: ${s.factionRep||0}`:"Вступить можно с 16 лет."}</small></button>`).join("")}`;
+ if(tab==="legacy")body=`<p>Поступки персонажей записываются в память рода. На тракте, в деревнях и при дворе люди могут узнать фамилию и изменить своё отношение ещё до разговора.</p><div class="hubgrid"><div>🧬 Поколение<b>${s.gen||1}</b></div><div>📜 Записей летописи<b>${(s.worldChronicle||[]).length}</b></div><div>✧ Артефактов<b>${(s.artifacts||[]).length}</b></div><div>🏆 Победы над чемпионами<b>${s.duelWins||0}</b></div></div><p><b>Добрая память:</b> ${s.ancestralReputation||0} · <b>Дурная слава:</b> ${s.ancestralInfamy||0}</p><div class="lore-entry"><b>Незавершённые истории рода</b><br>${(s.familyThreads||[]).map(t=>`• ${echoStories[t.id]?.title||"Неизвестная история"} — шаг ${t.step+1}; начата в поколении ${t.startedGen}`).join("<br>")||"Нет незавершённых историй."}<br><b>Последствия старых решений (влияют на встречи потомков)</b><br>${(s.echoMarks||[]).map(m=>`• ${m.mark} — поколение ${m.gen}`).join("<br>")||"Пока нет."}</div><div class="lore-entry"><b>Последние деяния рода</b><br>${(s.ancestralDeeds||[]).slice(0,8).map(d=>`• ${d.name}, поколение ${d.gen}: ${d.detail}`).join("<br>")||"Пока поступки рода не стали известны миру."}</div><p>Секретные легенды: ${s.chaosGodDefeated?"Победитель Азарота":"Азарот ещё не повержен"}; ${s.age>=200?"Долгожитель": "Путь к бессмертной славе ещё открыт"}.</p><button class="choice" id="chronicleDeed">📖 Внести подвиг в семейную летопись</button>`;
+ $("modal").innerHTML=`<h2>🌍 Мир и судьба Эйрвальда</h2>${nav}<div class="hubbody">${body}</div><button class="secondary" id="closeHub">Закрыть</button>`;$("overlay").style.display="flex";
+ $("modal").querySelectorAll("[data-hub]").forEach(b=>b.onclick=()=>openWorldHub(b.dataset.hub));
+ const bind=(id,fn)=>{const el=$(id);if(el)el.onclick=fn;};
+ bind("closeHub",()=>$("overlay").style.display="none");
+ bind("earnTitle",()=>{if(s.age<18||s.fame<100||s.title)return;s.title="Рыцарь";s.army=Math.max(1,s.army);s.worldChronicle.unshift(`${s.name} посвящён в рыцари.`);s.ancestralReputation=(s.ancestralReputation||0)+2;say("Ты получил рыцарский титул. Теперь можно приобретать земли и собирать дружину.");render();save();openWorldHub("power");});
+ bind("buyLand",()=>{if(!s.title||s.gold<180)return;s.gold-=180;s.land++;s.worldChronicle.unshift(`${s.name} приобрёл новое поместье.`);s.ancestralReputation=(s.ancestralReputation||0)+1;say("Ты приобрёл поместье. Оно приносит доход и укрепляет влияние.");render();save();openWorldHub("power");});
+ bind("raiseArmy",()=>{if(!s.land||s.gold<90)return;s.gold-=90;s.army+=5;say("Пять бойцов вступили в твою дружину.");render();save();openWorldHub("power");});
+ bind("courtDiplomacy",()=>{if(!s.title||s.actions<1)return;s.actions--;const gain=rnd(4,10);s.worldState.stability=Math.min(100,w.stability+gain);s.fame+=5;say("Ты провёл дипломатические переговоры. Стабильность королевства выросла.");render();save();openWorldHub("power");});
+ $("modal").querySelectorAll("[data-school]").forEach(b=>b.onclick=()=>{const x=b.dataset.school;if(s.age<12)return;s.school=x;s.spellLore++;s.magic+=x==="Хаос"||x==="Смерть"?3:2;s.control+=1;if(["Смерть","Хаос"].includes(x)){s.madness=Math.min(100,s.madness+8);s.stress=clamp(s.stress+4);}say(`Ты изучил основы школы «${x}».`);render();save();openWorldHub("magic");});
+ bind("studyLore",()=>{if(s.gold<45)return;s.gold-=45;s.spellLore+=2;s.magic+=3;s.control+=2;say("Редкий трактат расширил твои магические знания.");render();save();openWorldHub("magic");});
+ $("modal").querySelectorAll("[data-faction]").forEach(b=>b.onclick=()=>{if(s.age<16||s.faction)return;s.faction=b.dataset.faction;s.factionRep=5;if(s.faction==="chaos")unlockLore("cultOfAsh");else unlockLore("cultDawn");say(`Ты вступил в ${worldFactions.find(f=>f.id===s.faction).name}.`);render();save();openWorldHub("orders");});
+ bind("chronicleDeed",()=>{const deed=`${s.name}, поколение ${s.gen||1}: ${pick(["сохранил древнее знание","помог жителям приграничья","победил опасного врага","укрепил наследие семьи"])}.`;s.worldChronicle.unshift(deed);s.worldChronicle=s.worldChronicle.slice(0,24);say("Твой поступок внесён в семейную летопись.");save();openWorldHub("legacy");});
+}
+function meetEasterGuest(){
+ if(s.easterMet)return false;s.easterMet=true;
+ $("modal").innerHTML=`<div class="easter-portrait"><div class="easter-hair"></div><div class="easter-glasses">◉　◉</div><div class="easter-robe">✦</div></div><h2>✧ Незнакомец за гранью летописи</h2><p>На старом тракте ты встречаешь загадочного странника с растрёпанными тёмными кудрями, круглыми очками и спокойным взглядом. На нём простая светлая одежда и тёмная перевязь через плечо. Он представляется лишь как <b>Нару</b>.</p><p>«Я не герой твоей истории. Просто иногда наблюдаю, как люди становятся легендами». Он касается твоего лба — и ты ощущаешь, что границы возможного слегка отодвинулись.</p><div class="trait-detail">Все семь пределов характеристик увеличены на <b>+3</b>. Текущие характеристики не меняются.</div><button id="acceptNaru">Поблагодарить странника</button>`;$("overlay").style.display="flex";$("acceptNaru").onclick=()=>{for(const k of birthStatKeys)s.potential[k]=(Number(s.potential[k])||Number(s[k])||0)+3;s.worldChronicle.unshift("На тракте появился загадочный Нару. Он слегка расширил пределы наследника.");say("Странник исчез между мгновениями. Твои пределы стали немного выше.");$("overlay").style.display="none";render();save();};return true;
+}
+
+function readSave(){
+ try{return localStorage.getItem("eyrval_save");}catch(err){console.warn("Не удалось прочитать сохранение:",err);return null;}
+}
+function initCollapsibleCards(){
+ document.querySelectorAll('.card').forEach((card,i)=>{if(card.dataset.collapseReady)return;const h=card.querySelector('h2');if(!h)return;card.dataset.collapseReady='1';const body=document.createElement('div');body.className='card-body';while(h.nextSibling)body.appendChild(h.nextSibling);card.appendChild(body);const key='eyrval_card_'+(card.id||i);const btn=document.createElement('button');btn.className='card-collapse';btn.type='button';let closed=false;try{closed=localStorage.getItem(key)==='closed'}catch(e){}card.classList.toggle('collapsed',closed);btn.textContent=closed?'Развернуть':'Свернуть';h.appendChild(btn);btn.addEventListener('click',()=>{const state=card.classList.toggle('collapsed');btn.textContent=state?'Развернуть':'Свернуть';try{localStorage.setItem(key,state?'closed':'open')}catch(e){}});});
+}
+function init(){
+ initCollapsibleCards();
+ updateSoundButton();
+ const saved=readSave();
+ if(saved){
+  try{
+   s=JSON.parse(saved);
+   if(!s||typeof s!=="object"||!s.name)throw new Error("Повреждённое сохранение");
+   s.children=(s.children||[]).map(c=>typeof c==="string"?(()=>{const t=rollStats(s.race||"human");return {name:c,age:0,sex:"ребёнок",race:s.race||"human",...t};})():c);
+   if(s.partner&&!s.partnerStats){s.partnerRace=s.partnerRace||"human";const partnerRoll=makeBirthRoll(s.partnerRace);s.partnerStats=partnerRoll.stats;s.partnerAptitude=partnerRoll.aptitude;}
+   if(s.partner&&!s.partnerRace)s.partnerRace="human";
+   if(!races[s.race])s.race="human";
+   if(!Array.isArray(s.champions)||!s.champions.length)s.champions=createChampions();
+   if(!Array.isArray(s.children))s.children=[];
+   if(!Array.isArray(s.legacy))s.legacy=[];
+   if(!Array.isArray(s.log))s.log=[];s.ancestralDeeds=Array.isArray(s.ancestralDeeds)?s.ancestralDeeds:[];s.explorationCount=Number(s.explorationCount)||0;s.lastActionResult=s.lastActionResult||"";
+   if(!Number.isFinite(s.actions))s.actions=7;
+   s.racialTalentUsed=!!s.racialTalentUsed;s.sex=s.sex||"герой";s.stress=Number.isFinite(s.stress)?s.stress:0;s.social=Number.isFinite(s.social)?s.social:40;s.combat=Number.isFinite(s.combat)?s.combat:0;
+   if(!Number.isFinite(s.maxMana)||s.maxMana<25)s.maxMana=100;
+   s.weaponLevel=s.weaponLevel||0;s.armorLevel=s.armorLevel||0;s.staffLevel=s.staffLevel||0;s.staffBonus=s.staffBonus||0;s.artifacts=Array.isArray(s.artifacts)?s.artifacts:[];s.guildRank=s.guildRank||0;
+   s.questsDone=s.questsDone||0;s.house=s.house||0;s.potions=s.potions||0;s.duelWins=s.duelWins||0;
+   s.lifeGoal=s.lifeGoal||"champion";s.goalClaimed=!!s.goalClaimed;s.rareMeetingCooldown=s.rareMeetingCooldown||0;s.storyQuest=s.storyQuest||null;s.renown=Number.isFinite(s.renown)?s.renown:0;s.worldFlags=s.worldFlags||{};s.infection=s.infection||null;s.infectionCured=!!s.infectionCured;s.birthPath=s.birthPath||null;s.aptitude=s.aptitude||null;s.potential=s.potential||null;s.growthProgress=s.growthProgress||{};s.blessing=s.blessing||null;s.curse=s.curse||null;s.extendedLife=!!s.extendedLife;s.outcast=!!s.outcast;s.holyHuntCooldown=Number(s.holyHuntCooldown)||0;s.chaosGodDefeated=!!s.chaosGodDefeated;s.worldChronicle=Array.isArray(s.worldChronicle)?s.worldChronicle:[];s.worldState=s.worldState||{stability:65,prosperity:55,war:0,ruler:"Король Альдрен"};s.faction=s.faction||null;s.factionRep=Number(s.factionRep)||0;s.school=s.school||null;s.madness=Number(s.madness)||0;s.title=s.title||null;s.land=Number(s.land)||0;s.army=Number(s.army)||0;s.spellLore=Number(s.spellLore)||0;s.ending=s.ending||null;s.easterMet=!!s.easterMet;if(!s.aptitude||!s.potential){const bp=profileForExisting(s);s.birthPath=s.birthPath||bp.path;s.aptitude=s.aptitude||bp.apt;s.potential=s.potential||bp.potential;}if(s.infection&& !["vampire","werewolf"].includes(s.infection.type))s.infection=null;if(s.infection){s.infection.cureProgress=Number(s.infection.cureProgress)||0;s.infection.sunBurns=Number(s.infection.sunBurns)||0;s.infection.frenzyCount=Number(s.infection.frenzyCount)||0;}
+  }catch(err){
+   console.warn("Сохранение не удалось загрузить; создаётся новая летопись:",err);
+   s=fresh();say("Старая летопись не открылась. Начинается новая история.");
+   render();showCreator();return;
+  }
+ }else{
+  s=fresh();
+  say("Ты появился на свет в небольшом поселении. Никто не знает, кем тебе суждено стать.");
+ }
+ render();
+ if(!saved)showCreator();else if(!s.alive)showDeath();
+}
+
+function toast(t){
+let el=$("toast");
+el.textContent=t;
+el.classList.add("show");
+setTimeout(()=>el.classList.remove("show"),1900)}
+function save(){playSound("coin");try{localStorage.setItem("eyrval_save",JSON.stringify(s));toast("Игра сохранена на устройстве.");}catch(err){console.warn("Не удалось сохранить игру:",err);toast("Браузер запретил сохранение. Проверь настройки приватности.");}}
+function bar(label,val,max,kind,icon){return `<div class="barrow"><div class="barlabel"><span>${icon} ${label}</span><b>${Math.round(val)} / ${max}</b></div><div class="track"><div class="fill ${kind}" style="width:${clamp(val/max*100)}%"></div></div></div>`}
+function avatarMarkup(person={},size="child"){
+ const race=person.race||"human",age=Math.max(0,Number(person.age)||0),sex=person.sex||"герой";
+ const palettes={human:{skin:"#c98d68",hair:"#49302a",cloth:"#55728a",eye:"#6f9a9e"},elf:{skin:"#e0b99b",hair:"#d8c18a",cloth:"#496f67",eye:"#78c6b4"},dwarf:{skin:"#b87955",hair:"#8a452b",cloth:"#795638",eye:"#b6a16c"},orc:{skin:"#78966b",hair:"#302b28",cloth:"#536343",eye:"#e2b45d"},fae:{skin:"#e4c4d9",hair:"#8068a8",cloth:"#66528d",eye:"#9bd8e2"}};
+ const p=palettes[race]||palettes.human,adult=age>=16,child=age<7,female=sex==="дочь"||sex==="женщина"||sex==="героиня";
+ const hair=age<3?"#b99a79":p.hair,ear=race==="elf"||race==="fae";
+ const ears=ear?`<path d="M36 76 L9 46 L43 57Z" fill="${p.skin}" stroke="#5b3d39" stroke-width="1.5"/><path d="M124 76 L151 46 L117 57Z" fill="${p.skin}" stroke="#5b3d39" stroke-width="1.5"/>`:race==="orc"?`<path d="M39 86 L22 55 L51 67Z M121 86 L138 55 L109 67Z" fill="${p.skin}"/>`:``;
+ const hairShape=female?`<path d="M37 72 Q27 22 80 18 Q134 22 123 79 L130 132 Q110 119 111 83 L49 83 Q49 119 30 132Z" fill="${hair}"/>`:`<path d="M34 75 Q27 23 80 20 Q132 21 126 77 L111 60 Q81 76 48 59Z" fill="${hair}"/>`;
+ const beard=race==="dwarf"&&adult?`<path d="M48 105 Q80 133 112 105 L105 145 L80 157 L55 145Z" fill="${hair}"/>`:race==="human"&&adult&&!female?`<path d="M53 107 Q80 125 107 107 L101 127 Q80 143 59 127Z" fill="${hair}"/>`:``;
+ const crown=race==="elf"?`<path d="M54 28 L66 4 L78 27 L91 4 L105 30" fill="none" stroke="#d7c18a" stroke-width="4"/>`:race==="fae"?`<path d="M52 26 Q80 -2 108 26" fill="none" stroke="#e9d48b" stroke-width="3"/><circle cx="80" cy="13" r="5" fill="#e9d48b"/>`:``;
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 180" role="img" aria-label="Портрет: ${raceNames[race]||"персонаж"}, ${age} лет"><defs><linearGradient id="bg${race}" x2="0" y2="1"><stop stop-color="${p.cloth}"/><stop offset="1" stop-color="#142337"/></linearGradient><linearGradient id="skin${race}" x2="0" y2="1"><stop stop-color="${p.skin}"/><stop offset="1" stop-color="#98634f"/></linearGradient></defs><rect width="160" height="180" rx="18" fill="url(#bg${race})"/><circle cx="80" cy="67" r="53" fill="#ffffff" opacity=".07"/><path d="M15 180 Q20 126 80 122 Q140 126 145 180Z" fill="${p.cloth}" stroke="#d2b47b" stroke-width="2"/><path d="M63 119 L80 143 L97 119" fill="#e1d1b0"/><path d="M56 51 Q80 28 104 51 L111 91 Q105 119 80 121 Q55 119 49 91Z" fill="url(#skin${race})" stroke="#69483e" stroke-width="1.5"/>${ears}${hairShape}<path d="M60 77 Q68 72 74 77 M86 77 Q94 72 101 77" stroke="#4b3734" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="67" cy="85" rx="4" ry="3" fill="${p.eye}"/><ellipse cx="94" cy="85" rx="4" ry="3" fill="${p.eye}"/><path d="M80 87 L76 101 L83 102" stroke="#8a5c4c" stroke-width="2" fill="none"/><path d="M70 109 Q80 115 90 109" stroke="#743f3c" stroke-width="2" fill="none" stroke-linecap="round"/>${beard}${crown}<path d="M18 169 Q80 147 142 169" fill="none" stroke="#e4c47d" stroke-width="2" opacity=".6"/></svg>`;
+ return `<div class="avatar ${size==='hero'?'hero-avatar':size==='profile'?'profile-avatar':'child-avatar'}">${svg}</div>`;
+}
+const raceNames={human:"человек",elf:"эльф",dwarf:"дварф",orc:"орк",fae:"фейри"};
+
+function render(){
+ if(s){s.familyThreads=s.familyThreads||[];s.echoMarks=s.echoMarks||[];s.ancestralDeeds=s.ancestralDeeds||[];}
+ $("heroAvatar").innerHTML=avatarMarkup(s,"hero");
+ $("heroName").textContent=s.name;
+$("heroSub").textContent=`${races[s.race]?.name||"Человек"} · ${s.age} лет · ${stages(s.age)}${s.infection?" · "+(s.infection.type==="vampire"?"🩸 Вампир":"🌕 Оборотень"):s.infectionCured?" · ⚗️ Исцелён": ""}${s.outcast?" · ☠️ Изгой": ""}${s.extendedLife?" · ✧ Продлённая жизнь": ""}`;
+
+ $("wealth").innerHTML=`🪙 ${s.gold.toLocaleString("ru-RU")} золотых<br><span style="color:var(--muted);
+font-weight:normal">Слава: ${s.fame.toLocaleString("ru-RU")}</span>`;
+
+ $("rank").textContent=s.fame>900?"✦ Живая легенда":s.fame>400?"✦ Герой королевства":s.fame>100?"✦ Известное имя":"✦ "+(s.fame>0?"На слуху":"Безвестный");
+
+ $("generation").textContent=`Поколение ${["I","II","III","IV","V","VI","VII","VIII","IX"][Math.min(s.gen-1,8)]||s.gen}`;
+
+ $("year").textContent=`Год ${s.year} Эпохи Королей`;
+
+ $("ageLabel").innerHTML=`${s.age} лет <small>· ${stages(s.age)}</small>`;
+
+ $("yearHint").textContent=s.alive?(s.actions>0?`Осталось ${s.actions} действий. Можно продолжить занятия или завершить год сейчас.`:"Год завершён. Пора двигаться дальше."):"Эта жизнь завершилась.";
+
+ $("ageBtn").disabled=!s.alive;
+$("ageBtn").textContent=s.alive?"ПРОЖИТЬ ГОД ▶":"ЖИЗНЬ ОКОНЧЕНА";
+
+ $("bars").innerHTML=bar("Здоровье",s.health,100,"hp","❤️")+bar("Настроение",s.mood,100,"mood","😊")+bar("Мана",s.mana,Math.max(1,s.maxMana||100),"mana","🔮")+bar("Общение",s.social,100,"social","🫂")+bar("Стресс",s.stress,100,"","☁️");
+
+ $("stats").innerHTML=[["💪 Сила",s.strength],["🦶 Ловкость",s.agility],["🌀 Контроль магии",s.control],["🔮 Запас маны",s.maxMana||100],["🍀 Удача",s.luck],["⚔ Боевой рейтинг",Math.round(s.strength*1.35+s.agility*1.15+s.sword*2.4+s.magic*1.8+s.control+s.luck*.4)]].map(x=>`<div class="stat"><span>${x[0]}</span><b>${x[1]}</b></div>`).join("");
+ if(s.birthPath&&birthPaths[s.birthPath])$("stats").innerHTML+=`<div class="stat" style="grid-column:1/-1"><span>✦ Рождение</span><b>${birthPaths[s.birthPath].name}</b></div><div class="stat" style="grid-column:1/-1"><span>☼ Благословение</span><b>${s.blessing?.name||"Неизвестно"}</b></div><div class="stat" style="grid-column:1/-1"><span>☾ Проклятие</span><b>${s.curse?.name||"Неизвестно"}</b></div>`;
+ if(s.blessing)$("stats").innerHTML+=`<div class="trait-detail" style="grid-column:1/-1"><b>☼ ${s.blessing.name} — последствия</b><br>${birthBlessings.find(x=>x.id===s.blessing.id)?.desc||s.blessing.desc||"Особый дар судьбы."}</div>`;
+ if(s.curse)$("stats").innerHTML+=`<div class="trait-detail curse" style="grid-column:1/-1"><b>☾ ${s.curse.name} — последствия</b><br>${birthCurses.find(x=>x.id===s.curse.id)?.desc||s.curse.desc||"Особое проклятие судьбы."}</div>`;
+
+ $("skills").innerHTML=[["⚔ Владение мечом",s.sword],["✨ Магическое искусство",s.magic],["⭐ Слава",s.fame],["🪙 Золото",s.gold]].map(x=>`<div class="stat"><span>${x[0]}</span><b>${x[1]}</b></div>`).join("");
+ if(s.potential){const capNames={strength:"Сила",agility:"Ловкость",control:"Контроль",maxMana:"Мана",luck:"Удача",sword:"Меч",magic:"Магия"};$("skills").innerHTML+=`<div class="trait-detail" style="grid-column:1/-1"><b>🧬 Пределы характеристик</b><br>${birthStatKeys.map(k=>`${capNames[k]}: ${s[k]} / ${s.potential[k]}`).join(" · ")}</div>`;}
+
+ $("equipment").innerHTML=[["🗡 Оружие",["Учебный клинок","Стальной меч","Рунный клинок","Клинок драконоборца"][Math.min(3,s.weaponLevel||0)]],["🛡 Броня",["Нет доспеха","Кожаная броня","Кольчуга","Доспех древних"][Math.min(3,s.armorLevel||0)]],["🪄 Посох",s.staffName||"Нет"],["✧ Артефакты",(s.artifacts||[]).map(x=>x.name).join(", ")||"Нет"],["🏅 Ранг гильдии",["Нет ранга","Новичок","Искатель","Ветеран","Мастер"][Math.min(4,s.guildRank||0)]],["📜 Выполнено заданий",s.questsDone||0]].map(x=>`<div class="stat"><span>${x[0]}</span><b>${x[1]}</b></div>`).join("");
+
+ $("guildInfo").innerHTML=`Гильдия искателей: <b>${(s.guildRank||0)>=4?"Мастер":(s.guildRank||0)>=3?"Ветеран":(s.guildRank||0)>=2?"Искатель":(s.guildRank||0)>=1?"Новичок":"не состоишь"}</b><br><span style="font:12px Arial;
+color:var(--muted)">Оружие усиливает удары, броня снижает получаемый урон. Поручения приносят золото и славу.</span>`;
+
+ $("family").innerHTML=`<div>💍 Спутник жизни: <b>${s.partner||"Пока нет"}</b></div><div>👶 Потомки: <b>${s.children.length}</b></div><div>🧬 Род: <b>${s.gen}-е поколение</b></div><div class="childlist">${s.children.map((c,i)=>`<button class="childcard" data-profile="${i}">${avatarMarkup(c)}<span class="child-meta"><b>${c.name}</b><small>${c.age} лет · ${c.sex} · ${races[c.race]?.name||"Человек"} · сила ${c.strength} · магия ${c.magic}</small></span></button>`).join("")||"<span>Потомков пока нет.</span>"}</div><div style="margin-top:8px;
+color:var(--gold2)">Наследие</div>${s.legacy.length?s.legacy.map(x=>"✦ "+x).join("<br>"):"Твоя история только начинается."}`;
+
+ const infectionCard=$("infectionCard"),infectionPanel=$("infectionPanel");
+ if(s.infection){
+  infectionCard.hidden=false;infectionCard.classList.toggle("wolf",s.infection.type==="werewolf");
+  const vamp=s.infection.type==="vampire";
+  infectionPanel.innerHTML=`<span class="infection-tag">${vamp?"🩸 Вампирская кровь":"🌕 Проклятие оборотня"}</span><p>${vamp?"Тьма даровала тебе бессмертие и сверхъестественную силу. Обычные отдых, зелья и лечебная магия больше не действуют. В конце каждого года есть шанс, что солнце обожжёт тебя и оставит лишь 10% здоровья.":"Лунное проклятие даровало звериную силу и долголетие. Обычные способы лечения больше не действуют. Иногда лунная ярость приводит к встрече с опасным противником."}</p><p><b>Исцеление:</b> только особый лекарь, которого можно случайно встретить во время исследования мира. Цена — 1000 золота. После лечения навсегда теряется 20% сверхъестественно усиленных характеристик.</p><div class="infection-actions"><button id="bloodHunt">${vamp?"🩸 Охотиться на людей":"🐺 Ночная охота"}</button></div>`;
+  $("bloodHunt").onclick=supernaturalHunt;
+ }else{infectionCard.hidden=true;infectionPanel.innerHTML="";}
+
+ const resultEl=$("actionResult");if(resultEl)resultEl.innerHTML=`<b>✦ Результат последнего действия</b><br>${s.lastActionResult||"Пока ничего не произошло."}<small style="display:block;color:var(--muted);margin-top:5px">Здесь отображаются реальные изменения характеристик, ресурсов и состояния.</small>`;
+ $("points").textContent=s.alive?`⚡ Действий осталось: ${s.actions} / 7 · Тренировки улучшают навыки, удача неизменна.`:"Ты можешь продолжить род, выбрав наследника.";
+
+ const actionMarkup=(a,i)=>{const ageLocked=actionAgeLocked(i);const why=s.age<7?"Доступно в более старшем возрасте.":"Пока недоступно по возрасту.";const desc=i===0?(races[s.race]?.gift||a.desc):a.desc;return `<button class="act" data-a="${i}" ${!s.alive||s.actions<=0||ageLocked?"disabled":""}><strong>${a.icon} ${a.name}</strong><span>${ageLocked?why:desc}</span></button>`;};
+ $("actions").innerHTML=actionDefs.slice(0,8).map(actionMarkup).join("");
+ $("extraActions").innerHTML=actionDefs.slice(8).map((a,j)=>actionMarkup(a,j+8)).join("");
+ $("extraCount").textContent=actionDefs.length-8;
+ const ritualFound=(s.foundRituals||[]).includes("time");const ritualReady=ritualFound&&s.magic>=120&&s.age>=18&&!s.extendedLife;
+ if(ritualFound)$("extraActions").innerHTML+=`<button class="act" id="lifeRitualBtn" ${!s.alive||!ritualReady||s.actions!==7?"disabled":""}><strong>⏳ Ритуал украденного времени</strong><span>${s.extendedLife?"Ритуал уже совершён.":s.magic<120?`Нужно магии: 120 · сейчас ${Math.floor(s.magic)}.`:s.age<18?"Доступно с 18 лет.":s.actions!==7?`Нужно начать с полными 7 действиями · осталось ${s.actions}.`:"Все 7 действий будут потрачены. +10 лет, изгнание среди людей и охота святых рыцарей."}</span></button>`;
+ const ritualButton=$("lifeRitualBtn");if(ritualButton)ritualButton.onclick=castLifeRitual;
+ if((s.foundRituals||[]).includes("limits")){$("extraActions").innerHTML+=`<button class="act" id="ancientLimitsBtn" ${!s.alive||!s.children?.length||s.actions<=0?"disabled":""}><strong>🩸 Древний ритуал пределов</strong><span>Найден свиток. 30% шанс увеличить все пределы; ребёнок погибнет в любом случае.</span></button>`;$("ancientLimitsBtn").onclick=ancientLimitRitual;}
+ $("ageBtnDock").disabled=!s.alive;$("ageBtnDock").textContent=s.alive?"ПРОЖИТЬ ГОД ▶":"ЖИЗНЬ ОКОНЧЕНА";
+ $("dockHint").textContent=s.alive?`Осталось действий: ${s.actions}/7`:"Летопись завершена";
+ $("yearDock").hidden=!s;
+
+ $("potionCount").textContent=s.potions||0;
+
+ $("questPanel").innerHTML=questMarkup();
+ $("champions").innerHTML=championsMarkup();
+
+ $("championStatus").textContent=s.duelWins?`Побед над чемпионами: ${s.duelWins}. Твоё имя начинает звучать в легендах.`:"Слухи о них можно услышать в тавернах, но встретить их почти невозможно.";
+
+ $("lifeGoal").innerHTML=goalMarkup();
+ const chron=$("worldChronicle");if(chron)chron.innerHTML=s.worldChronicle.length?s.worldChronicle.slice().reverse().map(x=>`<div class="entry">${x}</div>`).join(""):`Изначальные боги ещё не повержены. В старых легендах упоминается тот, кто убил их всех.`;
+
+ $("journal").innerHTML=s.log.map(e=>`<div class="entry"><small>${e.age} лет · год ${e.year}</small>${e.text}</div>`).join("")||"Пока здесь тихо.";
+
+}
+function racialTalent(){
+ if(s.racialTalentUsed){toast("Родовой дар уже использован в этом году.");return;}
+ s.racialTalentUsed=true;
+ switch(s.race){
+  case "human":{const k=pick(["strength","agility","control","sword","magic"]),gain=rnd(2,4);s[k]+=gain;const g=rnd(8,18);s.gold+=g;say(`Ты быстро освоился в новой задаче: ${({strength:"сила",agility:"ловкость",control:"контроль магии",sword:"меч",magic:"магия"})[k]} +${gain}. Ты также заработал ${g} золотых.`);break;}
+  case "elf":s.mana=clamp(s.mana+Math.round(s.maxMana*.45),0,s.maxMana);s.magic+=rnd(2,4);s.control+=rnd(1,3);s.stress=clamp(s.stress-8);say("Ты провёл время под лунным светом. Поток маны восстановился, магия стала тоньше.");break;
+  case "dwarf":s.sword+=rnd(2,4);s.strength+=rnd(1,3);if(!s.infection)s.health=clamp(s.health+8);say("Вспомнив секреты горных кузнецов, ты закалил клинок и собственное тело.");break;
+  case "orc":s.strength+=rnd(2,5);s.combat+=rnd(5,10);if(!s.infection)s.health=clamp(s.health+12);s.mood=clamp(s.mood+5);say("Боевой рёв разогнал усталость. Ты чувствуешь прилив ярости и сил.");break;
+  case "fae":s.luck+=rnd(2,3);s.mood=clamp(s.mood+10);s.social=clamp(s.social+6);if(Math.random()<.45){const g=rnd(20,40);s.gold+=g;say(`Искры судьбы привели тебя к тайнику с ${g} золотыми.`);}else{s.mana=clamp(s.mana+20,0,s.maxMana);say("Искры судьбы закружились вокруг тебя. Удача возросла, а магическая энергия восстановилась.");}break;
+ }
+}
+
+const storyArcs=[
+ {id:"bell",title:"Колокол под озером",intro:"Рыбаки слышат колокольный звон из-под чёрной воды. На берегу тебя ждёт слепой картограф.",chapters:[
+  {title:"Карта утонувшего храма",text:"Картограф просит достать карту из затопленной часовни. Вода ледяная, а под ней движутся тени.",opts:[{label:"Нырнуть и найти тайник",stat:"agility",dc:32,ok:"Ты нашёл карту в каменном ларце.",bad:"Подводное течение ударило о скалы.",good:{mana:10,fame:8},fail:{health:-12}},{label:"Расшифровать руны на берегу",stat:"control",dc:29,ok:"Руны открыли безопасный проход.",bad:"Ложный символ вызвал магический ожог.",good:{magic:2},fail:{health:-8,mana:-12}}]},
+  {title:"Страж глубины",text:"У входа в храм проснулся древний страж. Он не нападает, но требует доказать право войти.",opts:[{label:"Сразиться со стражем",stat:"sword",dc:35,ok:"Точный удар расколол печать на его груди.",bad:"Страж отбросил тебя к стене.",good:{combat:12,gold:20},fail:{health:-18}},{label:"Успокоить его древним заклинанием",stat:"magic",dc:33,ok:"Страж признал в тебе хранителя знаний.",bad:"Заклинание рассыпалось, а страж ударил волной.",good:{control:2,mana:15},fail:{health:-10}}]},
+  {title:"Звон последнего колокола",text:"В центре храма висит колокол, удерживающий души погибших моряков. Его можно освободить или подчинить.",opts:[{label:"Освободить души",stat:"control",dc:38,ok:"Души обрели покой и благословили твой род.",bad:"Энергия душ обожгла тебя.",good:{fame:55,luck:2,mood:20},fail:{health:-20,fame:5}},{label:"Забрать силу колокола",stat:"strength",dc:37,ok:"Ты подчинил древнюю силу.",bad:"Сила оказалась слишком велика.",good:{gold:90,magic:4},fail:{stress:20,health:-14}}]}
+ ]},
+ {id:"ash",title:"Пепельная корона",intro:"В старой крепости нашли корону исчезнувшего короля. Несколько фракций уже идут к руинам.",chapters:[
+  {title:"Три знамени",text:"На дороге спорят солдаты, маги и торговцы. Каждый предлагает свою поддержку — и свою цену.",opts:[{label:"Договориться с солдатами",stat:"charisma",dc:30,ok:"Солдаты присоединились к твоему походу.",bad:"Командир счёл тебя самонадеянным.",good:{combat:10,social:10},fail:{gold:-15}},{label:"Подкупить проводника",stat:"gold",dc:45,ok:"Проводник знает тайный вход.",bad:"Проводник исчез с частью денег.",good:{fame:8},fail:{gold:-25}}]},
+  {title:"Зал пепельных рыцарей",text:"Внутри крепости поднялись рыцари, связанные клятвой. Они проверяют не силу, а намерение.",opts:[{label:"Принять поединок",stat:"sword",dc:36,ok:"Ты победил их предводителя в честном бою.",bad:"Рыцари ранили тебя и закрыли проход.",good:{sword:3,combat:15},fail:{health:-18}},{label:"Развеять клятву магией",stat:"magic",dc:34,ok:"Рыцари вспомнили свои имена и исчезли.",bad:"Проклятие ударило обратной волной.",good:{magic:3,control:2},fail:{mana:-20,health:-8}}]},
+  {title:"Право на корону",text:"Корона предлагает власть над руинами. Но её цена — забыть тех, кто помог тебе дойти сюда.",opts:[{label:"Отказаться от власти и уничтожить корону",stat:"luck",dc:35,ok:"Крепость освободилась от проклятия.",bad:"Взрыв отбросил тебя, но корона уничтожена.",good:{fame:65,mood:15},fail:{health:-22,fame:20}},{label:"Надеть корону",stat:"control",dc:40,ok:"Ты удержал древнюю волю и получил её силу.",bad:"Корона оставила на душе тяжёлый след.",good:{gold:120,renown:2},fail:{stress:25,luck:-2}}]}
+ ]},
+ {id:"caravan",title:"Последний караван",intro:"Купеческий обоз пропал на тракте. За возвращение груза обещают щедрую награду, но свидетели говорят о чём-то нечеловеческом.",chapters:[
+  {title:"Следы на тракте",text:"Следы ведут в лес. На развилке видны отпечатки тяжёлых сапог и странная светящаяся пыль.",opts:[{label:"Идти по следам разбойников",stat:"agility",dc:30,ok:"Ты обнаружил лагерь похитителей.",bad:"Ложный след завёл тебя в болото.",good:{gold:15},fail:{health:-10}},{label:"Изучить светящуюся пыль",stat:"control",dc:29,ok:"Пыль привела к скрытому порталу.",bad:"Пыль вызвала приступ головокружения.",good:{magic:2},fail:{mana:-15}}]},
+  {title:"Лагерь без людей",text:"Ты находишь обоз, но охрана исчезла. Из повозки доносится голос, называющий твоё имя.",opts:[{label:"Открыть повозку мечом наготове",stat:"strength",dc:34,ok:"Ты одолел тварь, скрывавшуюся внутри.",bad:"Тварь успела ранить тебя.",good:{combat:12,gold:30},fail:{health:-17}},{label:"Ответить голосу заклинанием",stat:"magic",dc:34,ok:"Ты разрушил иллюзию и увидел пленников.",bad:"Иллюзия поглотила часть твоей маны.",good:{control:2,fame:12},fail:{mana:-22}}]},
+  {title:"Кому достанется груз",text:"Купец найден живым. Он просит вернуть всё золото, но часть груза принадлежит бедным семьям.",opts:[{label:"Вернуть груз целиком",stat:"charisma",dc:34,ok:"Купец щедро наградил тебя и прославил твоё имя.",bad:"Купец заплатил меньше обещанного.",good:{gold:100,fame:25},fail:{gold:20}},{label:"Разделить груз с пострадавшими",stat:"luck",dc:32,ok:"Люди помогли тебе и наградили добрым именем.",bad:"Купец отказался платить, но семьи запомнили помощь.",good:{social:20,fame:45},fail:{social:8,fame:20}}]}
+ ]}
+];
+function questMarkup(){
+ const q=s.storyQuest;
+ if(!q)return `<p>В королевстве ходят слухи о трёх больших делах. Выбери путь, где твои решения важнее случайной награды.</p><div class="quest-meta">🧭 Доступно с 12 лет · 3 главы · проверки характеристик · разные исходы</div>`;
+ if(q.completed)return `<b>✓ ${q.title}</b><p>Это приключение завершено. Его исход: ${q.outcome||"история вошла в хроники"}.</p><div class="quest-meta">Завершено глав: 3/3 · Можно начать новое приключение.</div>`;
+ return `<b>${q.title}</b><p>${q.intro}</p><div class="quest-progress">${[0,1,2].map(i=>`<span class="${i<q.step?"done":i===q.step?"current":""}">${i+1}</span>`).join("")}</div><div class="quest-meta">Глава ${q.step+1} из 3 · Решения сохраняются между годами.</div>`;
+}
+function questAction(){
+ if(s.age<12){say("Для больших приключений нужно достичь 12 лет.");return;}
+ if(!s.storyQuest||s.storyQuest.completed){const arc=pick(storyArcs);s.storyQuest={id:arc.id,title:arc.title,intro:arc.intro,step:0,completed:false,outcome:"",startedYear:s.year};}
+ const q=s.storyQuest,arc=storyArcs.find(x=>x.id===q.id);if(!arc)return;
+ const chapter=arc.chapters[q.step];
+ $("modal").innerHTML=`<div class="quest-kicker">ПРИКЛЮЧЕНИЕ · ГЛАВА ${q.step+1}/3</div><h2>📖 ${q.title}</h2><h3>${chapter.title}</h3><p>${chapter.text}</p><p class="sub">Выбери подход. Проверка зависит от навыка, но исход не гарантирован.</p>${chapter.opts.map((o,i)=>`<button class="choice" data-quest-choice="${i}">${o.label}<small>Проверка: ${({strength:"сила",agility:"ловкость",control:"контроль",sword:"меч",magic:"магия",charisma:"обаяние",gold:"запас золота",luck:"удача"})[o.stat]||o.stat} · сложность ${o.dc}</small></button>`).join("")}`;
+ $("overlay").style.display="flex";
+ $("modal").querySelectorAll("[data-quest-choice]").forEach(btn=>btn.onclick=()=>{
+  const o=chapter.opts[+btn.dataset.questChoice];let value=o.stat==="charisma"?(s.social||0):o.stat==="gold"?Math.min(100,s.gold):Number(s[o.stat]||0);
+  const chance=clamp(48+(value-o.dc)*1.45+(s.luck||0)*.28,12,92),success=rnd(1,100)<=chance;
+  const effects=success?o.good:o.fail;
+  Object.entries(effects).forEach(([k,v])=>{if(k==="health"||k==="mana"||k==="mood"||k==="stress"||k==="social")s[k]=clamp((s[k]||0)+v,0,k==="mana"?(s.maxMana||100):100);else s[k]=Math.max(0,(s[k]||0)+v);});
+  say(`${success?"Успех":"Неудача"}: ${success?o.ok:o.bad}`);playSound(success?"success":"danger");
+  q.step++;
+  if(q.step>=3){q.completed=true;q.outcome=success?"Ты завершил финальное испытание успешно.":"Ты завершил путь, заплатив за него цену.";const reward=success?rnd(90,140):rnd(35,65);s.gold+=reward;s.fame+=success?70:30;s.renown=(s.renown||0)+(success?2:1);say(`Приключение «${q.title}» завершено. Дополнительная награда: ${reward} золота, слава и известность.`);playSound("level");}
+  $("overlay").style.display="none";checkGoal();render();save();
+ });
+}
+
+const actionMinAge=[7,7,7,0,7,10,0,7,16,14,7,14,12];
+function actionAgeLocked(i){return s.age<(actionMinAge[i]??0);}
+
+const actionDefs=[
+ {icon:"✦",name:"Использовать родовой дар",desc:"Особый талант твоего народа.",fn:racialTalent},
+ {icon:"✨",name:"Изучать магию",desc:"Контроль и магическое мастерство + мана.",fn:()=>{s.magic+=rnd(2,5)+Math.floor(s.control/12);
+s.control+=rnd(1,3);
+s.maxMana=(s.maxMana||100)+rnd(2,6)+Math.floor(s.control/15);
+s.mana=clamp(s.mana+15,0,s.maxMana);
+s.stress+=rnd(2,5);
+say("Ты провёл часы за изучением заклинаний. Магия стала послушнее.");
+}},
+ {icon:"⚔️",name:"Тренировать меч",desc:"Сила, ловкость и фехтование.",fn:()=>{s.sword+=rnd(2,5)+Math.floor(s.agility/15);
+s.strength+=rnd(1,3)+Math.floor(s.strength/20);
+s.agility+=rnd(1,2);
+if(!s.infection)s.health=clamp(s.health+3);
+s.stress+=4;
+say("Тренировки до изнеможения закалили тело и руку.");
+}},
+ {icon:"🧘",name:"Отдыхать",desc:"Восстановить здоровье, настроение и ману.",fn:()=>{if(!s.infection)s.health=clamp(s.health+rnd(12,22));
+s.mood=clamp(s.mood+rnd(12,20));
+s.mana=clamp(s.mana+25,0,s.maxMana||100);
+s.stress=clamp(s.stress-18);
+say("Ты позволил себе отдохнуть. Мир подождёт.");
+}},
+ {icon:"🧭",name:"Исследовать мир",desc:"Случайные встречи, находки и опасности.",fn:explore},
+ {icon:"🐉",name:"Охотиться на тварей",desc:"Сразиться с чудовищем ради славы и золота.",fn:fight},
+ {icon:"🫂",name:"Общаться",desc:"Друзья, связи и хорошее настроение.",fn:()=>{s.social=clamp(s.social+rnd(8,16));
+s.mood=clamp(s.mood+8);
+if(Math.random()<.15)s.fame+=5;
+say("Ты провёл время среди людей. Новые знакомства могут пригодиться.");
+}},
+ {icon:"📚",name:"Учиться и работать",desc:"Заработать золото и развить интеллект.",fn:()=>{
+let g=rnd(8,18)+Math.floor(s.agility/3);
+s.gold+=g;
+s.mood=clamp(s.mood-3);
+s.fame+=1;
+say(`Ты потрудился и получил ${g} золотых.`);
+}},
+ {icon:"💞",name:"Искать любовь",desc:"В зрелом возрасте можно создать семью.",fn:romance},
+ {icon:"👑",name:"Совершить подвиг",desc:"Рискованный путь к славе и могуществу.",fn:heroic}
+];
+
+actionDefs.push(
+ {icon:"🛒",name:"Купить снаряжение",desc:"Улучшить оружие или броню у торговца.",fn:shop},
+ {icon:"🏰",name:"Взять задание гильдии",desc:"Выполнить поручение ради золота, славы и ранга." ,fn:guildQuest},
+ {icon:"📖",name:"Продвинуться в приключении",desc:"Сюжетная цепочка с выбором, проверками навыков и последствиями.",fn:questAction}
+);
+
+function ancientLimitRitual(){
+ if(!(s.foundRituals||[]).includes("limits")){toast("Ты ещё не нашёл свиток Древнего ритуала пределов.");return;}
+ if(!s.children?.length){toast("Для ритуала нужен хотя бы один ребёнок.");return;}
+ $("modal").innerHTML=`<h2>🩸 Древний ритуал пределов</h2><p>Шанс успеха — <b>30%</b>. Цена неизменна: выбранный ребёнок будет навсегда принесён в жертву, даже если ритуал провалится.</p><p style="color:#e7a7bc">Это необратимое решение: наследник исчезнет из семьи и не сможет продолжить род.</p>${s.children.map((c,i)=>`<button class="choice" data-sacrifice="${i}">${c.name} · ${c.age} лет · предел магии ${c.potential?.magic??"?"}</button>`).join("")}<button class="secondary" id="cancelAncient">Отказаться</button>`;$("overlay").style.display="flex";
+ document.querySelectorAll('[data-sacrifice]').forEach(btn=>btn.onclick=()=>{const i=Number(btn.dataset.sacrifice),child=s.children[i],before=snapshotStats();if(!child||s.actions<=0||!confirm(`Принести в жертву ${child.name}? Шанс успеха 30%. Решение необратимо.`))return;s.actions--;s.children.splice(i,1);if(Math.random()<.30){for(const k of birthStatKeys)s.potential[k]=(Number(s.potential[k])||0)+(k==='maxMana'?rnd(12,22):rnd(8,16));s.magic+=5;s.maxMana+=10;s.mana=Math.min(s.maxMana,s.mana+10);say(`🩸 Ритуал удался. ${child.name} стал ценой твоего возвышения. Все пределы характеристик значительно выросли.`);playSound('level');}else{say(`🩸 Ритуал провалился. ${child.name} погиб напрасно. Древняя сила отвергла твою жертву.`);playSound('danger');}recordActionResult("Древний ритуал пределов",before,s.log?.[0]?.text);$("overlay").style.display="none";render();save();});$("cancelAncient").onclick=()=>$("overlay").style.display="none";
+}
+function shop(){
+ const w=s.weaponLevel||0,a=s.armorLevel||0,cw=[0,35,85,170][w+1]||170,ca=[0,30,75,150][a+1]||150;
+ const staffs=[{level:1,name:"Посох ученика",bonus:8,cost:120},{level:2,name:"Посох лунного серебра",bonus:18,cost:360},{level:3,name:"Посох архимага",bonus:35,cost:850}],nextStaff=staffs.find(x=>x.level>(s.staffLevel||0));
+ const relics=[{id:"ring_fate",name:"Кольцо Фортуны",desc:"+8 к удаче",cost:420},{id:"orb_ether",name:"Сфера эфира",desc:"+12 к запасу маны и +4 к магии",cost:650},{id:"titan_mark",name:"Печать титана",desc:"+8 к силе и +5 к пределу силы",cost:700},{id:"mirror_soul",name:"Зеркало души",desc:"+6 к контролю и +5 к пределу контроля",cost:720}],owned=id=>(s.artifacts||[]).some(x=>x.id===id);
+ $("modal").innerHTML=`<h2>🛒 Торговец Старого города</h2><p>У тебя ${s.gold} золотых. Снаряжение и артефакты остаются с тобой.</p><button id="buyW" ${w>=3||s.gold<cw?"disabled":""}>🗡 Улучшить оружие · ${cw} золота<small>Уровень ${w}/3 · повышает урон мечом.</small></button><button id="buyA" ${a>=3||s.gold<ca?"disabled":""}>🛡 Улучшить броню · ${ca} золота<small>Уровень ${a}/3 · снижает входящий урон.</small></button><div class="trait-detail"><b>🔮 Магические посохи</b><br>${nextStaff?`${nextStaff.name}: +${nextStaff.bonus} к урону заклинаний · ${nextStaff.cost} золота`:"Все посохи торговца уже приобретены."}</div><button id="buyStaff" ${!nextStaff||s.gold<(nextStaff?.cost||99999)?"disabled":""}>🪄 Купить посох ${nextStaff?`· ${nextStaff.cost} золота`:"· всё куплено"}<small>${nextStaff?`Текущий бонус: +${s.staffBonus||0}. Новый бонус: +${nextStaff.bonus} к заклинаниям.`:""}</small></button><div class="trait-detail"><b>✧ Редкие артефакты</b><br>${relics.map(r=>`${r.name} — ${r.desc} · ${owned(r.id)?"уже найден":""}`).join("<br>")}</div>${relics.map(r=>`<button class="buyRelic" data-relic="${r.id}" ${owned(r.id)||s.gold<r.cost?"disabled":""}>✧ ${r.name} · ${r.cost} золота<small>${r.desc}${owned(r.id)?" · уже принадлежит тебе":""}</small></button>`).join("")}<button class="secondary" id="leave">Уйти</button>`;
+ $("overlay").style.display="flex";["buyW","buyA","buyStaff","leave"].forEach(id=>{const el=$(id);if(el)el.style.cssText="width:100%;margin-top:8px;padding:12px;border-radius:9px;border:1px solid #a56b1c;background:#63350e;text-align:left"});
+ $("buyW").onclick=()=>{if(s.gold>=cw&&s.weaponLevel<3){s.gold-=cw;s.weaponLevel++;say("Ты приобрёл улучшенное оружие.");closeAndRender();}};$("buyA").onclick=()=>{if(s.gold>=ca&&s.armorLevel<3){s.gold-=ca;s.armorLevel++;say("Ты приобрёл прочную броню.");closeAndRender();}};
+ if(nextStaff)$("buyStaff").onclick=()=>{if(s.gold<nextStaff.cost)return;s.gold-=nextStaff.cost;s.staffLevel=nextStaff.level;s.staffBonus=nextStaff.bonus;s.staffName=nextStaff.name;say(`Ты приобрёл ${nextStaff.name}. Сила заклинаний выросла на ${nextStaff.bonus}.`);closeAndRender();};
+ document.querySelectorAll('.buyRelic').forEach(btn=>btn.onclick=()=>{const r=relics.find(x=>x.id===btn.dataset.relic);if(!r||owned(r.id)||s.gold<r.cost)return;s.gold-=r.cost;s.artifacts.push({id:r.id,name:r.name,desc:r.desc});if(r.id==='ring_fate')s.luck+=8;if(r.id==='orb_ether'){s.maxMana+=12;s.mana+=12;s.magic+=4;}if(r.id==='titan_mark'){s.strength+=8;s.potential.strength+=5;}if(r.id==='mirror_soul'){s.control+=6;s.potential.control+=5;}say(`Приобретён редкий артефакт: ${r.name}. ${r.desc}.`);closeAndRender();});$("leave").onclick=()=>$("overlay").style.display="none";
+}
+
+function guildQuest(){
+ if(s.age<14){say("Гильдия принимает искателей с 14 лет.");
+return;
+}
+ 
+let difficulty=1+(s.guildRank||0),skill=s.sword+s.magic+s.strength+s.agility+s.control;
+
+ 
+let chance=clamp(42+Math.floor(skill/4)+s.luck*1.3-difficulty*13,12,92);
+
+ if(rnd(1,100)<=chance){
+let g=rnd(18,30)+difficulty*12,f=rnd(12,20)+difficulty*7;
+s.gold+=g;
+s.fame+=f;
+s.questsDone=(s.questsDone||0)+1;
+if(s.questsDone%2===0)s.guildRank=Math.min(4,difficulty);
+say(`Поручение гильдии выполнено! Награда: ${g} золота, слава +${f}.`);
+}
+ else{s.health=clamp(s.health-rnd(8,20));
+s.mood=clamp(s.mood-6);
+say("Задание оказалось опаснее ожиданий. Ты вернулся без награды.");
+}
+}
+
+function useAction(i){if(!s.alive||s.actions<=0)return;playSound(i===0||i===1?"magic":i===5?"sword":"action");
+let old=s.actions;
+const growthBefore=Object.fromEntries(birthStatKeys.map(k=>[k,Number(s[k])||0]));
+const actionBefore=snapshotStats();
+const action=actionDefs[i];
+if(actionAgeLocked(i)){say("Ты ещё слишком мал для такого занятия. Попробуй другое дело.");s.mood=clamp(s.mood+2);s.actions=old-1;render();return;}
+if(s.age>=65&&[1,4,9,10].includes(i)&&Math.random()<(s.race==="dwarf"?.20:s.race==="elf"?.25:.35)){s.stress=clamp(s.stress+5);say("Возраст не позволил выложиться на полную. Тебе пришлось сделать перерыв.");}
+const logBefore=s.log?.[0]?.text||"";action.fn();
+if(s.age>=7&&s.age<14&&[1,2].includes(i)){s.control+=1;}
+if(s.age>=14&&s.age<18&&[1,2,4,5].includes(i)){s.strength+=1;s.agility+=1;}
+if(s.age>=40&&[1,2,4,5].includes(i))s.stress=clamp(s.stress+2);
+s.actions=old-1;
+applyBirthGrowth(growthBefore);
+recordActionResult(action.name,actionBefore,s.log?.[0]?.text||action.name);
+checkGoal();
+render();save()}
+function castLifeRitual(){
+ if(!s.alive||!(s.foundRituals||[]).includes("time")||s.extendedLife||s.age<18||s.magic<120||s.actions!==7){toast("Для ритуала нужны магия 120+, возраст 18+ и все 7 действий.");return;}
+ s.actions=0;s.extendedLife=true;s.outcast=true;s.social=clamp(s.social-35);s.fame+=80;s.stress=clamp(s.stress+25);s.holyHuntCooldown=1;
+ say("⏳ Ты произнёс запретное заклинание продления жизни. Время отступило на десять лет, но люди отвернулись от тебя: отныне ты навсегда изгой, а Священный орден объявил на тебя охоту.");
+ render();save();
+}
+function startHolyHunt(){
+ const foe={name:"Святой рыцарь-инквизитор",hp:Math.round(165+s.age*2.3),attack:Math.round(27+s.age*.42),def:18+Math.floor(s.age/12),loot:35,xp:55,kind:"holy",special:"holy",specialHint:"✝️ Рыцарь поднимает реликвенный клинок. Следующий удар особенно опасен."};
+ s.holyHuntCooldown=3;activeBattle={foe,maxHp:foe.hp,turn:1,guard:false,slow:false,poison:0,elite:true,special:foe.special,specialHint:foe.specialHint};
+ say("✝️ Святые рыцари выследили тебя. Они считают ритуал преступлением против божественного порядка.");battleScreen("Отряд инквизиторов настиг тебя. Они не отступят, пока ты не падёшь или не прорвёшься.");
+}
+function showChaosGodEncounter(source){
+ const unlocked=s.duelWins>=3;
+ $("modal").innerHTML=`<h2>☠️ Тот, кто убил богов</h2><p>Во время ${source} земля раскалывается, а небо гаснет. Перед тобой возникает <b>Азарот, Бог Хаоса</b> — древнее существо, уничтожившее изначальных богов и разорвавшее первозданный порядок.</p><p>${unlocked?"Ты уже победил всех трёх величайших бойцов Эйрвальда. Азарот признаёт твою силу и принимает вызов.":"Его взгляд пронзает тебя. Ты ещё не доказал, что достоин сразиться с ним. Легенды говорят: сначала одолей трёх сильнейших бойцов мира. Но даже случайная встреча с ним — чудо."}</p><button id="challengeChaos" ${!unlocked?"disabled":""}>⚔️ Бросить вызов богу хаоса</button><button class="secondary" id="fleeChaos">Отступить в разлом</button>`;
+ $("overlay").style.display="flex";
+ $("challengeChaos").onclick=()=>{const foe={name:"Азарот, Бог Хаоса",hp:620,attack:43,def:27,loot:0,xp:0,kind:"chaos",special:"chaos",specialHint:"☠️ Азарот сворачивает само пространство. Его следующий удар разрывает реальность."};activeBattle={foe,maxHp:foe.hp,turn:1,guard:false,slow:false,poison:0,elite:true,special:"chaos",specialHint:foe.specialHint,specialType:"chaosGod"};playSound("danger");battleScreen("Бой с богом начался. Он сильнее любого смертного. Победа навсегда изменит историю мира.");};
+ $("fleeChaos").onclick=()=>{$("overlay").style.display="none";s.health=clamp(s.health-rnd(4,12));say("Ты отступил от разлома. Азарот исчез, но его присутствие оставило след.");render();};
+}
+function showGodAscensionChoice(){
+ $("modal").innerHTML=`<h2>✦ Падение Азарота</h2><p>Бог Хаоса пал. Небо вновь обрело цвет, а осколки его силы разлетелись по миру. Теперь тебе предстоит решить, каким божеством тебя запомнит Эйрвальд.</p><button id="goodGod">🌿 Стать добрым богом — хранителем жизни и свободы</button><button id="evilGod">🔥 Стать злым богом — владыкой страха и воли</button>`;
+ $("overlay").style.display="flex";
+ const ascend=good=>{s.chaosGodDefeated=true;s.fame+=2000;s.magic+=25;s.maxMana+=60;s.mana=s.maxMana;s.worldChronicle=s.worldChronicle||[];s.foundRituals=s.foundRituals||[];s.loreUnlocked=s.loreUnlocked||[];s.ancestralReputation=Number(s.ancestralReputation)||0;s.ancestralInfamy=Number(s.ancestralInfamy)||0;s.lastActionResult=s.lastActionResult||"";s.ancestralDeeds=s.ancestralDeeds||[];s.explorationCount=s.explorationCount||0;const entry=good?`✧ ${s.name} победил Азарота и вознёсся как Добрый Бог — покровитель жизни, надежды и свободной воли.`:`☠ ${s.name} победил Азарота и занял его место как Злой Бог — владыка страха, хаоса и покорения.`;s.worldChronicle.push(entry);s.worldChronicle=s.worldChronicle.slice(-20);say(entry);$("overlay").style.display="none";playSound("level");render();save();};
+ $("goodGod").onclick=()=>ascend(true);$("evilGod").onclick=()=>ascend(false);
+}
+function explore(){
+ if(!s.easterMet&&Math.random()<.0008){meetEasterGuest();return;}
+ s.explorationCount=(s.explorationCount||0)+1;
+ if(Math.random()<(s.explorationCount>12?.11:.075)){const undiscovered=[{id:"limits",name:"Свиток Древнего ритуала пределов",desc:"В нём описана цена расширения потенциала — жизнь собственного потомка."},{id:"time",name:"Трактат украденного времени",desc:"Запретная магия способна отнять десять лет у самой смерти, но навсегда обратить людей против мага."}].filter(x=>!(s.foundRituals||[]).includes(x.id));if(undiscovered.length){const r=pick(undiscovered);s.foundRituals=s.foundRituals||[];s.foundRituals.push(r.id);if(r.id==="time")unlockLore("bloodOath");say(`📜 Ты обнаружил ${r.name}. ${r.desc} Теперь ритуал доступен в редких занятиях.`);render();save();return;}}
+ if(Math.random()<.16)unlockLore("firstRoad");
+ if((s.explorationCount||0)>=4&&Math.random()<.22)unlockLore("nightThings");
+ if((s.explorationCount||0)>=7&&Math.random()<.18)unlockLore("firstBeasts");
+ if((s.explorationCount||0)>=9&&Math.random()<.16)unlockLore("cultOfAsh");
+ if((s.explorationCount||0)>=14&&Math.random()<.12)unlockLore("cultDawn");
+ if((s.extendedLife||s.outcast)&&Math.random()<.24)unlockLore("holyOrder");
+ if((s.duelWins||0)>=1)unlockLore("threeChampions");
+ if(Math.random()<.12&&s.age>=18)unlockLore("blackArchive");
+ if(Math.random()<.10&&s.fame>=80)unlockLore("ashenCrown");
+ if(Math.random()<.035&&s.madness>=15)unlockLore("azarothWhisper");
+ if(Math.random()<.045){const pool=[{id:"ring_fate",name:"Кольцо Фортуны",desc:"+8 к удаче",apply:()=>s.luck+=8},{id:"orb_ether",name:"Сфера эфира",desc:"+12 к запасу маны и +4 к магии",apply:()=>{s.maxMana+=12;s.mana+=12;s.magic+=4;}},{id:"titan_mark",name:"Печать титана",desc:"+8 к силе и +5 к пределу силы",apply:()=>{s.strength+=8;s.potential.strength+=5;}},{id:"mirror_soul",name:"Зеркало души",desc:"+6 к контролю и +5 к пределу контроля",apply:()=>{s.control+=6;s.potential.control+=5;}}].filter(r=>!(s.artifacts||[]).some(x=>x.id===r.id));if(pool.length){const r=pick(pool);s.artifacts=s.artifacts||[];s.artifacts.push({id:r.id,name:r.name,desc:r.desc});r.apply();say(`✧ Редкая находка! Ты обнаружил артефакт «${r.name}»: ${r.desc}.`);return;}}
+ if(!s.chaosGodDefeated&&Math.random()<(s.duelWins>=3?.035:.0015)){showChaosGodEncounter("исследуя забытые земли");return;}if(rareChampionEncounter("исследования мира"))return;
+if(s.infection&&Math.random()<.12){meetCursedHealer();return;}
+if(!s.infection&&!s.infectionCured&&s.age>=14&&Math.random()<.09){spawnSupernatural(Math.random()<.5?"vampire":"werewolf","исследовании мира");return;}
+let r=Math.random();
+if(r<.28){
+let g=rnd(12,40);
+s.gold+=g;
+say(`В заброшенном святилище ты нашёл ${g} золотых.`)}else if(r<.52){s.mana=clamp(s.mana+20,0,s.maxMana||100);
+s.control++;
+say("Древний источник наполнил тебя маной и открыл тайну контроля.");
+}else if(r<.75){s.health=clamp(s.health-rnd(5,16));
+s.mood=clamp(s.mood-5);
+say("На тропе тебя настигла стая лесных тварей. Ты едва ушёл живым.");
+}else{s.fame+=rnd(8,18);
+s.luck=s.luck;
+say("Ты помог путникам отбиться от разбойников. О тебе заговорили.");
+}}
+let activeBattle=null;
+
+const infectionStats=["strength","agility","control","maxMana","luck","sword","magic","combat"];
+function infect(type,source){
+ if(s.infection||s.infectionCured||!s.alive)return false;
+ infectionStats.forEach(k=>{s[k]=Math.max(k==="maxMana"?25:0,Math.round((Number(s[k])||0)*1.5));});
+ s.mana=Math.min(s.maxMana,Math.round((s.mana||0)*1.5));
+ s.infection={type,cureProgress:0,sunBurns:0,frenzyCount:0,infectedAt:s.age};
+ playSound(type==="vampire"?"blood":"wolf");
+ say(type==="vampire"?`Ты победил ${source}, но его клыки оставили проклятый след. Кровь стала холодной: ты обращён в вампира. Все основные характеристики выросли в полтора раза.`:`Ты одолел ${source}, но его укус передал звериное проклятие. Ты стал оборотнем: все основные характеристики выросли в полтора раза.`);
+ render();save();return true;
+}
+function infectionCheck(type,source){
+ if(!s.infection&&!s.infectionCured&&Math.random()<(type==="vampire"?.13:.13))infect(type,source);
+}
+function spawnSupernatural(type,source="охоте"){
+ const vamp=type==="vampire",scale=1+Math.min(1.15,Math.max(0,s.age-18)*.009);
+ const foe=vamp?{name:"Древний вампир",hp:Math.round((72+s.age*1.65)*scale),attack:Math.round((18+s.age*.31)*scale),def:8+Math.floor(s.age/18),loot:54,xp:24,kind:"vampire",special:"blood",specialHint:"🩸 Вампир растворяется в тенях и готовится к кровавому броску."}:{name:"Матёрый оборотень",hp:Math.round((88+s.age*1.8)*scale),attack:Math.round((20+s.age*.34)*scale),def:7+Math.floor(s.age/20),loot:48,xp:26,kind:"werewolf",special:"moon",specialHint:"🌕 Оборотень входит в ярость. Следующий удар будет особенно жестоким."};
+ activeBattle={foe,maxHp:foe.hp,turn:1,guard:false,slow:false,poison:0,elite:true,infectionType:type,infectionSource:source,...{special:foe.special,specialHint:foe.specialHint}};
+ playSound("battle");battleScreen(vamp?"Из темноты выступил древний кровопийца. Его взгляд обещает бессмертие — и проклятие.":"Из леса выходит огромный зверь. В его глазах мерцает разум, но ярость сильнее слов.");
+}
+function supernaturalHunt(){
+ if(!s.alive||!s.infection)return;
+ if(s.age<16){toast("Охота доступна с 16 лет.");return;}
+ if(s.actions<=0){toast("На этот год действия закончились.");return;}
+ s.actions--;
+ const vamp=s.infection.type==="vampire";
+ const hunterChance=vamp?.22:.20;
+ if(Math.random()<hunterChance){
+  const foe=vamp?{name:"Святой рыцарь-инквизитор",hp:Math.round((105+s.age*2.0)*1.15),attack:Math.round(25+s.age*.42),def:13+Math.floor(s.age/15),loot:95,xp:36,kind:"holy"}:{name:"Серебряный следопыт",hp:Math.round((112+s.age*2.0)*1.12),attack:Math.round(24+s.age*.4),def:14+Math.floor(s.age/15),loot:90,xp:38,kind:"silver"};
+  activeBattle={foe,maxHp:foe.hp,turn:1,guard:false,slow:false,poison:0,elite:true,hunter:true};playSound("danger");battleScreen(vamp?"Твоя охота потревожила орден святых рыцарей. Они знают, кем ты стал, и пришли убить тебя.":"Серебряные охотники выследили зверя. Их оружие создано против твоей крови.");
+ }else if(vamp){const feed=rnd(18,34);s.health=clamp(s.health+feed,0,100);s.mana=clamp(s.mana+18,0,s.maxMana);s.social=clamp(s.social-rnd(2,7));s.stress=clamp(s.stress+4);say(`Ночная охота прошла успешно. Ты восстановил ${feed} здоровья и 18 маны, но слухи о пропавших людях множатся.`);render();save();}
+ else{const gain=rnd(2,5);s.health=clamp(s.health+12,0,100);s.combat+=gain;s.stress=clamp(s.stress+8);if(Math.random()<.25){s.social=clamp(s.social-8);say(`Звериная охота принесла боевой опыт +${gain}, но ты едва помнишь, что делал в лесу.`);}else say(`Ты вернулся с ночной охоты. Боевой опыт +${gain}, здоровье восстановлено.`);render();save();}
+}
+function meetCursedHealer(){
+ const vamp=s.infection?.type==="vampire";
+ $("modal").innerHTML=`<h2>⚗️ Лекарь за гранью света</h2><p>В заброшенной лечебнице тебя встречает старик в маске из белой кости. Он сразу распознаёт проклятие и утверждает, что способен изгнать его.</p><p>«Я не торгую надеждой. Цена — <b>1000 золотых</b>. Лечение будет полным, но часть силы, дарованной проклятием, уйдёт навсегда».</p><p>После ритуала характеристики, усиленные обращением, уменьшатся на 20%. Повторного заражения не будет.</p><button id="payHealer" ${s.gold<1000?"disabled":""}>🪙 Заплатить 1000 золотых и исцелиться</button><button class="secondary" id="leaveHealer">Уйти</button>`;
+ $("overlay").style.display="flex";
+ $("payHealer").onclick=()=>{if(!s.infection||s.gold<1000)return;s.gold-=1000;infectionStats.forEach(k=>{s[k]=Math.max(k==="maxMana"?25:0,Math.floor((Number(s[k])||0)*.8));});s.mana=Math.min(s.maxMana,Math.floor(s.mana*.8));const old=s.infection.type;s.infection=null;s.infectionCured=true;s.health=Math.min(s.health,100);playSound("level");say(`Лекарь провёл древний ритуал. Ты избавился от ${old==="vampire"?"вампиризма":"проклятия оборотня"}. Заплачено 1000 золотых; 20% усиленных характеристик утрачено навсегда.`);$("overlay").style.display="none";render();save();};
+ $("leaveHealer").onclick=()=>{$("overlay").style.display="none";say("Ты отказался от предложения лекаря. Возможно, судьба ещё сведёт вас снова.");render();save();};
+}
+
+
+function fight(){
+ if(s.age<10){say("Ты ещё слишком юн для настоящей охоты. Сначала подрасти и потренируйся.");return;}
+ if(s.health<=0){toast("Сначала восстанови здоровье.");return;}
+ if(!s.infection&&!s.infectionCured&&s.age>=14&&Math.random()<.16){spawnSupernatural(Math.random()<.5?"vampire":"werewolf","охоте на чудовищ");return;}
+ const beasts=[
+  {name:"Волчья тварь",hp:34+s.age*.8,attack:8+s.age*.18,def:3,loot:18,xp:7},
+  {name:"Пещерный тролль",hp:56+s.age,attack:13+s.age*.22,def:7,loot:32,xp:11},
+  {name:"Теневой василиск",hp:48+s.age*1.1,attack:15+s.age*.2,def:5,loot:40,xp:13},
+  {name:"Молодой дракон",hp:88+s.age*1.2,attack:20+s.age*.25,def:11,loot:65,xp:18}
+ ];
+ const r=Math.random(),dragonChance=clamp(7+s.luck*.5,7,20),idx=r<dragonChance/100?3:r<.43?2:r<.73?1:0;
+ const foe={...beasts[idx]};
+ const ageScale=1+Math.min(0.65,Math.max(0,s.age-18)*.006);
+ foe.hp=Math.round(foe.hp*1.18*ageScale);foe.attack=Math.round(foe.attack*1.13*ageScale);foe.def+=1+Math.floor(Math.max(0,s.age-25)/30);
+ const affixes=[{name:"свирепая",hp:1.18,atk:1.15,def:0,loot:1.35},{name:"древняя",hp:1.35,atk:1.08,def:2,loot:1.6},{name:"осквернённая",hp:1.08,atk:1.28,def:1,loot:1.45},{name:"обычная",hp:1,atk:1,def:0,loot:1}];
+ const affix=pick(affixes);foe.name=affix.name==="обычная"?foe.name:`${affix.name} ${foe.name.toLowerCase()}`;foe.hp=Math.round(foe.hp*affix.hp);foe.attack=Math.round(foe.attack*affix.atk);foe.def+=affix.def;foe.loot=Math.round(foe.loot*affix.loot);
+ const specials={"Молодой дракон":{special:"fire",specialHint:"🔥 Дракон набирает пламя! Защита или ледяная магия помогут пережить выдох."},"Пещерный тролль":{special:"smash",specialHint:"🪨 Тролль поднимает обе руки для сокрушительного удара!"},"Теневой василиск":{special:"gaze",specialHint:"👁 Василиск собирает яд во взгляде. Следующая атака может отравить."},"Волчья тварь":{special:"pounce",specialHint:"🐺 Тварь готовится к прыжку — высокая ловкость поможет уклониться."}};
+ const spec=Object.entries(specials).find(([name])=>foe.name.toLowerCase().includes(name.toLowerCase()))?.[1]||{};
+ activeBattle={foe,maxHp:foe.hp,turn:1,guard:false,slow:false,poison:0,elite:affix.name!=="обычная",...spec};
+ battleScreen(`${activeBattle.elite?"☠️ Редкий усиленный противник! ":""}Чудовище преградило тебе путь. Изучи его намерения и выбери тактику.`);
+}
+function battleScreen(message){
+ const b=activeBattle;if(!b)return;
+ const intent=b.foe.special&&b.turn%3===0?b.foe.specialHint:(b.turn%3===0?"⚠️ Противник готовит мощный удар! Защита особенно важна.":"Противник наблюдает за тобой и готовится атаковать.");
+ $("modal").innerHTML=`<h2>⚔️ ${b.foe.name}</h2><p>${message}</p>
+ <div class="barrow"><div class="barlabel"><span>❤️ Твоё здоровье</span><b>${Math.round(s.health)}/100</b></div><div class="track"><div class="fill hp" style="width:${clamp(s.health)}%"></div></div></div>
+ <div class="barrow" style="margin-top:10px"><div class="barlabel"><span>🐲 Здоровье чудовища</span><b>${Math.max(0,Math.round(b.foe.hp))}/${Math.round(b.maxHp)}</b></div><div class="track"><div class="fill" style="width:${clamp(b.foe.hp/b.maxHp*100)}%"></div></div></div>
+ <div class="battle-hint">${intent}<br>Твоя мана: ${Math.round(s.mana)}/${Math.round(s.maxMana||100)} · Зелий: ${s.potions||0}${b.slow?" · ❄️ Враг ослаблен":""}${b.elite?" · ☠️ Элитный враг":""}</div>
+ <div class="battle-actions">
+ <button id="strike">⚔️ Обычный удар<small>Надёжный физический урон.</small></button>
+ <button id="heavy">💥 Сокрушительный удар<small>Большой урон, но противник может уклониться.</small></button>
+ <div class="spell-label">Школы боевой магии</div>
+ <button id="spell" ${s.mana<16?"disabled":""}>🔥 Огненный шар · 16 маны<small>Мощный урон, особенно против бронированных целей.</small></button>
+ <button id="spellIce" ${s.mana<14?"disabled":""}>❄️ Ледяные оковы · 14 маны<small>Урон и ослабление следующей атаки врага.</small></button>
+ <button id="spellStorm" ${s.mana<22?"disabled":""}>⚡ Грозовой разряд · 22 маны<small>Случайный урон; шанс критического попадания.</small></button>
+ <button id="spellHeal" ${s.infection||s.mana<18||s.health>=100?"disabled":""}>🌿 Живительный свет · 18 маны<small>Восстановить до 28 здоровья.</small></button>
+ <button id="guard">🛡 Защита и концентрация<small>Сильно снизить следующий удар и восстановить 5 маны.</small></button>
+ <button id="battlePotion" ${s.infection||!s.potions||s.health>=100?"disabled":""}>🧪 Выпить зелье<small>Восстановить до 30 здоровья.</small></button>
+ <button id="run" class="secondary">🏃 Отступить<small>Шанс зависит от ловкости и удачи.</small></button>
+ </div>`;
+ $("overlay").style.display="flex";
+ ["strike","heavy","spell","spellIce","spellStorm","spellHeal","guard","battlePotion","run"].forEach(id=>{const el=$(id);if(el)el.onclick=()=>battleMove(id);});
+}
+function battleMove(move){
+ const b=activeBattle;if(!b)return;
+ if(move==="run"){
+  const chance=clamp(35+s.agility*.9+s.luck*.55,35,85);
+  if(Math.random()*100<chance){say(`Ты отступил от ${b.foe.name}, сохранив жизнь.`);activeBattle=null;$("overlay").style.display="none";render();return;}
+  battleEnemyTurn("Не удалось отступить. Противник настиг тебя!");return;
+ }
+ let msg="";
+ if(move==="strike"){
+  const d=Math.max(3,Math.round(s.strength*.38+s.agility*.16+s.sword*1.15+(s.weaponLevel||0)*8+rnd(1,7)-b.foe.def*.65));
+  b.foe.hp-=d;msg=`Ты нанёс ${d} урона мечом.`;playSound("sword");
+ }else if(move==="heavy"){
+  if(Math.random()<.18){msg="Сокрушительный удар не попал!";}
+  else{const d=Math.max(5,Math.round(s.strength*.62+s.sword*1.55+(s.weaponLevel||0)*10+rnd(2,10)-b.foe.def));b.foe.hp-=d;msg=`Сокрушительный удар нанёс ${d} урона!`;}
+  playSound("hit");
+ }else if(["spell","spellIce","spellStorm"].includes(move)){
+  const cost=move==="spell"?16:move==="spellIce"?14:22;if(s.mana<cost)return;s.mana-=cost;
+  let d=0;
+  if(move==="spell"){d=Math.max(8,Math.round((s.magic+(s.staffBonus||0))*1.18+s.control*.72+(s.school==="Огонь"?5:0)+rnd(8,17)-b.foe.def*.18));msg=`Огненный шар вспыхнул и нанёс ${d} урона.`;playSound("fire");}
+  if(move==="spellIce"){d=Math.max(6,Math.round((s.magic+(s.staffBonus||0))*.78+s.control*.7+(s.school==="Лёд"?5:0)+rnd(5,13)-b.foe.def*.2));b.slow=true;msg=`Ледяные оковы нанесли ${d} урона и ослабили следующую атаку.`;playSound("ice");}
+  if(move==="spellStorm"){d=Math.max(7,Math.round((s.magic+(s.staffBonus||0))*1.05+s.control*.55+(s.school==="Молния"?5:0)+rnd(3,24)-b.foe.def*.12));if(Math.random()<.24+s.luck*.002){d=Math.round(d*1.75);msg=`⚡ Критический грозовой разряд! ${d} урона!`;}else msg=`Молния ударила на ${d} урона.`;playSound("storm");}
+  b.foe.hp-=d;playSound("magic");
+ }else if(move==="spellHeal"){
+  if(s.infection){toast("Проклятие блокирует лечебную магию. Поможет только ночная охота.");return;}if(s.mana<18||s.health>=100)return;s.mana-=18;const healed=Math.min(28,100-s.health);s.health=clamp(s.health+28);msg=`Живительный свет восстановил ${Math.round(healed)} здоровья.`;playSound("heal");
+ }else if(move==="guard"){
+  b.guard=true;s.mana=clamp(s.mana+5,0,s.maxMana||100);msg="Ты принял защитную стойку и восстановил 5 маны.";
+ }else if(move==="battlePotion"){
+  if(s.infection){toast("Проклятие блокирует действие зелий. Поможет только ночная охота.");return;}if(!s.potions||s.health>=100)return;
+  s.potions--;const healed=Math.min(30,100-s.health);s.health=clamp(s.health+30);playSound("heal");msg=`Зелье восстановило ${Math.round(healed)} здоровья.`;
+ }
+ if(b.foe.hp<=0){
+  if(b.specialType==="chaosGod"){activeBattle=null;$("overlay").style.display="none";showGodAscensionChoice();return;}
+  const g=b.foe.loot+rnd(5,18),f=rnd(12,28);s.gold+=g;s.fame+=f;s.combat=(s.combat||0)+b.foe.xp+rnd(2,6);s.mood=clamp(s.mood+6);if(!s.infection)s.health=clamp(s.health+3);
+  say(`Победа над ${b.foe.name}! ${msg} Добыча: ${g} золота, слава +${f}.`);
+  if(b.infectionType)infectionCheck(b.infectionType,b.foe.name);
+  activeBattle=null;$("overlay").style.display="none";render();save();return;
+ }
+ battleEnemyTurn(msg);
+}
+function battleEnemyTurn(playerMessage){
+ const b=activeBattle;if(!b)return;
+ const heavy=b.turn%3===0||Math.random()<.12;
+ const armor=(s.armorLevel||0)*4+Math.floor(s.agility/10);
+ let raw=b.foe.attack+rnd(-5,8)+(heavy?Math.round(b.foe.attack*.62):0),effect="";if(s.curse?.id==="brittle")raw=Math.round(raw*1.12);
+ if(heavy&&b.special==="fire"){raw=Math.round(raw*1.35);effect=" Дракон обрушил огненное дыхание!";}
+ else if(heavy&&b.special==="smash"){raw=Math.round(raw*1.45);effect=" Удар тролля сотряс землю!";}
+ else if(heavy&&b.special==="gaze"){raw=Math.round(raw*1.18);b.poison=2;effect=" Ядовитый взгляд оставил отравление!";}
+ else if(heavy&&b.special==="pounce"){raw=Math.round(raw*1.2);effect=" Прыжок твари застал тебя врасплох!";}
+ else if(heavy&&b.special==="blood"){raw=Math.round(raw*1.45);b.foe.hp=Math.min(b.maxHp,b.foe.hp+Math.round(raw*.22));effect=" Вампир высосал часть жизненной силы!";}
+ else if(heavy&&b.special==="moon"){raw=Math.round(raw*1.5);effect=" Оборотень обрушил удар в лунной ярости!";}
+ else if(heavy&&b.foe.kind==="holy"){raw=Math.round(raw*1.35);effect=" Священный клинок вспыхнул против нечисти!";}
+ else if(heavy&&b.foe.kind==="silver"){raw=Math.round(raw*1.4);effect=" Серебряное оружие прожигает проклятую плоть!";}
+ const dodge=Math.random()<Math.min(.32,(s.agility||0)*.0012);
+ const reduction=armor+(b.guard?Math.round(b.foe.attack*.82):0);
+ const hit=dodge?0:Math.max(1,Math.round((raw-reduction)*(b.slow?.62:1)));b.slow=false;
+ s.health=clamp(s.health-hit);if(dodge)effect=" Ты уклонился от атаки!";playSound(hit?"hit":"ui");b.guard=false;b.turn++;
+ if(b.poison>0){s.health=clamp(s.health-3);b.poison--;effect+=" Яд отнял ещё 3 здоровья.";}
+ if(s.health<=0){activeBattle=null;$("overlay").style.display="none";die(`Ты пал в бою с ${b.foe.name}. ${playerMessage}`);return;}
+ battleScreen(`${playerMessage} ${heavy?"Особая атака":"Противник атаковал"} и нанёс ${hit} урона.${effect}`);
+}
+function addChild(){
+ 
+const otherRace=s.partnerRace||"human",partnerPhenotype={...(s.partnerStats||rollStats(otherRace)),race:otherRace},childRace=inheritedRace(s,{race:otherRace}),t=inheritedStats(s,partnerPhenotype,childRace);
+
+ const partnerApt=s.partnerAptitude||makeBirthRoll(otherRace).aptitude,parentApt=s.aptitude||profileForExisting(s).aptitude,childApt={};
+ for(const k of birthStatKeys)childApt[k]=Math.max(.35,Math.min(1.8,((parentApt[k]||1)+(partnerApt[k]||1))/2+(Math.random()-.5)*.18));
+ const childPotential={};for(const k of birthStatKeys)childPotential[k]=Math.max(t[k]+8,Math.min(k==="maxMana"?300:260,Math.round((k==="maxMana"?85:55)*childApt[k])));
+ const childPath=(childApt.magic+childApt.control>childApt.sword+childApt.strength+.25)?"mage":(childApt.sword+childApt.strength>childApt.magic+childApt.control+.25)?"warrior":"balanced";
+ const c={name:pick(names)+" "+s.name.split(" ").slice(-1)[0],race:childRace,age:0,sex:Math.random()<.5?"дочь":"сын",strength:t.strength,agility:t.agility,control:t.control,maxMana:t.maxMana,luck:t.luck,sword:t.sword,magic:t.magic,health:100,mood:rnd(60,90),bornYear:s.year,aptitude:childApt,potential:childPotential,birthPath:childPath};
+
+ s.children.push(c);playSound("birth");
+say(`В семье родился ${c.sex}: ${c.name}. Его задатки унаследованы от обоих родителей.`);
+
+}
+function romance(){if(s.age<16){say("Ты пока слишком юн для создания семьи.");
+toast("Семья — после 16 лет.");
+return}if(s.partner){if(s.children.length<5&&Math.random()<.65){addChild();
+}else say("Вы с партнёром провели вечер вместе. Семейные узы стали крепче.");
+s.mood=clamp(s.mood+10);
+return}if(Math.random()<.55+s.luck/100){s.partner=pick(["Элиана","Морвен","Тарен","Лисса","Эйрик","Селена","Ровен","Мира"]);
+s.partnerRace=pick(Object.keys(races));
+const partnerRoll=makeBirthRoll(s.partnerRace);s.partnerStats=partnerRoll.stats;s.partnerAptitude=partnerRoll.aptitude;
+s.mood=clamp(s.mood+18);
+s.social=clamp(s.social+10);
+say(`Ты встретил ${s.partner}. Между вами вспыхнули чувства. Вы решили быть вместе.`)}else{ s.mood=clamp(s.mood-4);
+say("Знакомство было приятным, но искры не возникло. Возможно, в другой раз.")}}
+function heroic(){if(s.age<14){say("Пока ты можешь совершать лишь маленькие добрые дела.");
+s.fame+=2;
+return}
+let p=s.combat+s.magic+s.sword+s.luck*.7;
+ if(p>rnd(20,100)){s.fame+=rnd(35,70);
+s.gold+=rnd(20,50);
+s.mood=clamp(s.mood+12);
+say("Твой смелый поступок вошёл в баллады. Слава разнеслась по королевству!")}else{s.health=clamp(s.health-rnd(12,28));
+say("Подвиг обернулся опасностью. Ты выжил, но заплатил за смелость.");
+}}
+// Сюжетные нити переживают смерть героя и могут завершиться потомками.
+const echoStories={
+ caravan:{title:"Долг старого каравана",steps:[
+  {text:"На тракте тебя находит седой купец. Его дед рассказывал, что представитель твоего рода спас караван от разбойников. «Мы храним старый долг. Но теперь на перевале пропадают люди…»",choices:[["Выступить защитником каравана",()=>{s.ancestralReputation=(s.ancestralReputation||0)+2;s.fame+=12;echoAdvance("caravan",1,"Ты принял обязанность защищать караван.");rememberDeed("good","Защитил караван, которому помог предок.");}],["Потребовать плату за старую историю",()=>{s.gold+=25;s.ancestralInfamy=(s.ancestralInfamy||0)+1;echoAdvance("caravan",1,"Купец заплатил, но доверие рода пошатнулось.");}]]},
+  {text:"Караван попал в засаду. Среди нападавших — люди, чьи семьи когда-то потеряли имущество из-за решения твоего предка.",choices:[["Защитить всех, даже бывших врагов",()=>{s.health=clamp(s.health-8);s.ancestralReputation=(s.ancestralReputation||0)+3;s.gold+=35;echoFinish("caravan","Ты примирил две семьи. Караванный союз будет помогать твоим потомкам.","caravan_oath");rememberDeed("good","Примирил семьи, враждовавшие поколениями.");}],["Использовать смуту и забрать товары",()=>{s.gold+=70;s.ancestralInfamy=(s.ancestralInfamy||0)+3;echoFinish("caravan","Ты разбогател, но караванщики поклялись обходить твоих потомков стороной.","caravan_fear");rememberDeed("evil","Ограбил караван во время засады.");}]]}
+ ]},
+ grove:{title:"Пепел старой рощи",steps:[
+  {text:"Эльфийские послы узнают фамилию твоего рода. Много лет назад один из предков вырубил священную рощу ради военного похода. Теперь на её месте снова пробиваются ростки.",choices:[["Помочь восстановить рощу",()=>{s.gold=Math.max(0,s.gold-15);s.ancestralReputation=(s.ancestralReputation||0)+2;echoAdvance("grove",1,"Ты начал искупление старой вины.");}],["Заявить, что род не обязан каяться",()=>{s.fame+=8;s.ancestralInfamy=(s.ancestralInfamy||0)+2;echoAdvance("grove",1,"Послы ушли, запомнив твою гордость.");}]]},
+  {text:"Дух рощи предлагает завершить дело: отдать редкий артефакт или позволить ему забрать часть жизненной силы.",choices:[["Отдать золото и восстановить святилище",()=>{s.gold=Math.max(0,s.gold-45);s.magic+=3;s.ancestralReputation=(s.ancestralReputation||0)+4;echoFinish("grove","Роща исцелена. Потомки твоего рода получат уважение эльфийских хранителей.","grove_blessing");}],["Отказаться и сорвать ростки",()=>{s.magic+=5;s.madness=clamp(s.madness+8);s.ancestralInfamy=(s.ancestralInfamy||0)+4;echoFinish("grove","Роща вновь погибла. Эльфийские хранители будут помнить твою фамилию.","grove_curse");}]]}
+ ]},
+ shrine:{title:"Голос под руинами",steps:[
+  {text:"Во сне тебе является незнакомый ребёнок и просит найти колокол под руинами. На камне высечена фамилия твоего рода: один из предков запечатал здесь древнее существо.",choices:[["Начать поиски",()=>{s.stress=clamp(s.stress+4);s.spellLore=(s.spellLore||0)+1;echoAdvance("shrine",1,"Ты начал искать печать.");unlockLore("oldGods");}],["Сжечь видение запретным заклинанием",()=>{s.magic+=2;s.madness=clamp(s.madness+10);echoFinish("shrine","Видение исчезло, но печать ослабла. Нечто древнее запомнило твой род.","shrine_fracture");}]]},
+  {text:"Под руинами ты находишь печать. Она держится на клятве предка, но трещины уже пропускают шёпот Азарота.",choices:[["Укрепить печать собственной кровью",()=>{s.health=clamp(s.health-18);s.ancestralReputation=(s.ancestralReputation||0)+3;echoFinish("shrine","Печать укреплена. Твои потомки унаследуют защиту от шёпота Хаоса.","shrine_seal");}],["Разрушить печать ради запретного знания",()=>{s.magic+=8;s.madness=clamp(s.madness+18);s.ancestralInfamy=(s.ancestralInfamy||0)+3;echoFinish("shrine","Ты получил запретное знание, но пробудил древний шёпот для будущих поколений.","shrine_whisper");unlockLore("azarothWhisper");}]]}
+ ]}
+};
+function echoAdvance(id,step,note){s.familyThreads=s.familyThreads||[];let t=s.familyThreads.find(x=>x.id===id);if(!t){t={id,step:0,startedGen:s.gen||1};s.familyThreads.push(t);}t.step=step;say(note);}
+function echoFinish(id,note,mark){s.familyThreads=s.familyThreads||[];s.familyThreads=s.familyThreads.filter(x=>x.id!==id);s.echoMarks=s.echoMarks||[];s.echoMarks.push({mark,gen:s.gen||1,by:s.name});s.echoMarks=s.echoMarks.slice(-12);rememberDeed("legacy",note);say(note);}
+function showEchoEvent(id,step){const story=echoStories[id],node=story.steps[step];if(!node)return;$("modal").innerHTML=`<h2>📜 ${story.title}</h2><p>${node.text}</p><small style="color:var(--gold2)">Сюжетная нить · ${step+1} из ${story.steps.length} · Может перейти к наследнику</small>${node.choices.map((c,i)=>`<button class="choice" data-echo="${i}">${c[0]}</button>`).join("")}`;$("overlay").style.display="flex";$ ("modal").querySelectorAll("[data-echo]").forEach(b=>b.onclick=()=>{const before=snapshotStats();node.choices[+b.dataset.echo][1]();recordActionResult("Отголосок поколений",before,s.log?.[0]?.text||story.title);closeAndRender();});}
+function generationEchoEvent(){
+ s.familyThreads=s.familyThreads||[];const active=s.familyThreads.find(t=>echoStories[t.id]&&t.step<echoStories[t.id].steps.length);
+ if(active){showEchoEvent(active.id,active.step);return true;}
+ if(s.age<16||Math.random()>.13)return false;
+ const pool=[];if((s.ancestralReputation||0)>0||s.ancestralDeeds?.some(d=>d.kind==="good"))pool.push("caravan");if((s.ancestralInfamy||0)>0||s.ancestralDeeds?.some(d=>d.kind==="evil"))pool.push("grove");if((s.explorationCount||0)>=3||s.spellLore>0)pool.push("shrine");
+ if(!pool.length)return false;const id=pick(pool);showEchoEvent(id,0);return true;
+}
+
+function ageUp(){
+ if(!s.alive)return;playSound("year");
+ const unusedActions=Math.max(0,Number(s.actions)||0);
+ if(unusedActions>0)say(`Ты завершил год досрочно, не использовав ${unusedActions} действий.`);
+ const previous=s.age;
+ const growthBefore=Object.fromEntries(birthStatKeys.map(k=>[k,Number(s[k])||0]));
+ s.age++;
+ s.year++;
+ worldTick();
+ if(s.age>=18&&Math.random()<.12)unlockLore("holyOrder");
+ if((s.duelWins||0)>=2)unlockLore("threeChampions");
+ s.actions=7;
+ s.racialTalentUsed=false;
+ if(s.rareMeetingCooldown>0)s.rareMeetingCooldown--;
+ // Возраст меняет темп развития: детство даёт базовый рост, юность — лучший период обучения.
+ if(s.age<7){s.strength+=rnd(0,1);s.agility+=rnd(0,1);s.maxMana+=rnd(0,2);s.mana=clamp(s.mana+2,0,s.maxMana);}
+ else if(s.age<14){s.strength+=rnd(0,1);s.agility+=rnd(0,1);s.control+=rnd(0,1);s.maxMana+=rnd(0,1);}
+ else if(s.age<18){s.strength+=rnd(1,2);s.agility+=rnd(1,2);s.control+=rnd(1,2);}
+ else if(s.age<40){if(Math.random()<.35)s.strength+=1;if(Math.random()<.35)s.agility+=1;}
+ else if(s.age<60){if(!s.infection)s.health=clamp(s.health-rnd(0,2));s.agility=Math.max(1,s.agility-(s.age%4===0?1:0));if(s.age%5===0)s.control+=1;}
+ else if(s.age<75){if(!s.infection)s.health=clamp(s.health-rnd(1,3));s.agility=Math.max(1,s.agility-(Math.random()<.35?1:0));if(s.age%4===0)s.maxMana=Math.max(20,s.maxMana-1);}
+ else{if(!s.infection)s.health=clamp(s.health-rnd(2,5));s.agility=Math.max(1,s.agility-(Math.random()<.55?1:0));}
+ // Расовая физиология: бонусы умеренные и не отменяют общие возрастные ограничения.
+ if(s.race==="elf"){
+  if(s.age>=14&&s.age<22&&Math.random()<.45)s.control+=1;
+  if(s.age>=55&&s.age<75){if(!s.infection&&s.age%3===0)s.health=clamp(s.health+1);if(s.age%5===0)s.agility+=1;}
+  if(s.age>=75&&!s.infection){s.health=clamp(s.health+1);}
+ }else if(s.race==="dwarf"){
+  if(!s.infection&&s.age>=40&&s.age<70&&s.age%2===0)s.health=clamp(s.health+1);
+  if(s.age>=50&&s.age<70&&s.age%5===0)s.strength+=1;
+ }else if(s.race==="orc"){
+  if(s.age>=14&&s.age<26){s.strength+=1;if(!s.infection&&s.age%3===0)s.health=clamp(s.health+1);}
+  if(!s.infection&&s.age>=45&&s.age<60&&s.age%3===0)s.health=clamp(s.health-1);
+ }else if(s.race==="fae"){
+  if(s.age<14){if(s.age%2===0)s.control+=1;s.maxMana+=2;s.mana=clamp(s.mana+2,0,s.maxMana);}
+  if(s.age>=40&&s.age%4===0)s.luck+=1;
+ }
+ if(!s.infection)s.health=clamp(s.health-rnd(0,s.age>=60?4:2));
+ s.mood=clamp(s.mood+rnd(-4,5));s.stress=clamp(s.stress-5);s.mana=clamp(s.mana+Math.max(3,Math.round(s.maxMana*.07)),0,s.maxMana||100);
+ if(s.blessing?.id==="starborn")s.mana=clamp(s.mana+5,0,s.maxMana);
+ if(s.blessing?.id==="greenblood"&&!s.infection&&s.health<100)s.health=clamp(s.health+1);
+ if(s.blessing?.id==="foxluck"&&Math.random()<.08){const boon=rnd(5,15);s.gold+=boon;say(`Нить Фортуны привела к тебе неожиданную находку: +${boon} золотых.`);}
+ if(s.curse?.id==="manaThirst"){s.mana=clamp(s.mana-4,0,s.maxMana);s.stress=clamp(s.stress+3);}
+ if(s.curse?.id==="restless")s.stress=clamp(s.stress+4);
+ if(!s.infection)s.health=clamp(s.health+(s.house||0)*2);s.mood=clamp(s.mood+(s.house||0));
+ applyBirthGrowth(growthBefore);
+ if(s.age===3)say("Ты стал увереннее держать равновесие и узнавать мир вокруг. Пока доступны простые занятия.");
+ if(s.age===7)say("Ты пошёл учиться. С этого возраста открываются занятия и первые серьёзные тренировки.");
+ if(s.age===14)say("Началась юность. Тело и разум быстро развиваются — сейчас особенно полезно учиться и тренироваться.");
+ if(s.age===16)say("Ты достиг совершеннолетия. Теперь доступны отношения, гильдейские поручения и опасные приключения.");
+ if(s.age===40)say("Началась зрелость. Рост физических качеств замедляется, зато опыт помогает в испытаниях.");
+ if(s.age===60)say("Ты вступил в старость. Береги здоровье: восстановление даётся труднее, но мудрость ещё может расти.");
+ if(s.age===75)say("Ты достиг преклонного возраста. Риск опасных последствий заметно вырос — отдыхай и береги себя.");
+ if(s.age===30&&s.partner&&s.children.length===0&&Math.random()<.45)addChild();
+ if(s.partner&&s.age>18&&s.children.length<4&&Math.random()<.12)addChild();
+ s.children.forEach(c=>{c.age++;});
+ if(s.health<=0){die("Здоровье иссякло. Пришло время покинуть этот мир.");return;}
+ if(s.infection?.type==="vampire"&&Math.random()<.14){s.health=Math.max(1,Math.floor(s.health*.10));s.infection.sunBurns++;playSound("danger");say("☀️ Рассвет застал тебя вне укрытия! Солнечный свет обжёг твою плоть: осталось лишь 10% здоровья. Впредь ищи убежище до рассвета.");}
+ if(s.infection?.type==="werewolf"&&Math.random()<.14){s.infection.frenzyCount++;const scale=1+Math.min(1.2,Math.max(0,s.age-18)*.012);const foe={name:pick(["Королевский палач чудовищ","Древний медведь-людоед","Рыцарь Серебряной Клятвы","Проклятый чемпион арены"]),hp:Math.round((125+s.age*2.15)*scale),attack:Math.round((27+s.age*.46)*scale),def:15+Math.floor(s.age/12),loot:115,xp:48,kind:"silver",special:"moonHunter",specialHint:"⚔️ Противник готовит сокрушительный удар, направленный на сердце зверя."};activeBattle={foe,maxHp:foe.hp,turn:1,guard:false,slow:false,poison:0,elite:true,hunter:true};playSound("danger");say("🌕 Полнолуние пробудило зверя. В ярости ты бросился на случайного сильного противника — теперь это смертельная схватка.");battleScreen("Лунная ярость вывела тебя на путь опасного противника. Он достаточно силён, чтобы убить даже оборотня.");}
+ let risk=s.age>(s.extendedLife?80:70)?(s.age-(s.extendedLife?78:68))*.012:.001;
+ if(!s.infection){
+  if(s.race==="elf")risk=s.age>(s.extendedLife?92:82)?(s.age-(s.extendedLife?90:80))*.008:.0008;
+  else if(s.race==="dwarf")risk=s.age>(s.extendedLife?86:76)?(s.age-(s.extendedLife?84:74))*.009:.001;
+  else if(s.race==="orc")risk=s.age>(s.extendedLife?76:66)?(s.age-(s.extendedLife?74:64))*.016:.0015;
+  else if(s.race==="fae")risk=s.age>(s.extendedLife?84:74)?(s.age-(s.extendedLife?82:72))*.011:.001;
+ }else risk=0;
+ if(Math.random()<risk){die("Судьба распорядилась иначе. Твоя жизнь подошла к концу.");return;}
+ if((s.land||0)>0){const rent=(s.land||0)*rnd(4,8);s.gold+=rent;say(`Поместья принесли ${rent} золотых дохода.`);}
+ if(s.investments){s.investments=s.investments.filter(inv=>{if(inv.due<=s.year){let gain=rnd(150,230);s.gold+=gain;say(`Торговое вложение принесло ${gain} золотых.`);return false;}return true;});}
+ if(s.age%10===0){s.fame+=Math.floor(s.combat/20);say("Прошёл ещё один десяток лет. Твои поступки становятся частью истории.");}
+ if(s.holyHuntCooldown>0)s.holyHuntCooldown--;
+ if(s.faction&&Math.random()<.22)s.factionRep=Math.min(100,(s.factionRep||0)+1);
+ if(s.madness>=75&&Math.random()<.12){s.stress=clamp(s.stress+5);s.mood=clamp(s.mood-4);say("Шёпот запретной магии тревожит твой разум.");}
+ if(s.outcast&&s.age>=18&&s.holyHuntCooldown===0&&Math.random()<.22&&!activeBattle)startHolyHunt();
+ const eventOpened=s.age>=7&&Math.random()<.48;
+ if(!activeBattle){if(generationEchoEvent()){}else if(eventOpened)randomLifeEvent();else if(s.age>=16&&Math.random()<.06)rareChampionEncounter("дороги королевства");}
+ s.lastActionResult=`Итоги ${s.age}-го года: ${s.log?.[0]?.text||"год прошёл спокойно"} · Возраст ${s.age} лет · Действия обновлены до 7.`;
+ checkGoal();render();save();
+}
+function randomLifeEvent(){
+ if(!s.infection&&!s.infectionCured&&s.age>=14&&Math.random()<.10){
+  const type=Math.random()<.5?"vampire":"werewolf",vamp=type==="vampire";
+  $("modal").innerHTML=`<h2>${vamp?"🩸 Шёпот кровавой ночи":"🌕 Следы под полной луной"}</h2><p>${vamp?"На окраине деревни находят обескровленных путников. Из развалин часовни доносится тихий зов.":"Скот пропадает из загонов, а на дверях появляются глубокие царапины. В лесу слышен вой, похожий на человеческий."}</p><button id="supernaturalInvestigate">⚔️ Проследить за следом</button><button class="secondary" id="supernaturalAvoid">🏃 Не вмешиваться</button>`;
+  $("overlay").style.display="flex";
+  $("supernaturalInvestigate").onclick=()=>{spawnSupernatural(type,"ночной встрече");};
+  $("supernaturalAvoid").onclick=()=>{if(Math.random()<.72){say("Ты не стал вмешиваться в ночные происшествия. Иногда осторожность — лучшая защита.");}else{s.health=clamp(s.health-rnd(5,13));say("Ты попытался уйти, но тварь настигла тебя в темноте.");}$("overlay").style.display="none";render();save();};
+  return;
+ }
+ if(Math.random()<.42){roadsideEncounter();return;}
+ const raceEvents={
+  human:{title:"Сходство с любым народом",text:"В приграничном поселении спорят люди разных народов. Тебя просят выступить посредником.",options:[["Помочь договориться",()=>{s.social=clamp(s.social+12);s.fame+=7;say("Твоя гибкость помогла примирить соседей. Ты заслужил уважение обеих сторон.");}],["Взять плату за посредничество",()=>{s.gold+=rnd(12,25);say("Ты сумел обратить дипломатический талант в звонкую монету.");}]]},
+  elf:{title:"Зов древней рощи",text:"Старые деревья шепчут на языке, который помнят лишь эльфы. Роща предлагает поделиться силой.",options:[["Принять благословение",()=>{s.magic+=2;s.maxMana+=8;s.mana=clamp(s.mana+18,0,s.maxMana);say("Роща признала в тебе своего. Магия и запас маны усилились.");}],["Оставить дар природе",()=>{s.mood=clamp(s.mood+14);s.stress=clamp(s.stress-12);say("Тихий вечер в роще вернул тебе душевное равновесие.");}]]},
+  dwarf:{title:"Зов горного клана",text:"Кузнецы твоего народа готовят редкий сплав и предлагают испытать его в деле.",options:[["Помочь у горна",()=>{s.sword+=2;s.strength+=1;s.gold=Math.max(0,s.gold-5);say("Ты провёл день у горна и освоил приём обработки крепчайшей стали.");}],["Продать найденную руду",()=>{const g=rnd(18,32);s.gold+=g;say(`Ты обменял образцы руды на ${g} золотых.`);}]]},
+  orc:{title:"Испытание клана",text:"Сородичи собираются на состязание силы. Победитель получит признание старейшин.",options:[["Принять вызов",()=>{if(s.strength+rnd(0,20)>rnd(12,42)){s.strength+=2;s.fame+=12;say("Ты выдержал испытание и заслужил уважение клана.");}else{s.health=clamp(s.health-12);s.combat+=3;say("Ты проиграл, но стойко принял поражение и приобрёл боевой опыт.");}}],["Поддержать участников",()=>{s.social=clamp(s.social+10);s.mood=clamp(s.mood+8);say("Ты помог провести состязание и укрепил связи с кланом.");}]]},
+  fae:{title:"Тропа между мирами",text:"За холмом появилась тропинка, которой не было вчера. Маленький огонёк зовёт тебя за собой.",options:[["Последовать за огоньком",()=>{if(Math.random()<.65){const g=rnd(20,45);s.gold+=g;s.luck+=1;say(`Ты нашёл тайник между мирами: ${g} золотых и +1 удача.`);}else{s.mana=clamp(s.mana-12,0,s.maxMana);say("Тропа исчезла, оставив после себя лишь усталость и странный звон в ушах.");}}],["Загадать желание",()=>{s.mood=clamp(s.mood+10);s.luck+=1;say("Огонёк рассыпался искрами. Кажется, судьба стала чуточку благосклоннее.");}]]}
+ };
+ const common=[
+  {title:"Королевский турнир",text:"Глашатай зовёт тебя принять участие в состязании.",options:[["Выйти на поединок",()=>{const c=clamp(35+s.strength+s.agility+s.sword*2+s.luck,10,95);if(rnd(1,100)<=c){s.fame+=25;s.gold+=20;s.sword++;playSound("success");say("Ты победил на турнире. Королевский двор запомнил твоё имя!");}else{s.health=clamp(s.health-10);say("Ты проиграл поединок, но приобрёл опыт.");}}],["Остаться зрителем",()=>{s.mood=clamp(s.mood+8);say("Турнир вдохновил тебя на новые свершения.");}]]},
+  {title:"Странствующий лекарь",text:"Лекарь предлагает лечение и отдых за 25 золотых.",options:[["Заплатить",()=>{if(s.gold>=25){s.gold-=25;if(!s.infection)s.health=clamp(s.health+35);s.stress=clamp(s.stress-12);say(s.infection?"Лекарь обработал раны, но обычное лечение не действует на твоё проклятие.":"Лекарь залечил твои раны.");}else say("У тебя не хватает золота.");}],["Отказаться",()=>say("Ты решил обойтись собственными силами.")]]},
+  {title:"Письмо из столицы",text:"Тебя приглашают на состязание талантов. Дорога стоит 20 золотых.",options:[["Оплатить поездку",()=>{if(s.gold>=20){s.gold-=20;let v=s.magic+s.control+s.sword;if(v>rnd(35,125)){s.fame+=35;s.gold+=55;say("Ты занял призовое место и получил награду!");}else say("Ты не победил, но познакомился с влиятельными людьми.");}else say("Поездка оказалась тебе не по карману.");}],["Остаться дома",()=>say("Ты отложил поездку на другой год.")]]}
+ ];
+ const e=(Math.random()<.42&&raceEvents[s.race])?raceEvents[s.race]:pick(common);
+ $("modal").innerHTML=`<h2>🎲 ${e.title}</h2><p>${e.text}</p>${e.options.map((o,i)=>`<button class="choice" data-life-event="${i}">${o[0]}</button>`).join("")}`;
+ $("overlay").style.display="flex";
+ $("modal").querySelectorAll("[data-life-event]").forEach(b=>b.onclick=()=>{const before=snapshotStats();e.options[+b.dataset.lifeEvent][1]();applyBirthGrowth(before);recordActionResult("Случайное событие",before,s.log?.[0]?.text||e.title);closeAndRender();});
+}
+function die(reason){if(s.blessing?.id==="phoenix"&&!s.blessingUsed){s.blessingUsed=true;s.alive=true;s.health=35;s.mood=clamp(s.mood-18);s.stress=clamp(s.stress+20);playSound("level");say("✧ Искра феникса вспыхнула в последний миг. Ты вернулся к жизни с 35 здоровья, но божественный дар угас навсегда.");render();save();return;}playSound("danger");s.alive=false;try{localStorage.setItem("eyrval_save",JSON.stringify(s));}catch(e){}
+s.ageAtDeath=s.age;
+say(reason);
+say(`Ты прожил ${s.age} лет. Твоё имя останется в хрониках Эйрвальда.`);
+render();
+setTimeout(()=>showDeath(),250)}
+function showChild(i){
+ 
+const c=s.children[i];
+if(!c)return;
+
+ $("modal").innerHTML=`<h2>🧬 ${c.name}</h2><div class="portrait-row">${avatarMarkup(c,"profile")}</div><div class="portrait-caption">${races[c.race]?.name||"Человек"} · ${c.age} лет</div><p>${c.sex} · ${c.age} лет · Наследник ${s.name}</p><div class="profilegrid">${[["💪 Сила",c.strength],["🦶 Ловкость",c.agility],["🌀 Контроль магии",c.control],["🔮 Запас маны",c.maxMana],["🍀 Удача",c.luck],["⚔ Меч",c.sword],["✨ Магия",c.magic]].map(x=>`<span>${x[0]} <b>${x[1]}</b></span>`).join("")}</div><p>Задатки ребёнка рассчитаны из характеристик обоих родителей с небольшой случайной наследственной вариацией.</p><button id="closeProfile">Закрыть</button>`;
+
+ $("overlay").style.display="flex";
+$("closeProfile").onclick=()=>$("overlay").style.display="none";
+
+}
+function showDeath(){
+ const m=$("modal");m.innerHTML=`<div class="portrait-row">${avatarMarkup(s,"profile")}</div><h2 style="text-align:center">🕯 Конец одной жизни</h2><p style="text-align:center"><b>${s.name}</b> прожил ${s.age} лет.<br>Слава: ${s.fame} · Меч: ${s.sword} · Магия: ${s.magic}.<br>${s.children.length?`Род продолжат ${s.children.length} потомков.`:"У этой ветви рода пока нет наследников."}</p><div style="border-top:1px solid #536d83;margin:14px 0;padding-top:10px"><b style="color:var(--gold2)">Выбери наследника — характеристики и пределы видны заранее</b></div>${s.children.map((c,i)=>`<button data-child-view="${i}" class="choice child-choice"><b>${c.name}</b> · ${c.age} лет · ${races[c.race]?.name||"Человек"}<div class="profilegrid">${birthStatKeys.map((k,j)=>`<span>${["💪 Сила","🦶 Ловкость","🌀 Контроль","🔮 Мана","🍀 Удача","⚔ Меч","✨ Магия"][j]} <b>${c[k]??0}</b><small class="capline">Предел: ${(c.potential||profileForExisting(c).potential)[k]??"—"}</small></span>`).join("")}</div><small style="display:block;color:#cbb89c;margin-top:7px">Нажми, чтобы выбрать этого наследника.</small></button>`).join("")||"<p>Наследников нет.</p>"}<button class="secondary" id="newLife">🌱 Начать новую династию</button>`;$("overlay").style.display="flex";m.querySelectorAll('[data-child-view]').forEach(b=>b.onclick=()=>showHeirConfirmation(Number(b.dataset.childView)));$("newLife").onclick=()=>{const old=s;s=fresh(1);s.champions=old.champions||createChampions();s.worldChronicle=old.worldChronicle||[];s.ancestralReputation=old.ancestralReputation||0;s.ancestralInfamy=old.ancestralInfamy||0;s.ancestralDeeds=old.ancestralDeeds||[];s.familyThreads=old.familyThreads||[];s.echoMarks=old.echoMarks||[];s.loreUnlocked=old.loreUnlocked||[];s.foundRituals=old.foundRituals||[];s.worldState=old.worldState||s.worldState;s.faction=old.faction||null;s.factionRep=old.factionRep||0;s.title=old.title||null;s.land=old.land||0;s.army=old.army||0;s.school=old.school||null;s.spellLore=old.spellLore||0;s.madness=old.madness||0;s.chaosGodDefeated=!!old.chaosGodDefeated;s.legacy=[...(old.legacy||[]),`${old.name} — ${old.age} лет, поколение ${old.gen||1}`].slice(-20);s.ancestralDeeds=old.ancestralDeeds||[];say("Новая династия начинает летопись Эйрвальда.");$("overlay").style.display="none";activeBattle=null;render();showCreator();};
+}
+function showHeirConfirmation(i){
+ const child=s.children[i];if(!child)return;const labels={strength:"Сила",agility:"Ловкость",control:"Контроль",maxMana:"Запас маны",luck:"Удача",sword:"Меч",magic:"Магия"};$("modal").innerHTML=`<h2>🧬 Наследник: ${child.name}</h2><div class="portrait-row">${avatarMarkup(child,"profile")}</div><p>${child.age} лет · ${races[child.race]?.name||"Человек"} · ${child.sex}</p><div class="profilegrid">${birthStatKeys.map(k=>`<span>${labels[k]} <b>${child[k]??0}</b><small class="capline">Предел: ${child.potential?.[k]??"—"}</small></span>`).join("")}</div><div class="trait-detail"><b>Врождённый путь:</b> ${birthPaths[child.birthPath||"balanced"]?.name||"Неизвестен"}<br>Ты продолжишь жизнь с этими характеристиками и пределами.</div><button id="confirmHeir">Продолжить род за ${child.name}</button><button class="secondary" id="backHeirs">Назад к наследникам</button>`;
+ $("confirmHeir").onclick=()=>{const old=s,t={strength:child.strength,agility:child.agility,control:child.control,maxMana:child.maxMana,luck:child.luck,sword:child.sword,magic:child.magic};s=fresh((old.gen||1)+1,{name:old.name,race:old.race},t,child.race||old.race||"human");s.name=child.name;s.race=child.race||old.race||"human";s.sex=child.sex==="дочь"?"героиня":"герой";s.age=child.age||0;s.aptitude=child.aptitude||profileForExisting(child).apt;s.potential=child.potential||profileForExisting(child).potential;s.growthProgress={};s.birthPath=child.birthPath||profileForExisting(child).path;s.health=clamp(child.health??100);s.parents=[old.name];s.gold=Math.max(5,Math.floor(old.gold*.12));s.house=old.house||0;s.champions=old.champions||createChampions();s.fame=Math.floor(old.fame*.08);s.investments=[];s.log=(old.log||[]).slice();s.worldChronicle=old.worldChronicle||[];s.ancestralReputation=old.ancestralReputation||0;s.ancestralInfamy=old.ancestralInfamy||0;s.ancestralDeeds=old.ancestralDeeds||[];s.familyThreads=old.familyThreads||[];s.echoMarks=old.echoMarks||[];s.loreUnlocked=old.loreUnlocked||[];s.foundRituals=old.foundRituals||[];s.worldState=old.worldState||s.worldState;s.faction=old.faction||null;s.factionRep=old.factionRep||0;s.title=old.title||null;s.land=old.land||0;s.army=old.army||0;s.school=old.school||null;s.spellLore=old.spellLore||0;s.madness=old.madness||0;s.chaosGodDefeated=!!old.chaosGodDefeated;s.artifacts=old.artifacts||[];s.staffLevel=old.staffLevel||0;s.staffBonus=old.staffBonus||0;s.staffName=old.staffName||"";say(`Ты продолжил род ${old.name}. ${child.name} начинает собственную историю.`);$("overlay").style.display="none";activeBattle=null;render();save();};$("backHeirs").onclick=showDeath;
+}
+
+function handleActionClick(e){
+ const button=e.target.closest("button[data-a]");if(!button)return;
+ const index=Number(button.dataset.a);
+ if(!Number.isInteger(index)||!actionDefs[index])return;
+ if(button.disabled||!s.alive||s.actions<=0)return;
+ useAction(index);
+}
+
+$("actions").addEventListener("click",handleActionClick);
+$("extraActions").addEventListener("click",handleActionClick);
+$("family").addEventListener("click",e=>{
+let b=e.target.closest("[data-profile]");
+if(b)showChild(+b.dataset.profile)});
+
+$("ageBtn").onclick=ageUp;$("ageBtnDock").onclick=ageUp;
+document.addEventListener("click",e=>{if(e.target.closest("button")&&!e.target.closest("#soundBtn"))playSound("ui");});
+$("soundBtn").onclick=()=>{soundEnabled=!soundEnabled;try{localStorage.setItem("eyrval_sound",soundEnabled?"on":"off");}catch(e){}updateSoundButton();if(soundEnabled)playSound("success");};
+$("saveBtn").onclick=()=>{playSound("click");save();};
+$("treasuryBtn").onclick=openTreasury;$("loreArchiveBtn").onclick=openLoreArchive;$("worldHubBtn").onclick=openWorldHub;
+$("potionBtn").onclick=usePotion;
+$("lifeGoal").addEventListener("change",e=>{if(e.target.id==="goalSelect")setGoal(e.target.value);
+});
+
+window.addEventListener("beforeunload",()=>{try{localStorage.setItem("eyrval_save",JSON.stringify(s));}catch(err){console.warn("Автосохранение недоступно:",err);}});
+
+init();
+
+
+
+</script>
+
+
+</body></html>
